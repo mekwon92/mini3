@@ -5,22 +5,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
-public class BookService {
-// 책 목록
-private List<Book> bookList = new ArrayList<Book>();
-private static final int TMPCOUNT = 1000;
-
-// 초기화 블럭
-{
-	System.out.println("초기 데이터를 삽입합니다.");
-	bookList.add(new Book("000", "홍길동전", "홍길동", "길동사","00-0000-0000","디테일", 10000, 1000, false));
-	System.out.println("초기데이터 삽입 완료.");
-}
-
-public class BookQuerryTest {
+public class BookQuerry {
 	String clientID = "tqo7kxREe4GFC4lx0fAK";
 	String secret = "jcYW9V3xwB";
 
@@ -47,10 +33,4 @@ public class BookQuerryTest {
 			}
 		}
 	}
-}
-
-public static void main(String[] args) throws Exception {
-	new BookQuerry().call();
-}
-
 }
