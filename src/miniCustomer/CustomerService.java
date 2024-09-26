@@ -1,4 +1,4 @@
-package mini;
+package miniCustomer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,8 @@ public class CustomerService {
 		{
 			customers.add(new Customer("id1","pw1"));
 			customers.add(new Customer("id2","pw2"));
-			
+			customers.add(new Customer("id3","pw3"));
+			customers.add(new Customer("id4","pw4"));
 		}
 	
 	// 아이디 생성
@@ -52,7 +53,7 @@ public class CustomerService {
 		String id = MiniUtils.next("ID", String.class);
 		String pw = MiniUtils.next("PW", String.class);
 				
-		if(findBy(id) == null) {
+		if(findBy(id) != null) {
 			System.out.println("해당하는 아이디가 없습니다");
 			return;
 		}
