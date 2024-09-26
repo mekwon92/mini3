@@ -1,4 +1,4 @@
-package mini;
+package miniBook;
 
 public class Book {
 	// 필드

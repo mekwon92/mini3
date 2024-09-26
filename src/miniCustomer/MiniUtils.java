@@ -1,4 +1,4 @@
-package mini;
+package miniCustomer;
 
 import java.util.Scanner;
 import java.util.function.Predicate;

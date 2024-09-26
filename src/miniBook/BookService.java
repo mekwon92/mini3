@@ -1,9 +1,9 @@
-package mini;
+package miniBook;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class miniPBookService {
+public class BookService {
 // 책 목록
 private List bookList = new ArrayList();
 private static final int TMPCOUNT = 1000;

@@ -1,4 +1,4 @@
-package mini;
+package miniCustomer;
 
 import java.util.ArrayList;
 import java.util.Collection;
