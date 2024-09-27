@@ -25,7 +25,7 @@ public class MiniUtils {
 		while (true) {
 			try {
 				T t = next(msg, clazz); //입력통합 호출
-				T t = next(msg, clazz); // 입력통합 호출
+//				T t = next(msg, clazz); // 입력통합 호출
 				if (con.test(t)) {
 					return t;
 				} else {
@@ -36,7 +36,7 @@ public class MiniUtils {
 			} catch (IllegalArgumentException iae) {
 				System.out.println(iae.getMessage());
 			} 
-			}
+			
 		}
 	}
 }

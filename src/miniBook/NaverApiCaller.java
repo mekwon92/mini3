@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class NaverApiCaller {
 	String clientID = "hEXQ0_5PvioNhHNeXSFx";
 	String secret = "m8VlYwqi8t";
@@ -76,8 +79,7 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
-		String[] queries = { "가나다라", "자바", "sql", "html", "spring framework", "react", "css", "javascript", "jsp",
-				"안드로이드" };
+		String[] queries = { "북로드" };
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 

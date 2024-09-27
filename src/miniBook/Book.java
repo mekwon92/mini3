@@ -28,9 +28,6 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "제목 = " + bookName + ", 저자 = " + bookWriter + ", 출판 =" + bookPublisher + ", 도서번호 = " + bookId
-				+ ", ISBN =" + ISBookNum + ", 정가 =" + bookPrice + ", 재고 =" + bookCount + ", 담기 =" + ifChecked + "]";
-				+ ", ISBN =" + ISBookNum + ", 정가 =" + bookPrice + ", 재고 =" + bookCount + ", 담기 =" + ifChecked;
 		return "\n--------------------------------------------------------------------------------------------------\n"
 				+ "| *제목 = " + bookName + " | *저자 = " + bookWriter + " | *출판 =" + bookPublisher + " | *도서번호 = " + bookId
 				+ " *ISBN =" + ISBookNum + " | \n| *정가 =" + bookPrice + " | *재고 =" + bookCount + " 권 | *담기 =" + ifChecked

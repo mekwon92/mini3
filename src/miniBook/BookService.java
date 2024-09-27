@@ -1,20 +1,20 @@
 package miniBook;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class BookService {
 // 책 목록
-private static final int TMPCOUNT = 1000;
 	private static List<Book> bookList = new ArrayList<Book>();
 	private static final int TMPCOUNT = 1000;
 
 // 초기화 블럭
-{
-	System.out.println("초기 데이터를 삽입합니다.");
-	System.out.println("초기데이터 삽입 완료.");
-}
+
 	{
 		System.out.println("SYSTEM :: 초기 데이터를 삽입합니다.");
 		bookList.add(new Book("000", "홍길동전", "홍길동", "길동사", "0000000001", "디테일1", 10000, TMPCOUNT, false));
@@ -24,6 +24,13 @@ private static final int TMPCOUNT = 1000;
 		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000005", "디테일5", 14000, TMPCOUNT, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
+		try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("C:\\Users\\tj\\eclipse-workspace\\mini\\src\\miniBook"));) {
+            bookList = (List<Book>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 	}
 
 // GETTER , SETTER 
@@ -35,14 +42,14 @@ private static final int TMPCOUNT = 1000;
 		BookService.bookList = bookList;
 	}
 
-	public void printBook() { // 출력확인용
+	public void printBook() { // 출력확인용 셔플
 		System.out.println("*****서적 목록은 다음과 같습니다.*****");
 		List<Book> pBook = new ArrayList<>(bookList);
 		Collections.shuffle(pBook);
 		pBook.forEach(x -> System.out.print(x + "\n"));
 	}
 	
-	public Book findByBookID(String no) {
+	public Book findByBookID(String no) { // 도서번호로 검색
 		Book bookname = null;
 		for(int i = 0; i < bookList.size(); i++) {
 			if(bookList.get(i).getBookId() == no) {
@@ -51,5 +58,6 @@ private static final int TMPCOUNT = 1000;
 		}
 		return bookname;
 	}
-
+// 검색, 상세정보, 재고
+// 1. 검색 메서드 구현(제가 만들었던 셔플 리스트 이외에도 스트링 명령어 사용해서 검색어를 통해 )
 }
