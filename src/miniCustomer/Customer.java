@@ -35,7 +35,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [아이디 :" + id + ", 비밀번호 :" + pw + ", 고객번호 :" + userNum + "]";
+		return "아이디("+ id + ") 비밀번호(" + pw+")";
 	}
 	
 	

@@ -1,11 +1,12 @@
 package miniCustomer;
-
+import miniBook.*;
+import cart.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Set;;
+
 /* 추후 해야할 작업
  * 1. 정규식 이용해서 matchs
  * 2. 입출력으로 영속화
@@ -16,17 +17,24 @@ import java.util.Set;
  * 1. id입력 안받고 바로 삭제하는 방법이 있나..?!
  * 2. switch문 말고 다른방법
  * 3. 입력받은 id를 계속 사용할방법..?
+ * 구매내역확인 ..... findBy를 이용해서 갖고와야함....
  * */
-
+//
+//회원번호 id 수량 
+//사용자아이디만 알아도됨
+//책번호로 책... id...회원
 public class CustomerService {
 	private List<Customer> customers = new ArrayList<Customer>();
 	private Map<Integer, Customer> usermap = new HashMap<Integer, Customer>();
 	
 	
 		{
-			customers.add(new Customer("id1","pw1"));
-			customers.add(new Customer("id2","pw2"));
-			
+			Customer customer = new Customer("id1","pw1");
+			Customer customer2 = new Customer("id2","pw2");
+			customer.setUserNum(998);
+			customer2.setUserNum(999);
+			customers.add(customer);
+			customers.add(customer2);
 		}
 		
 		//로그인
@@ -43,10 +51,12 @@ public class CustomerService {
 				for(Customer c : customers) {
 					if(c.getId().equals(id)&&c.getPw().equals(pw)) {
 						System.out.println("로그인 성공");
+						afterLogin();
 						return;
 					}
 				}	
 				System.out.println("비밀번호 불일치");
+				return;
 			}
 		}
 		
@@ -80,7 +90,7 @@ public class CustomerService {
 		Customer c = new Customer(id, pw);
 		c.setUserNum(cnt);
 		customers.add(c);
-		System.out.println("아이디 : "+id+ " 비밀번호 : " +pw +" 생성되었습니다. 회원 번호 : " + c.getUserNum());
+		System.out.println("아이디("+ id + ") 비밀번호(" +pw +") 생성 완료. 회원 번호 부여: " + c.getUserNum());
 		usermap.put(cnt, c);
 		cnt++;
 		
@@ -112,14 +122,15 @@ public class CustomerService {
 			}
 		}	
 	}
-	
 
 	
-	
-	
 	//고객출력
+	
 	public void printCustomer() {
-		
+		Set<Integer> keys = usermap.keySet();
+		for(Integer key : keys) {
+			System.out.println("no."+ key + " " +usermap.get(key));
+		}
 	}
 	
 	
