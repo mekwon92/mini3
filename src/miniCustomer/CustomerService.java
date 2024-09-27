@@ -25,7 +25,6 @@ import java.util.Set;;
 //책번호로 책... id...회원
 public class CustomerService {
 	private List<Customer> customers = new ArrayList<Customer>();
-	private Map<Integer, Customer> usermap = new HashMap<Integer, Customer>();
 	
 	
 		{
@@ -90,17 +89,31 @@ public class CustomerService {
 		Customer c = new Customer(id, pw);
 		c.setUserNum(cnt);
 		customers.add(c);
-		System.out.println("아이디("+ id + ") 비밀번호(" +pw +") 생성 완료. 회원 번호 부여: " + c.getUserNum());
-		usermap.put(cnt, c);
+		System.out.println("ID("+ id + ") PASSWORD(" +pw +") 생성 완료. 회원 번호 부여: " + c.getUserNum());
 		cnt++;
 		
 	}
 	
 	// 아이디 제거
 	public void customerRemove() {
-		Customer c = findBy(MiniUtils.next("삭제할 ID를 입력하세요", String.class , s->findBy(s) != null, "해당하는 아이디가 없습니다."));
-		customers.remove(c);
-		System.out.println("삭제완료");
+		System.out.println("삭제를 원하시면 본인의 아이디와 비밀번호를 입력하세요");
+		String id = MiniUtils.next("ID", String.class); //남의 아이디를 입력해도 되는 문제가 있다.
+		String pw = MiniUtils.next("PW", String.class);		
+		if(findBy(id) == null) {
+			System.out.println("해당하는 아이디가 없습니다");
+			return;
+		}
+		else {
+			for(Customer c : customers) {
+				if(c.getId().equals(id)&&c.getPw().equals(pw)) {
+					customers.remove(c);
+					System.out.println("삭제완료");
+					return;
+				}
+			}	
+			System.out.println("비밀번호가 틀렸습니다. 다시시도하세요");
+			return;
+		}
 	}
 	
 	//회원정보 관리
@@ -127,9 +140,12 @@ public class CustomerService {
 	//고객출력
 	
 	public void printCustomer() {
-		Set<Integer> keys = usermap.keySet();
-		for(Integer key : keys) {
-			System.out.println("no."+ key + " " +usermap.get(key));
+		System.out.println("==============================");
+		System.out.println("회원번호       ID     PASSWORD");
+		System.out.println("==============================");
+		for(Customer c : customers) {
+			System.out.printf("%5d %11s %11s",c.getUserNum(),c.getId(),c.getPw());
+			System.out.println();
 		}
 	}
 	
