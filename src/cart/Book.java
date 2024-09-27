@@ -1,4 +1,4 @@
-package miniBook;
+package cart;
 
 public class Book {
 	// 필드
@@ -106,6 +106,7 @@ public class Book {
 	public void setBookCount(int bookCount) {
 		this.bookCount = bookCount;
 	}
+
 
 	
 }
