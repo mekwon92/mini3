@@ -1,6 +1,8 @@
 package miniCustomer;
 
 import java.util.List;
+import cart.*;
+import miniBook.*;
 
 public class Customer {
 	private String id;
@@ -35,7 +37,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [아이디 :" + id + ", 비밀번호 :" + pw + ", 고객번호 :" + userNum + "]";
+		return "ID("+ id + ") PASSWORD(" + pw+")";
 	}
 	
 	
