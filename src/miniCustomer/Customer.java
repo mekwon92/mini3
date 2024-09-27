@@ -13,8 +13,6 @@ public class Customer {
 		this.id = id;
 		this.pw = pw;
 	}
-	
-	
 	public String getId() {
 		return id;
 	}
