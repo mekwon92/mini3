@@ -11,7 +11,6 @@ public class BookQuerry {
 	String secret = "jcYW9V3xwB";
 
 	public void call() throws Exception {
-		String query = "폭풍의 언덕";
 		query = URLEncoder.encode(query, "utf-8");
 		String url = "https://openapi.naver.com/v1/search/book.json?query=" + query + "&display=100";
 
