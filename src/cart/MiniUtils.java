@@ -1,4 +1,4 @@
-package cart2;
+package cart;
 
 import java.util.Scanner;
 import java.util.function.Predicate;
