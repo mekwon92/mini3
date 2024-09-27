@@ -14,8 +14,5 @@ private static final int TMPCOUNT = 1000;
 }
 
 
-public static void main(String[] args) throws Exception {
-	new BookQuerry().call();
-}
 
 }

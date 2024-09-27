@@ -1,4 +1,4 @@
-//package mini;
+//package cart;
 //
 //public class CartMain {
 //	public static void main(String[] args) {
@@ -43,7 +43,6 @@
 //		
 //}
 //	
-package cart;
 
 
 	

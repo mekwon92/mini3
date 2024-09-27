@@ -11,6 +11,11 @@ import java.util.Set;
  * 2. 입출력으로 영속화
  * 3. 구매내역 확인
  * 4. (관리자하게되면) 회원리스트
+ * 
+ * 생각해볼것
+ * 1. id입력 안받고 바로 삭제하는 방법이 있나..?!
+ * 2. switch문 말고 다른방법
+ * 3. 입력받은 id를 계속 사용할방법..?
  * */
 
 public class CustomerService {
@@ -21,13 +26,54 @@ public class CustomerService {
 		{
 			customers.add(new Customer("id1","pw1"));
 			customers.add(new Customer("id2","pw2"));
-			customers.add(new Customer("id3","pw3"));
-			customers.add(new Customer("id4","pw4"));
+			
 		}
+		
+		//로그인
+		public void login() {
+			
+			String id = MiniUtils.next("ID", String.class);
+			String pw = MiniUtils.next("PW", String.class);
+					
+			if(findBy(id) == null) {
+				System.out.println("해당하는 아이디가 없습니다");
+				return;
+			}
+			else {
+				for(Customer c : customers) {
+					if(c.getId().equals(id)&&c.getPw().equals(pw)) {
+						System.out.println("로그인 성공");
+						return;
+					}
+				}	
+				System.out.println("비밀번호 불일치");
+			}
+		}
+		
+		//로그인 후 
+		public void afterLogin() {
+			while(true) {
+				int input = MiniUtils.next("1.도서 검색  2.회원정보  3. 로그아웃 ", Integer.class,  t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
+				switch (input) {
+				case 1:
+					System.out.println("도서검색 서비스 예정 다시입력해주세요");
+					break;
+				case 2:
+					customerInfo();
+					break;
+				case 3:
+					return;
+				default:
+					break;
+				}
+			}	
+		}
+		
 	
 	// 아이디 생성
 		int cnt = 1000;
 	public void customerAdd() {
+		System.out.println("회원가입 화면입니다.");
 		String id = MiniUtils.next("ID", String.class, s->findBy(s) == null , "중복아이디 존재. 가입불가");
 		String pw = MiniUtils.next("PW", String.class);
 		
@@ -47,30 +93,33 @@ public class CustomerService {
 		System.out.println("삭제완료");
 	}
 	
-	
-	//로그인
-	public void login() {
-		String id = MiniUtils.next("ID", String.class);
-		String pw = MiniUtils.next("PW", String.class);
-				
-		if(findBy(id) != null) {
-			System.out.println("해당하는 아이디가 없습니다");
-			return;
-		}
-		else {
-			for(Customer c : customers) {
-				if(c.getId().equals(id)&&c.getPw().equals(pw)) {
-					System.out.println("로그인 완료");
-					return;
-				}
-			}	
-			System.out.println("비밀번호 불일치");
-		}
+	//회원정보 관리
+	public void customerInfo() {
+		while(true) {
+			System.out.println("****마이페이지****");
+			int input = MiniUtils.next("1. 구매이력 확인 2. 회원 삭제 3. 뒤로가기 ", Integer.class,  t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
+			switch (input) {
+			case 1:
+				System.out.println("구매이력 서비스 예정. 다시입력하세요 ");
+				break;
+			case 2:
+				customerRemove();
+				break;
+			case 3:
+				return;
+			default:
+				break;
+			}
+		}	
 	}
+	
+
+	
+	
 	
 	//고객출력
 	public void printCustomer() {
-	
+		
 	}
 	
 	
