@@ -41,5 +41,15 @@ private static final int TMPCOUNT = 1000;
 		Collections.shuffle(pBook);
 		pBook.forEach(x -> System.out.print(x + "\n"));
 	}
+	
+	public Book findByBookID(String no) {
+		Book bookname = null;
+		for(int i = 0; i < bookList.size(); i++) {
+			if(bookList.get(i).getBookId() == no) {
+				bookname = bookList.get(i);
+			}
+		}
+		return bookname;
+	}
 
 }
