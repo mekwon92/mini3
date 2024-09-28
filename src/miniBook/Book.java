@@ -11,10 +11,11 @@ public class Book {
 	private int bookPrice; // 책 가격
 	public int bookCount; // 책 재고 // + 상품목록에서의 재고 + 클론을 통해서 다른 변수로 관리
 	private boolean ifChecked; // 책 구매의사 확인용 체크박스
+	private boolean isSearch; // 장바구니 액션시 가져갈 불린값.
 
 	// 생성자
 	public Book(String bookId, String bookName, String bookWriter, String bookPublisher, String ISBookNum,
-			String bookDetail, int bookPrice, int bookCount, boolean ifChecked) {
+			String bookDetail, int bookPrice, int bookCount, boolean ifChecked, boolean isSearch) {
 		this.bookId = bookId;
 		this.bookName = bookName;
 		this.bookWriter = bookWriter;
@@ -24,13 +25,15 @@ public class Book {
 		this.bookPrice = bookPrice;
 		this.bookCount = bookCount;
 		this.ifChecked = ifChecked;
+		this.isSearch = isSearch;
 	}
 
 	@Override
 	public String toString() {
 		return "\n--------------------------------------------------------------------------------------------------\n"
 				+ "| *제목 = " + bookName + " | *저자 = " + bookWriter + " | *출판 =" + bookPublisher + " | *도서번호 = " + bookId
-				+ " *ISBN =" + ISBookNum + " | \n| *정가 =" + bookPrice + " | *재고 =" + bookCount + " 권 | *담기 =" + ifChecked
+				+ " *ISBN =" + ISBookNum + " | \n| *정가 =" + bookPrice + " | *재고 =" + bookCount + " 권 | *담기 ="
+				+ ifChecked
 				+ " |\n--------------------------------------------------------------------------------------------------";
 	}
 
@@ -107,5 +110,4 @@ public class Book {
 		this.bookCount = bookCount;
 	}
 
-	
 }

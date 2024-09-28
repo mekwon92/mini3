@@ -1,4 +1,5 @@
 package miniBook;
+
 // 출력 확인부
 import miniCustomer.*;
 
@@ -7,6 +8,6 @@ public class BookTest {
 		BookService bookService = new BookService();
 //		bookService.printBooks();
 		bookService.bookSearcher();
-		
+
 	}
 }
