@@ -56,23 +56,52 @@ public class BookService {
 
 	/**
 	 * 도서번호를 통한 검색
+	 * 일치하는 경우 한가지밖에 없기 떄문에 추후 예외처리 필요
 	 * @param String bookID
 	 * @author KHM
 	 */
-	public Book findByBook(String no) { // 도서번호로 검색
-		Book bookname = null;
+	public Book findByBookId(String no) { // 도서번호로 검색
+		Book book = null;
 		for (int i = 0; i < bookList.size(); i++) {
 			if (bookList.get(i).getBookId() == no) {
-				bookname = bookList.get(i);
+				book = bookList.get(i);
 			}
 		}
-		return bookname;
+		return book;
+	}
+	/**
+	 * 저자를 통한 검색
+	 * 저자 한명이 다양한 검색결과를 가질 수 있기 때문에 리스트 사용
+	 * @param writer
+	 * @return 저자
+	 */
+	public void findByWriter(String writer) { 
+		List<Book> bookRes = new ArrayList<Book>();
+		for(int i = 0; i < bookList.size(); i++) {
+			Book book = bookList.get(i);
+			if(book.getBookWriter().equals(writer)) {
+				bookRes.add(book);
+			}
+		}
+		if(bookRes.isEmpty()) {
+			System.out.println("SYSTEM :: 저자명 : " + writer + " 에 따른 검색결과가 없습니다." );
+			
+		}
+		
+	}
+	public Book findByBook(String no) { // 도서번호로 검색
+		Book book = null;
+		for (int i = 0; i < bookList.size(); i++) {
+			if (bookList.get(i).getBookId() == no) {
+				book = bookList.get(i);
+			}
+		}
+		return book;
 	}
 
 	public void bookSearcher() {
 		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자");
 		
 	}
-// 검색, 상세정보, 재고
 // 1. 검색 메서드 구현(제가 만들었던 셔플 리스트 이외에도 스트링 명령어 사용해서 검색어를 통해 )
 }
