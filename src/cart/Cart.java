@@ -6,7 +6,7 @@ public class Cart {
 
 	private int cart;
 	private String booknum;
-	private int buy;
+//	private int buy;
 	private int back;
 	private int cancle;
 
@@ -17,17 +17,17 @@ public class Cart {
 
 		this.cart = cart;
 		this.booknum = booknum;
-		this.buy = buy;
+//		this.buy = buy;
 		this.back = back;
 		this.cancle = cancle;
 
 	}
 
 	public Cart(Cart cs) {
-		setBuy(cs.getBuy());// 구매에 따라 바뀐다?
+//		setBuy(cs.getBuy());
 		cart = cs.cart;
 		booknum = cs.booknum;
-		buy = cs.buy;
+//		buy = cs.buy;
 		back = cs.back;
 		// if(s.arr != null)
 	}
@@ -37,7 +37,7 @@ public class Cart {
 		return cart;
 	}
 
-	public void setCart(int cart) {
+	public void setCart(int cart) {//장바구니
 		this.cart = cart;
 	}
 
@@ -45,19 +45,19 @@ public class Cart {
 		return booknum;
 	}
 
-	public void setBooknum(String booknum) {
+	public void setBooknum(String booknum) {//책 번호
 		this.booknum = booknum;
 	}
 
-	public int getBuy() {
-		return buy;
-	}
+//	public int getBuy() {//구매
+//		return buy;
+//	}
+//
+//	public void setBuy(int buy) {
+//		this.buy = buy;
+//	}
 
-	public void setBuy(int buy) {
-		this.buy = buy;
-	}
-
-	public int getBack() {
+	public int getBack() {//뒤로가기
 		return back;
 	}
 
@@ -65,7 +65,7 @@ public class Cart {
 		this.back = back;
 	}
 
-	public int getCancle() {
+	public int getCancle() {//취소하기
 		return cancle;
 	}
 
