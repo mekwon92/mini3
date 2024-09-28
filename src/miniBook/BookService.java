@@ -13,7 +13,7 @@ import miniCustomer.*;
 
 public class BookService {
 // 책 목록
-	private static List<Book> bookList = new ArrayList<Book>();
+	private List<Book> bookList = new ArrayList<Book>();
 	private static final int TMPCOUNT = 1000;
 
 // 초기화 블럭
@@ -27,6 +27,7 @@ public class BookService {
 		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000005", "디테일5", 14000, TMPCOUNT, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
+		System.out.println(bookList);
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream("C:\\Users\\tj\\eclipse-workspace\\mini\\src\\miniBook"));) {
 			bookList = (List<Book>) ois.readObject();
@@ -35,15 +36,6 @@ public class BookService {
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-
-// GETTER , SETTER 
-	public static List<Book> getBookList() {
-		return bookList;
-	}
-
-	public static void setBookList(List<Book> bookList) {
-		BookService.bookList = bookList;
 	}
 
 	/**
@@ -55,8 +47,7 @@ public class BookService {
 		List<Book> pBook = new ArrayList<>(bookList);
 		Collections.shuffle(pBook);
 		pBook.forEach(x -> System.out.print(x + "\n"));
-	}
-	
+	}	
 	
 	/**
 	 * 리스트를 통한 출력부, printBooks 오버로딩
@@ -79,17 +70,16 @@ public class BookService {
 	public Book findByBookId(String no) {
 		Book book = null;
 		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getBookId() == no) {
+			if (bookList.get(i).getBookId().equals(no)) {
 				book = bookList.get(i);
 			}
 		}
 		return book;
 	}
-
 	public Book findByBookISBN(String no) {
 		Book book = null;
 		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getISBookNum() == no) {
+			if (bookList.get(i).getISBookNum().equals(no)) {
 				book = bookList.get(i);
 			}
 		}
@@ -123,8 +113,8 @@ public class BookService {
 	/**
 	 * 일치하는 제목에 따른 검색결과 반환
 	 * 제목 하나가 출판사에 따른 다양한 검색결과를 가질 수 있기 때문에 리스트 사용
-	 * 마지막 일치하는 검색 결과가 있을 경우 
-	 * @param String writer
+	 * 마지막 일치하는 검색 결과가 있을 경우 + 후에 트림 사용해서 띄어쓰기 이슈 해결 필요 + 제목 일부분만 검색해도 되게 하려면 contains 사용해야 할듯.
+	 * @param String bookName
 	 * @author KHM
 	 */
 	private void findByName(String bookName) { 
@@ -144,6 +134,10 @@ public class BookService {
 		System.out.println("SYSTEM :: END OF QUERRY");
 	}
 	
+	/**
+	 * 검색 메서드 구현
+	 * @author KHM
+	 */
 	public void bookSearcher() {
 		Book b = null;
 		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자");
@@ -156,7 +150,7 @@ public class BookService {
 			break;
 		}
 		case 2: {
-			b = findByBookId(MiniUtils.next("번호 입력", String.class, s -> findByBookISBN(s) != null, "존재하지 않는 도서번호입니다."));
+			b = findByBookISBN(MiniUtils.next("번호 입력", String.class, s -> findByBookISBN(s) != null, "존재하지 않는 도서번호입니다."));
 			System.out.println("=====검색 결과=====");
 			System.out.println(b);
 			break;
@@ -175,5 +169,4 @@ public class BookService {
 			break;
 		}
 	}
-// 1. 검색 메서드 구현(제가 만들었던 셔플 리스트 이외에도 스트링 명령어 사용해서 검색어를 통해 )
 }
