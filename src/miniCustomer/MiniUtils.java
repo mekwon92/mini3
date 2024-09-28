@@ -7,7 +7,7 @@ public class MiniUtils {
 	static Scanner scanner = new Scanner(System.in);
 	
 
-	static <T> T next(String msg, Class<T> clazz) {
+	public static <T> T next(String msg, Class<T> clazz) {
 		System.out.println(msg);
 		System.out.print("> ");
 		String str = scanner.nextLine();
@@ -21,11 +21,10 @@ public class MiniUtils {
 	}
 	
 
-	static <T> T next(String msg, Class<T> clazz, Predicate<T> con, String errMsg) {
+	public static <T> T next(String msg, Class<T> clazz, Predicate<T> con, String errMsg) {
 		while (true) {
 			try {
 				T t = next(msg, clazz); //입력통합 호출
-//				T t = next(msg, clazz); // 입력통합 호출
 				if (con.test(t)) {
 					return t;
 				} else {
