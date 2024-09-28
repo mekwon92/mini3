@@ -23,27 +23,25 @@ public class BookService {
 	{
 		System.out.println("SYSTEM :: 초기 데이터를 삽입합니다.");
 		bookList.add(new Book("000", "홍길동전", "홍길동", "길동사", "0000000000001", 
-				"디테일1", 10000, TMPCOUNT, false, false));
+				"정의의 사도 홍길동의 모험", 10_000, TMPCOUNT, false, false));
 		bookList.add(new Book("001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", 
-				"디테일2", 11000, TMPCOUNT, false, false));
+				"경애는 회사를 그만두고 무작정 베트남으로 떠난다.", 11_000, TMPCOUNT, false, false));
 		bookList.add(new Book("002", "상수의 마음", "홍길동", "길동사", "0000000000003", 
-				"디테일3", 12000, TMPCOUNT, false, false));
+				"어느날 상수에게 경애가 다가온다. 그의 마음은 움직였다.", 12_000, TMPCOUNT, false, false));
 		bookList.add(new Book("003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", 
-				"디테일4", 13000, TMPCOUNT, false,
-				false));
+				"길고도 복잡한 이야기를 원한다면.", 13_000, TMPCOUNT, false, false));
 		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000000005", 
-				"디테일5", 14000, TMPCOUNT, false, false));
+				"위대한 개츠비, 더블린 사람들의 뒤를 잇는 고전필독서", 14_000, TMPCOUNT, false, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
-		System.out.println(bookList);
-		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("C:\\Users\\USER\\Desktop\\mini\\src\\miniBook\\data.ser"));) {
-			bookList = (List<Book>) ois.readObject();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+//		try (ObjectInputStream ois = new ObjectInputStream(
+//				new FileInputStream("C:\\Users\\USER\\Desktop\\mini\\src\\miniBook\\data.ser"));) {
+//			bookList = (List<Book>) ois.readObject();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException | ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/**
@@ -96,7 +94,9 @@ public class BookService {
 	}
 
 	/**
-	 * 일치하는 저자에 따른 검색결과 반환 저자 한명이 다양한 검색결과를 가질 수 있기 때문에 리스트 사용 마지막 일치하는 검색 결과가 있을 경우
+	 * 일치하는 저자에 따른 검색결과 반환 저자 한명이 다양한 검색결과를 가질 수 있기 때문에 리스트 사용 
+	 * 마지막 일치하는 검색 결과가 있을 경우 + 후에 트림 사용해서 띄어쓰기 이슈 해결 필요, 
+	 * 해외작가의경우 성과 이름이 떨어져 있을 확률이 높으므로 이에 대한 고려도 필요
 	 * 
 	 * @param String writer
 	 * @author KHM
@@ -144,24 +144,27 @@ public class BookService {
 
 	/**
 	 * 검색 메서드 구현
+	 * 도서번호 리딩 제로 제외하고도 잘 나오게 추가
 	 * 
 	 * @author KHM
 	 */
 	public void bookSearcher() {
 		Book b = null;
-		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자 5.전체");
+		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로가기");
 		int input = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 5, "1~5 사이의 숫자 입력");
 		switch (input) {
 		case 1: {
-			b = findByBookId(MiniUtils.next("번호 입력", String.class, s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
+			b = findByBookId(MiniUtils.next("번호 입력", String.class, 
+					s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
 			System.out.println("=====검색 결과=====");
 			System.out.println(b);
-
+			
+			showBookDetails(b);
 			break;
 		}
 		case 2: {
-			b = findByBookISBN(
-					MiniUtils.next("번호 입력", String.class, s -> findByBookISBN(s) != null, "존재하지 않는 도서번호입니다."));
+			b = findByBookISBN(MiniUtils.next("번호 입력", String.class, 
+					s -> findByBookISBN(s) != null, "존재하지 않는 도서번호입니다."));
 			System.out.println("=====검색 결과=====");
 			System.out.println(b);
 			break;
@@ -172,13 +175,16 @@ public class BookService {
 			break;
 		}
 		case 4: {
-			String a = MiniUtils.next("제목 입력", String.class);
+			String a = MiniUtils.next("저자 입력", String.class);
 			findByWriter(a);
 			break;
 		}
 		case 5 : {
 			printBooks();
 			break;
+		}
+		case 6 : {
+			
 		}
 		default:
 			break;
@@ -190,12 +196,26 @@ public class BookService {
 	 * 
 	 * @author KHM
 	 */
-	public void showBookDetails() {
-		Book b = null;
+	public void showBookDetails(String a) {
+		Book b;
+		System.out.print("SYSTEM :: 상세정보 페이지를 로드합니다.");
+		b = bookList.get(Integer.parseInt(a));
+		String bd = b.getBookDetail(); 
+		System.out.println("| 책 소개 : " + bd + "| 가격 : " + b.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
+	}
+	
+	/**
+	 * 도서 상세정보 페이지 구현 오버로딩
+	 * (Book 객체)
+	 * 
+	 * @param Book book
+	 * @author KHM
+	 */
+	public void showBookDetails(Book a) {
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
-//		b.setBookDetail();
-//		System.out.println(b.);
-
+		System.out.println("*책 소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
+				+ " | *정가 : " + a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
+		int c = MiniUtils.next("입력", Integer.class , null, null);
 	}
 
 }
