@@ -71,7 +71,7 @@ public class NaverApiCaller {
 			Integer discount = item.getInt("discount");
 
 			Book book = new Book(String.format("%04d", ++counter), title, author, publisher, isbn, description,
-					discount, 0, false);
+					discount, 0, false, false);
 			list.add(book);
 		}
 		return list;
@@ -79,7 +79,7 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
-		String[] queries = { "북로드" };
+		String[] queries = { "정보처리기사" };
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 

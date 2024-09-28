@@ -94,6 +94,14 @@ public class Book {
 		this.bookPrice = bookPrice;
 	}
 
+	public int getBookCount() {
+		return bookCount;
+	}
+
+	public void setBookCount(int bookCount) {
+		this.bookCount = bookCount;
+	}
+
 	public boolean isIfChecked() {
 		return ifChecked;
 	}
@@ -102,12 +110,12 @@ public class Book {
 		this.ifChecked = ifChecked;
 	}
 
-	public int getBookCount() {
-		return bookCount;
+	public boolean isSearch() {
+		return isSearch;
 	}
 
-	public void setBookCount(int bookCount) {
-		this.bookCount = bookCount;
+	public void setSearch(boolean isSearch) {
+		this.isSearch = isSearch;
 	}
 
 }

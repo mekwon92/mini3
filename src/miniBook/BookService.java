@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import miniCustomer.*;
@@ -19,12 +18,13 @@ public class BookService {
 // 초기화 블럭
 	{
 		System.out.println("SYSTEM :: 초기 데이터를 삽입합니다.");
-		bookList.add(new Book("000", "홍길동전", "홍길동", "길동사", "0000000001", "디테일1", 10000, TMPCOUNT, false, false));
-		bookList.add(new Book("001", "경애하는 경애에게", "홍길동", "길동사", "0000000002", "디테일2", 11000, TMPCOUNT, false, false));
-		bookList.add(new Book("002", "상수의 마음", "홍길동", "길동사", "0000000003", "디테일3", 12000, TMPCOUNT, false, false));
+		bookList.add(new Book("000", "홍길동전", "홍길동", "길동사", "0000000000001", "디테일1", 10000, TMPCOUNT, false, false));
 		bookList.add(
-				new Book("003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000004", "디테일4", 13000, TMPCOUNT, false, false));
-		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000005", "디테일5", 14000, TMPCOUNT, false, false));
+				new Book("001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", "디테일2", 11000, TMPCOUNT, false, false));
+		bookList.add(new Book("002", "상수의 마음", "홍길동", "길동사", "0000000000003", "디테일3", 12000, TMPCOUNT, false, false));
+		bookList.add(new Book("003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", "디테일4", 13000, TMPCOUNT, false,
+				false));
+		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000000005", "디테일5", 14000, TMPCOUNT, false, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
 		System.out.println(bookList);
@@ -44,7 +44,6 @@ public class BookService {
 	 * @author KHM
 	 */
 	public void printBooks() {
-		System.out.println("*****서적 목록은 다음과 같습니다.*****");
 		List<Book> pBook = new ArrayList<>(bookList);
 		Collections.shuffle(pBook);
 		pBook.forEach(x -> System.out.print(x + "\n"));
@@ -57,7 +56,6 @@ public class BookService {
 	 * @author KHM
 	 */
 	public void printBooks(List<Book> listTarget) {
-		System.out.println("*****서적 목록은 다음과 같습니다.*****");
 		List<Book> pBook = new ArrayList<>(listTarget);
 		pBook.sort((p1, p2) -> p1.getBookName().compareTo(p2.getBookName()));
 		pBook.forEach(x -> System.out.print(x + "\n"));
@@ -150,6 +148,7 @@ public class BookService {
 			b = findByBookId(MiniUtils.next("번호 입력", String.class, s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
 			System.out.println("=====검색 결과=====");
 			System.out.println(b);
+
 			break;
 		}
 		case 2: {
@@ -173,4 +172,18 @@ public class BookService {
 			break;
 		}
 	}
+
+	/**
+	 * 도서 상세정보 페이지 구현
+	 * 
+	 * @author KHM
+	 */
+	public void showBookDetails() {
+		Book b = null;
+		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
+//		b.setBookDetail();
+//		System.out.println(b.);
+		
+	}
+
 }
