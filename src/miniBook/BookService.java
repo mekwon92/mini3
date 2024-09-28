@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BookService {
@@ -44,13 +45,25 @@ public class BookService {
 	}
 
 	/**
-	 * 셔플 후 출력 확인부
+	 * 무작위 초입 출력부
 	 * @author KHM
 	 */
-	public void printBook() { // 출력확인용 셔플
+	public void printBooks() {
 		System.out.println("*****서적 목록은 다음과 같습니다.*****");
 		List<Book> pBook = new ArrayList<>(bookList);
 		Collections.shuffle(pBook);
+		pBook.forEach(x -> System.out.print(x + "\n"));
+	}
+	
+	/**
+	 * 저자를 통한 출력부, printBooks 오버로딩
+	 * @param  
+	 * @author KHM
+	 */
+	public void printBooks(List<Book> listTarget) {
+		System.out.println("*****서적 목록은 다음과 같습니다.*****");
+		List<Book> pBook = new ArrayList<>(listTarget);
+//		Collections.sort(pBook);
 		pBook.forEach(x -> System.out.print(x + "\n"));
 	}
 
@@ -70,10 +83,9 @@ public class BookService {
 		return book;
 	}
 	/**
-	 * 저자를 통한 검색
+	 * 일치하는 저자에 따른 검색결과 반환
 	 * 저자 한명이 다양한 검색결과를 가질 수 있기 때문에 리스트 사용
-	 * @param writer
-	 * @return 저자
+	 * @param String writer
 	 */
 	public void findByWriter(String writer) { 
 		List<Book> bookRes = new ArrayList<Book>();
@@ -84,7 +96,9 @@ public class BookService {
 			}
 		}
 		if(bookRes.isEmpty()) {
-			System.out.println("SYSTEM :: 저자명 : " + writer + " 에 따른 검색결과가 없습니다." );
+			System.out.println("SYSTEM :: 저자명 : " + writer + ", 이에 따른 검색결과가 없습니다. ::" );
+		} else {
+			System.out.println("SYSTEM :: 저자명 : " + writer + ", 이에 따른 검색 결과입니다. ::" );
 			
 		}
 		
