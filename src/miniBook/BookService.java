@@ -15,10 +15,11 @@ import miniCustomer.*;
  * @author HHJ, KHM
  */
 public class BookService {
+	
 // 책 목록
 	private List<Book> bookList = new ArrayList<Book>();
 	private static final int TMPCOUNT = 1000;
-
+	
 // 초기화 블럭
 	{
 		System.out.println("SYSTEM :: 초기 데이터를 삽입합니다.");
@@ -45,13 +46,64 @@ public class BookService {
 	}
 
 	/**
-	 * 무작위 초입 출력부
+	 * 검색 메서드 구현
+	 * 도서번호 리딩 제로 제외하고도 잘 나오게 추가
+	 * 
+	 * @author KHM
+	 */
+	public void bookSearcher() {
+		Book b = null;
+		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로가기");
+		int input = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 5, "1~5 사이의 숫자 입력");
+		printBooks();
+		switch (input) {
+		case 1: {
+			b = findByBookId(MiniUtils.next("번호 입력", String.class, 
+					s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
+			System.out.println("=====검색 결과=====");
+			System.out.println(b);
+			showBookDetails(b);
+			break;
+		}
+		case 2: {
+			b = findByBookISBN(MiniUtils.next("번호 입력", String.class, 
+					s -> findByBookISBN(s) != null, "존재하지 않는 ISBN입니다."));
+			System.out.println("=====검색 결과=====");
+			System.out.println(b);
+			break;
+		}
+		case 3: {
+			String a = MiniUtils.next("제목 입력", String.class);
+			findByName(a);
+			break;
+		}
+		case 4: {
+			String a = MiniUtils.next("저자 입력", String.class);
+			findByWriter(a);
+			break;
+		}
+		case 5 : {
+			printBooks();
+			break;
+		}
+		case 6 : {
+			
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * 무작위 초입 출력부 + shuffle
 	 * 
 	 * @author KHM
 	 */
 	public void printBooks() {
 		List<Book> pBook = new ArrayList<>(bookList);
 		Collections.shuffle(pBook);
+		System.out.println("SYSTEM :: 도서 리스트를 출력합니다.");
 		pBook.forEach(x -> System.out.print(x + "\n"));
 	}
 
@@ -75,10 +127,19 @@ public class BookService {
 	 */
 	public Book findByBookId(String no) {
 		Book book = null;
+		boolean flag = false;
 		for (int i = 0; i < bookList.size(); i++) {
 			if (bookList.get(i).getBookId().equals(no)) {
 				book = bookList.get(i);
+				flag = true;
 			}
+		}
+		if (flag == true) {
+			System.out.println("SYSTEM :: 일치하는 검색결과가 있습니다.");
+		}
+		else {
+			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
+			return ;
 		}
 		return book;
 	}
@@ -142,54 +203,6 @@ public class BookService {
 		System.out.println("SYSTEM :: END OF QUERRY");
 	}
 
-	/**
-	 * 검색 메서드 구현
-	 * 도서번호 리딩 제로 제외하고도 잘 나오게 추가
-	 * 
-	 * @author KHM
-	 */
-	public void bookSearcher() {
-		Book b = null;
-		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로가기");
-		int input = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 5, "1~5 사이의 숫자 입력");
-		switch (input) {
-		case 1: {
-			b = findByBookId(MiniUtils.next("번호 입력", String.class, 
-					s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
-			System.out.println("=====검색 결과=====");
-			System.out.println(b);
-			
-			showBookDetails(b);
-			break;
-		}
-		case 2: {
-			b = findByBookISBN(MiniUtils.next("번호 입력", String.class, 
-					s -> findByBookISBN(s) != null, "존재하지 않는 도서번호입니다."));
-			System.out.println("=====검색 결과=====");
-			System.out.println(b);
-			break;
-		}
-		case 3: {
-			String a = MiniUtils.next("제목 입력", String.class);
-			findByName(a);
-			break;
-		}
-		case 4: {
-			String a = MiniUtils.next("저자 입력", String.class);
-			findByWriter(a);
-			break;
-		}
-		case 5 : {
-			printBooks();
-			break;
-		}
-		case 6 : {
-			
-		}
-		default:
-			break;
-		}
-	}
 
 	/**
 	 * 도서 상세정보 페이지 구현
@@ -197,11 +210,18 @@ public class BookService {
 	 * @author KHM
 	 */
 	public void showBookDetails(String a) {
-		Book b;
-		System.out.print("SYSTEM :: 상세정보 페이지를 로드합니다.");
-		b = bookList.get(Integer.parseInt(a));
-		String bd = b.getBookDetail(); 
-		System.out.println("| 책 소개 : " + bd + "| 가격 : " + b.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
+		String b = "";
+		int bp = 0;
+		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
+		for(int i = 0; i < bookList.size(); i++) {
+			if(bookList.get(i).getBookId() == a) {
+				b = bookList.get(i).getBookDetail();
+				bp = bookList.get(i).getBookPrice();
+				System.out.println("*소개 : " + b + " | *정가 : " + bp + " |" + "1.장바구니 2.뒤로가기" );
+				break;
+			}
+		}
+		
 	}
 	
 	/**
@@ -213,7 +233,7 @@ public class BookService {
 	 */
 	public void showBookDetails(Book a) {
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
-		System.out.println("*책 소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
+		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
 				+ " | *정가 : " + a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
 		int c = MiniUtils.next("입력", Integer.class , null, null);
 	}
