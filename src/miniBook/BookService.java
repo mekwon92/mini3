@@ -207,6 +207,7 @@ public class BookService {
 	/**
 	 * 도서 상세정보 페이지 구현
 	 * 
+	 * @param String string
 	 * @author KHM
 	 */
 	public void showBookDetails(String a) {
@@ -242,11 +243,11 @@ public class BookService {
 				System.out.println("SYSTEM :: 장바구니에 상품이 담겼습니다.");
 				cs.add(a);
 			}
+			case 2:{
+				System.out.println("초기 화면으로 돌아갑니다.");
+				break;
+			}
 		}
 	}		
 
-	public void add(Book a) {
-
-	}
-	
 }
