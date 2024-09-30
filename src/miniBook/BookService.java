@@ -23,15 +23,15 @@ public class BookService {
 // 초기화 블럭
 	{
 		System.out.println("SYSTEM :: 초기 데이터를 삽입합니다.");
-		bookList.add(new Book("000", "홍길동전", "홍길동", "길동사", "0000000000001", 
+		bookList.add(new Book("0000", "홍길동전", "홍길동", "길동사", "0000000000001", 
 				"정의의 사도 홍길동의 모험", 10_000, TMPCOUNT, false, false));
-		bookList.add(new Book("001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", 
+		bookList.add(new Book("0001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", 
 				"경애는 회사를 그만두고 무작정 베트남으로 떠난다.", 11_000, TMPCOUNT, false, false));
-		bookList.add(new Book("002", "상수의 마음", "홍길동", "길동사", "0000000000003", 
+		bookList.add(new Book("0002", "상수의 마음", "홍길동", "길동사", "0000000000003", 
 				"어느날 상수에게 경애가 다가온다. 그의 마음은 움직였다.", 12_000, TMPCOUNT, false, false));
-		bookList.add(new Book("003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", 
+		bookList.add(new Book("0003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", 
 				"길고도 복잡한 이야기를 원한다면.", 13_000, TMPCOUNT, false, false));
-		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000000005", 
+		bookList.add(new Book("0004", "달과6펜스", "홍길동", "길동사", "0000000000005", 
 				"위대한 개츠비, 더블린 사람들의 뒤를 잇는 고전필독서", 14_000, TMPCOUNT, false, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
@@ -233,8 +233,12 @@ public class BookService {
 	 * @author KHM
 	 */
 	public void showBookDetails(Book a) {
-		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
 //		CartService cs = new CartService();
+		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
+<<<<<<< HEAD
+//		CartService cs = new CartService();
+=======
+>>>>>>> f41b9839cde56e59f3c723afd251c0e3164f3c70
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
 				+ " | *정가 : " + a.getBookPrice() + " |" + "\n1.장바구니 2.뒤로가기" );
 		int key = MiniUtils.next("입력", Integer.class , i -> i >=1 && i <= 2, "SYSTEM :: INPUT ERROR");
