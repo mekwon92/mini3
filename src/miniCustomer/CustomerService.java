@@ -32,6 +32,11 @@ public class CustomerService {
 	BookService bs = new BookService();
 	
 	
+		public Customer getLoggedInId() {
+		return loggedInId;
+	}
+
+
 		{
 			Customer customer = new Customer("id1","pw1");
 			Customer customer2 = new Customer("id2","pw2");
