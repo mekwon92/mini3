@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import miniBook.*;
+import miniCustomer.CustomerService;
 
 
 public class CartService {
@@ -45,6 +46,11 @@ public void add(Book a) {
 	carts.add(a);
 }
 
+public void buy(BookService bs) { //로그인한걸 가져온다
+	carts.add(bs);
+	
+}
+
 //		
 //		students.add(new Student(no, name, kor, eng, mat));
 //	
@@ -75,7 +81,6 @@ public void add(Book a) {
 		switch (input) {
 		case 1:
 			buy();
-			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
 			break;
 //		case 2:
 //			System.out.println("책 수량을 입력해주세요");
@@ -101,9 +106,7 @@ public void add(Book a) {
 //		}
 	}
 
-	public void buy() { //로그인한걸 가져온다
-		
-	}
+
 //	public void modify() {
 //		// 1. 학번 입력
 //		// 2. 학번을 통한 탐색(배열) >> 학생
