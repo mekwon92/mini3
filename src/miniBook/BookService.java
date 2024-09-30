@@ -36,7 +36,7 @@ public class BookService {
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
 		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("C:\\Users\\tj\\Desktop\\mini\\data.ser"));) {
+				new FileInputStream("C:\\javaworkspace\\mini2\\data.ser"));) {
 			bookList = (List<Book>) ois.readObject();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -234,14 +234,14 @@ public class BookService {
 	 */
 	public void showBookDetails(Book a) {
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
-		CartService cs = new CartService();
+//		CartService cs = new CartService();
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
 				+ " | *정가 : " + a.getBookPrice() + " |" + "\n1.장바구니 2.뒤로가기" );
 		int key = MiniUtils.next("입력", Integer.class , i -> i >=1 && i <= 2, "SYSTEM :: INPUT ERROR");
 		switch (key) {
 			case 1: {
 				System.out.println("SYSTEM :: 장바구니에 상품이 담겼습니다.");
-				cs.add(a);
+//				cs.add(a);
 			}
 			case 2:{
 				System.out.println("초기 화면으로 돌아갑니다.");
