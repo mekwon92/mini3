@@ -7,7 +7,7 @@ public class CustomerMain {
 		System.out.println("****얼라딘입니다. 어서오세요****");
 
 		while(true) {
-			int input = MiniUtils.next("1. 로그인 2. 회원가입 3. 종료", Integer.class ,  t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
+			int input = MiniUtils.next("1. 로그인 2. 회원가입 3. 회원내역 4. 종료", Integer.class ,  t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
 			switch (input) {
 			case 1:
 				cs.login();
@@ -16,6 +16,9 @@ public class CustomerMain {
 				cs.customerAdd();
 				break;
 			case 3:
+				cs.customerInfo();
+				break;
+			case 4:
 				System.out.println("안녕히가세요");
 				return;
 			default:
