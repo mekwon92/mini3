@@ -80,7 +80,7 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
-		String[] queries = { "유머집" };
+		String[] queries = { "어린왕자" };
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 
