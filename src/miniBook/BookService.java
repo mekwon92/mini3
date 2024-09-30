@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import cart.CartService;
-import cart.MiniUtils;
 import miniCustomer.*;
 /**
  * 서적 서비스부
@@ -241,10 +240,10 @@ public class BookService {
 		switch (key) {
 			case 1: {
 				System.out.println("SYSTEM :: 장바구니에 상품이 담겼습니다.");
-				cs.add();
+				cs.add(a);
 			}
 		}
-	}
+	}		
 
 	public void add(Book a) {
 
