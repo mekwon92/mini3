@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import miniBook.BookService.*;
 
 public class NaverApiCaller {
 	String clientID = "hEXQ0_5PvioNhHNeXSFx";
@@ -71,7 +72,7 @@ public class NaverApiCaller {
 			Integer discount = item.getInt("discount");
 
 			Book book = new Book(String.format("%04d", ++counter), title, author, publisher, isbn, description,
-					discount, 0, false, false);
+					discount, 1000 , false, false);
 			list.add(book);
 			System.out.println(list);
 		}
@@ -80,7 +81,7 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
-		String[] queries = { "유머집" };
+		String[] queries = { "데미안" };
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 
