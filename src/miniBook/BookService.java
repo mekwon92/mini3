@@ -236,6 +236,7 @@ public class BookService {
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
 				+ " | *정가 : " + a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
 		int c = MiniUtils.next("입력", Integer.class , null, null);
+		
 	}
 
 }

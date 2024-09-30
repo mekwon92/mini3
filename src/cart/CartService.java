@@ -1,5 +1,8 @@
 package cart;
 
+
+
+import java.awt.print.Book;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,20 +11,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import miniBook.Book;
-import miniBook.BookService;
+import miniBook.*;
+
 
 public class CartService {
 
 	// 일단 출력 보려고 필드에 선언을 해 놓은 상태
 	private List<Book> carts = new ArrayList<Book>(); // 장바구니
-	private List<Book> back;
-	private List<Book> buy;
-	private List<Book> cancel;
-	private List<Book> add;
+//	private List<Book> back;
+//	private List<Book> buy;
+//	private List<Book> cancel;
+//	private List<Book> add;
 
 	{
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("money"))) {// 폴더를 만들어서 그 전에 금액을 저장
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data.ser"))) {// 폴더를 만들어서 그 전에 금액을 저장
 			carts = (List<Book>) ois.readObject();
 		} catch (FileNotFoundException e) {
 //			System.out.println("파일 검색 실패, 초기화 더미 데이터 처리 완료");
@@ -38,19 +41,9 @@ public class CartService {
 //		
 //	}
 //	
-//public void add() {
-//		
-//		String booknum = MiniUtils.next("책 번호를 입력하세요", String.class, n -> findBy(n) == null, "정확한 책을 입력하세요");
-//		//책 번호를 입력하세요 후 입력하면 구매와 뒤로가기 버튼이 나왔으면 좋겠음
-//		
-//		booklist.add() = new cart(Booknum);
-//}
-
-	public void add() {
-		
-		Book Cart = findBy(MiniUtils.next("책 번호", String.class, n -> findBy(n) != null, "입력한 책은 존재하지 않습니다."));
-
-	}
+public void add(Book a) {
+	carts.add(a);
+}
 
 //		
 //		students.add(new Student(no, name, kor, eng, mat));
@@ -60,14 +53,7 @@ public class CartService {
 //		(BookService.getBookList().get(findby("")));
 //		
 //	}
-//	
-	public void cancel() { // 담은 책 취소
-
-	}
-
-	public void back() { // 뒤돌아가기
-
-	}
+//
 
 	private Book findBy(String book) {
 		Book cart = null;
@@ -79,41 +65,62 @@ public class CartService {
 		return cart;
 	}
 
-//장바구니 들어왔을때
+//장바구니 들어왔을때 책번호랑 
 	public void cartlist() {
 		// 책 정보
-		int input = MiniUtils.next("1.구매 2.책 삭제 3.추가 및 수량변경", Integer.class, i -> i <= 4 && i >= 1,
-				"1이상 3이하의 값을 입력하세요");
+		BookService bs = new BookService();
+		int input = MiniUtils.next("1.결제 2.다른 책 검색 3.수량 변경 4.초기로 돌아가기", Integer.class, i -> i <= 5 && i >= 1,
+				"1이상 5이하의 값을 입력하세요");
 		List<Book> tmp = null;
 		switch (input) {
 		case 1:
-			System.out.println("구매완료.");
-			tmp = buy;
-			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음
+			buy();
+			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
 			break;
-		case 2:
-			System.out.println("취소합니다.");
-			// 현재 장바구니에 담긴 책 선택 삭제
-			tmp = cancel;
+//		case 2:
+//			System.out.println("책 수량을 입력해주세요");
+//			// 1.책 입력
+//			// 2.책 번호를 입력하세요 후 입력하면 다시 이창이뜨면 좋곘음
+//			modify();
+//			break;
+//		case 3:
+//			System.out.println("검색할 책을 입력해주세요");
+//			bs.bookSearcher();
+//			return;
+		case 4:
+			System.out.println("초기 화면으로 돌아가기");
 			break;
-		case 3:
-			System.out.println("책 추가 할 책을 입력해주세요");
-			// 1.책 입력
-			// 2.책 번호를 입력하세요 후 입력하면 다시 이창이뜨면 좋곘음
-			tmp = add;
-
-			break;
-
+		
 		default:
 			System.out.println("????");
 			break;
 		}
-		for (int i = 0; i < tmp.size(); i++) {
-//				System.out.println(students[i]);
-			System.out.println(tmp.get(i));
-		}
+//		for (int i = 0; i < carts.size(); i++) {
+////				System.out.println(students[i]);
+//			System.out.println(carts.get(i));
+//		}
 	}
 
+	public void buy() { //로그인한걸 가져온다
+		
+	}
+//	public void modify() {
+//		// 1. 학번 입력
+//		// 2. 학번을 통한 탐색(배열) >> 학생
+//		Student s = findBy(next("학번", Integer.class, n -> findBy(n) != null, "입력한 학번은 존재하지 않습니다."));
+//		// 3. 이름, 국어, 영어, 수학 점수 변경
+//		String name = next("이름", String.class, str -> str.matches("^[가-힣]{2,4}"), "정확한 이름의 조건을 입력하세요");
+//		s.setName(name);
+//		int kor = next("국어", Integer.class, i -> i <= 100 && i >= 0, "0이상 100이하의 값을 입력하세요");
+//		int eng = next("영어", Integer.class, i -> i <= 100 && i >= 0, "0이상 100이하의 값을 입력하세요");
+//		int mat = next("수학", Integer.class, i -> i <= 100 && i >= 0, "0이상 100이하의 값을 입력하세요");
+//		s.setKor(kor);
+//		s.setEng(eng);
+//		s.setMat(mat);
+//		
+//	}
+	
+	
 	public void remove() { // 장바구니에 서적 삭제
 		Book cs = findBy(MiniUtils.next("책 번호를 입력하세요", String.class, n -> findBy(n) != null, "입력한 책은 존재하지 않습니다."));
 		carts.remove(cs);
