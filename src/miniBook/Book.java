@@ -1,6 +1,8 @@
 package miniBook;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable{
 	// 필드
 	private String bookId; // 책 번호(서점용)
 	private String bookName; // 책 제목

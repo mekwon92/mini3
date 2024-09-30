@@ -35,14 +35,14 @@ public class BookService {
 				"위대한 개츠비, 더블린 사람들의 뒤를 잇는 고전필독서", 14_000, TMPCOUNT, false, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
-//		try (ObjectInputStream ois = new ObjectInputStream(
-//				new FileInputStream("C:\\Users\\USER\\Desktop\\mini\\src\\miniBook\\data.ser"));) {
-//			bookList = (List<Book>) ois.readObject();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException | ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		try (ObjectInputStream ois = new ObjectInputStream(
+				new FileInputStream("C:\\Users\\tj\\Desktop\\mini\\data.ser"));) {
+			bookList = (List<Book>) ois.readObject();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -139,6 +139,10 @@ public class BookService {
 		}
 		else {
 			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
+<<<<<<< HEAD
+=======
+//			return ;
+>>>>>>> fbd8acdb104c937393b6a3fc20707e4d203c19cf
 		}
 		return book;
 	}

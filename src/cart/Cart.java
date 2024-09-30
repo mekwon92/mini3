@@ -6,28 +6,30 @@ public class Cart {
 
 	private int cart;
 	private String booknum;
-//	private int buy;
+	private int buy;
 	private int back;
-	private int cancle;
+	private int cancel;
+	private int add;
 
 	public Cart() {
 	}
 
-	public Cart(int cart, String booknum, int buy, int back, int cancle) {
+	public Cart(int cart, String booknum, int buy, int back, int cancle,int add) {
 
 		this.cart = cart;
 		this.booknum = booknum;
 //		this.buy = buy;
 		this.back = back;
-		this.cancle = cancle;
+		this.cancel = cancle;
+		this.add = add;
 
 	}
 
 	public Cart(Cart cs) {
-//		setBuy(cs.getBuy());
+		setBooknum(cs.getBooknum());//원래는 학번으로 작동했는데 여기서는 북 넘버로 작동해야할듯?
 		cart = cs.cart;
-		booknum = cs.booknum;
-//		buy = cs.buy;
+		add = cs.add;
+		buy = cs.buy;
 		back = cs.back;
 		// if(s.arr != null)
 	}
@@ -49,13 +51,13 @@ public class Cart {
 		this.booknum = booknum;
 	}
 
-//	public int getBuy() {//구매
-//		return buy;
-//	}
-//
-//	public void setBuy(int buy) {
-//		this.buy = buy;
-//	}
+	public int getBuy() {//구매
+		return buy;
+	}
+
+	public void setBuy(int buy) {
+		this.buy = buy;
+	}
 
 	public int getBack() {//뒤로가기
 		return back;
@@ -66,16 +68,17 @@ public class Cart {
 	}
 
 	public int getCancle() {//취소하기
-		return cancle;
+		return cancel;
 	}
 
-	public void setCancle(int cancle) {
-		this.cancle = cancle;
+	public void setCancle(int cancel) {
+		this.cancel = cancel;
 	}
 
 	public static void remove(Cart cs) {
 		// TODO Auto-generated method stub
-
 	}
+	
 
 }
+
