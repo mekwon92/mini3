@@ -81,7 +81,15 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
+<<<<<<< HEAD
 		String[] queries = { "똥", "데미안" };
+=======
+<<<<<<< HEAD
+		String[] queries = { "어린왕자" };
+=======
+		String[] queries = { "데미안" };
+>>>>>>> 9fd113f8bab08a45b8c3fe95dee5d74379dbc89f
+>>>>>>> 22c311ea330043d7a580f765af59f4d8bc3c29e7
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 

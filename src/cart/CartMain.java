@@ -1,5 +1,8 @@
 package cart;
 
+import miniCustomer.MiniUtils;
+import miniBook.*;
+
 public class CartMain {
 	public static void main(String[] args) {
 		// UI
