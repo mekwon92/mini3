@@ -1,6 +1,8 @@
 package miniCustomer;
 import miniBook.*;
 import cart.*;
+
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +25,11 @@ import java.util.Set;;
 //회원번호 id 수량 
 //사용자아이디만 알아도됨
 //책번호로 책... id...회원
+
 public class CustomerService {
 	private List<Customer> customers = new ArrayList<Customer>();
+	private Customer loggedInId;
+	BookService bs = new BookService();
 	
 	
 		{
@@ -36,26 +41,31 @@ public class CustomerService {
 			customers.add(customer2);
 		}
 		
+		
 		//로그인
-		public void login() {
+		public Customer login() {
 			
 			String id = MiniUtils.next("ID", String.class);
 			String pw = MiniUtils.next("PW", String.class);
+			
+			loggedInId = new Customer(id, pw);
 					
 			if(findBy(id) == null) {
 				System.out.println("해당하는 아이디가 없습니다");
-				return;
+				return new Customer(null,null);
+				
 			}
 			else {
 				for(Customer c : customers) {
 					if(c.getId().equals(id)&&c.getPw().equals(pw)) {
 						System.out.println("로그인 성공");
 						afterLogin();
-						return;
+						return loggedInId;
 					}
 				}	
 				System.out.println("비밀번호 불일치");
-				return;
+				return new Customer(null,null);
+				
 			}
 		}
 		
@@ -65,7 +75,7 @@ public class CustomerService {
 				int input = MiniUtils.next("1.도서 검색  2.회원정보  3. 로그아웃 ", Integer.class,  t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
 				switch (input) {
 				case 1:
-					System.out.println("도서검색 서비스 예정 다시입력해주세요");
+					bs.bookSearcher();
 					break;
 				case 2:
 					customerInfo();
@@ -95,25 +105,46 @@ public class CustomerService {
 	}
 	
 	// 아이디 제거
+//	public void customerRemove() {
+//		System.out.println("삭제를 원하시면 본인의 아이디와 비밀번호를 입력하세요");
+//		String id = MiniUtils.next("ID", String.class); //남의 아이디를 입력해도 되는 문제가 있다.
+//		String pw = MiniUtils.next("PW", String.class);
+//		if(findBy(id) == null) {
+//			System.out.println("해당하는 아이디가 없습니다");
+//			return;
+//		}
+//		else {
+//			for(Customer c : customers) {
+//				if(c.getId().equals(id)&&c.getPw().equals(pw)) {
+//					customers.remove(c);
+//					System.out.println("삭제완료");
+//					return;
+//				}
+//			}	
+//			System.out.println("비밀번호가 틀렸습니다. 다시시도하세요");
+//			return;
+//		}
+//	}
+	
 	public void customerRemove() {
-		System.out.println("삭제를 원하시면 본인의 아이디와 비밀번호를 입력하세요");
-		String id = MiniUtils.next("ID", String.class); //남의 아이디를 입력해도 되는 문제가 있다.
-		String pw = MiniUtils.next("PW", String.class);		
-		if(findBy(id) == null) {
-			System.out.println("해당하는 아이디가 없습니다");
-			return;
-		}
-		else {
+		Customer cc = loggedInId;
+		System.out.println("삭제를 원하시면 본인의 비밀번호를 입력하세요");
+		String pw = MiniUtils.next("PW", String.class);
+		if(loggedInId.getPw().equals(pw)) {
 			for(Customer c : customers) {
-				if(c.getId().equals(id)&&c.getPw().equals(pw)) {
+				if(c.getId().equals(cc.getId())) {
 					customers.remove(c);
 					System.out.println("삭제완료");
 					return;
 				}
 			}	
-			System.out.println("비밀번호가 틀렸습니다. 다시시도하세요");
+			System.out.println("비밀번호가 틀렸습니다");
 			return;
 		}
+		else
+			System.out.println("비밀번호가 틀렸습니다. 다시입력하세요");
+			return;
+		
 	}
 	
 	//회원정보 관리
