@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import cart.Cart;
 import miniCustomer.*;
 /**
  * 서적 서비스부
@@ -139,7 +139,6 @@ public class BookService {
 		}
 		else {
 			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
-			return ;
 		}
 		return book;
 	}
@@ -231,11 +230,13 @@ public class BookService {
 	 * @param Book book
 	 * @author KHM
 	 */
-	public void showBookDetails(Book a) {
+	public Book showBookDetails(Book a) {
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
 				+ " | *정가 : " + a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
-		int c = MiniUtils.next("입력", Integer.class , null, null);
+		int c = MiniUtils.next("입력", Integer.class , i -> i >= 1 && i <= 2, "1 이상 2 이하의 값을 입력하세요.");
+		Cart
+		return a;
 	}
 
 }
