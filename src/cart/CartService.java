@@ -16,7 +16,11 @@ import miniCustomer.Customer;
 import miniCustomer.CustomerService;
 import miniCustomer.MiniUtils;
 
+<<<<<<< HEAD
 //cs.getLoggedInId() 로그인한 객체 가져오는법
+=======
+	public void buy() { //로그인한걸 가져온다
+>>>>>>> 95e77fee959b54dff711c61e41f912a488e32f94
 
 public class CartService {
 
@@ -101,8 +105,13 @@ public void buy(Customer cs){//회원정보 가져오기
 		List<Book> tmp = null;
 		switch (input) {
 		case 1:
+<<<<<<< HEAD
 			buy((Customer) users);
 			System.out.println("결제 취소");
+=======
+			buy();
+			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
+>>>>>>> 95e77fee959b54dff711c61e41f912a488e32f94
 			break;
 //		case 2:
 //			System.out.println("책 수량을 입력해주세요");
@@ -128,6 +137,7 @@ public void buy(Customer cs){//회원정보 가져오기
 //		}
 	}
 
+	public void buy() { //로그인한걸 가져온다
 
 //	public void modify() {
 //		// 1. 학번 입력
