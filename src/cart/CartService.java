@@ -2,7 +2,7 @@ package cart;
 
 
 
-import java.awt.print.Book;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,28 +12,32 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import miniBook.*;
+import miniCustomer.Customer;
 import miniCustomer.CustomerService;
+import miniCustomer.MiniUtils;
 
+//cs.getLoggedInId() 로그인한 객체 가져오는법
 
 public class CartService {
 
 	// 일단 출력 보려고 필드에 선언을 해 놓은 상태
 	private List<Book> carts = new ArrayList<Book>(); // 장바구니
+	private List<Customer> users = new ArrayList<Customer>(); 
 //	private List<Book> back;
 //	private List<Book> buy;
 //	private List<Book> cancel;
 //	private List<Book> add;
 
-	{
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data.ser"))) {// 폴더를 만들어서 그 전에 금액을 저장
-			carts = (List<Book>) ois.readObject();
-		} catch (FileNotFoundException e) {
-//			System.out.println("파일 검색 실패, 초기화 더미 데이터 처리 완료");
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();// 예외 정보 출력
-		}
-
-	}
+//	{
+//		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data.ser"))) {// 폴더를 만들어서 그 전에 금액을 저장
+//			carts = (List<Book>) ois.readObject();
+//		} catch (FileNotFoundException e) {
+////			System.out.println("파일 검색 실패, 초기화 더미 데이터 처리 완료");
+//		} catch (IOException | ClassNotFoundException e) {
+//			e.printStackTrace();// 예외 정보 출력
+//		}
+//
+//	}
 
 //	public void buy() { //구매
 //		List<Book> tmpList = new ArrayList<Book>();
@@ -42,12 +46,29 @@ public class CartService {
 //		
 //	}
 //	
+	
+/**
+ * add 메서드 구현, 오버로딩
+ * 
+ * @author LSW
+ * @param Book book
+ */
 public void add(Book a) {
 	carts.add(a);
 }
+/**
+ * add 메서드 구현, 오버로딩
+ * 
+ * @author LSW
+ * @param Customer customer
+ */
+public void add(Customer cs) {
+	users.add(cs);
+}
 
-public void buy(BookService bs) { //로그인한걸 가져온다
-	carts.add(bs);
+public void buy(Customer cs){//회원정보 가져오기
+	
+	users.add(cs);
 	
 }
 
@@ -74,13 +95,14 @@ public void buy(BookService bs) { //로그인한걸 가져온다
 //장바구니 들어왔을때 책번호랑 
 	public void cartlist() {
 		// 책 정보
-		BookService bs = new BookService();
+//		BookService bs = new BookService();
 		int input = MiniUtils.next("1.결제 2.다른 책 검색 3.수량 변경 4.초기로 돌아가기", Integer.class, i -> i <= 5 && i >= 1,
 				"1이상 5이하의 값을 입력하세요");
 		List<Book> tmp = null;
 		switch (input) {
 		case 1:
-			buy();
+			buy((Customer) users);
+			System.out.println("결제 취소");
 			break;
 //		case 2:
 //			System.out.println("책 수량을 입력해주세요");
