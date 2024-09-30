@@ -1,9 +1,0 @@
-diff a/src/cart/CartService.java b/src/cart/CartService.java	(rejected hunks)
-@@ -81,7 +81,6 @@
- 		switch (input) {
- 		case 1:
- 			buy();
--			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
- 			break;
- //		case 2:
- //			System.out.println("책 수량을 입력해주세요");
