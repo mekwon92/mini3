@@ -7,7 +7,11 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+<<<<<<< HEAD
 import cart.Cart;
+=======
+import cart.CartService;
+>>>>>>> 15c9c5a9c99d829034df5767c6fd71eb750f1e1f
 import miniCustomer.*;
 /**
  * 서적 서비스부
@@ -18,25 +22,25 @@ public class BookService {
 	
 // 책 목록
 	private List<Book> bookList = new ArrayList<Book>();
-	private static final int TMPCOUNT = 1000;
+	public final int TMPCOUNT = 1000;
 	
 // 초기화 블럭
 	{
 		System.out.println("SYSTEM :: 초기 데이터를 삽입합니다.");
-		bookList.add(new Book("000", "홍길동전", "홍길동", "길동사", "0000000000001", 
+		bookList.add(new Book("0000", "홍길동전", "홍길동", "길동사", "0000000000001", 
 				"정의의 사도 홍길동의 모험", 10_000, TMPCOUNT, false, false));
-		bookList.add(new Book("001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", 
+		bookList.add(new Book("0001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", 
 				"경애는 회사를 그만두고 무작정 베트남으로 떠난다.", 11_000, TMPCOUNT, false, false));
-		bookList.add(new Book("002", "상수의 마음", "홍길동", "길동사", "0000000000003", 
+		bookList.add(new Book("0002", "상수의 마음", "홍길동", "길동사", "0000000000003", 
 				"어느날 상수에게 경애가 다가온다. 그의 마음은 움직였다.", 12_000, TMPCOUNT, false, false));
-		bookList.add(new Book("003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", 
+		bookList.add(new Book("0003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", 
 				"길고도 복잡한 이야기를 원한다면.", 13_000, TMPCOUNT, false, false));
-		bookList.add(new Book("004", "달과6펜스", "홍길동", "길동사", "0000000000005", 
+		bookList.add(new Book("0004", "달과6펜스", "홍길동", "길동사", "0000000000005", 
 				"위대한 개츠비, 더블린 사람들의 뒤를 잇는 고전필독서", 14_000, TMPCOUNT, false, false));
 		System.out.println("SYSTEM :: 초기데이터 삽입 완료.");
 		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
 		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("C:\\Users\\tj\\Desktop\\mini\\data.ser"));) {
+				new FileInputStream("C:\\javaworkspace\\mini2\\data.ser"));) {
 			bookList = (List<Book>) ois.readObject();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -55,7 +59,7 @@ public class BookService {
 		Book b = null;
 		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로가기");
 		int input = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 5, "1~5 사이의 숫자 입력");
-		printBooks();
+//		printBooks();
 		switch (input) {
 		case 1: {
 			b = findByBookId(MiniUtils.next("번호 입력", String.class, 
@@ -210,6 +214,7 @@ public class BookService {
 	/**
 	 * 도서 상세정보 페이지 구현
 	 * 
+	 * @param String string
 	 * @author KHM
 	 */
 	public void showBookDetails(String a) {
@@ -234,13 +239,38 @@ public class BookService {
 	 * @param Book book
 	 * @author KHM
 	 */
+<<<<<<< HEAD
 	public Book showBookDetails(Book a) {
+=======
+	public void showBookDetails(Book a) {
+//		CartService cs = new CartService();
+>>>>>>> 15c9c5a9c99d829034df5767c6fd71eb750f1e1f
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
+<<<<<<< HEAD
+//		CartService cs = new CartService();
+=======
+>>>>>>> f41b9839cde56e59f3c723afd251c0e3164f3c70
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() 
+<<<<<<< HEAD
 				+ " | *정가 : " + a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기" );
 		int c = MiniUtils.next("입력", Integer.class , i -> i >= 1 && i <= 2, "1 이상 2 이하의 값을 입력하세요.");
 		Cart
 		return a;
 	}
+=======
+				+ " | *정가 : " + a.getBookPrice() + " |" + "\n1.장바구니 2.뒤로가기" );
+		int key = MiniUtils.next("입력", Integer.class , i -> i >=1 && i <= 2, "SYSTEM :: INPUT ERROR");
+		switch (key) {
+			case 1: {
+				System.out.println("SYSTEM :: 장바구니에 상품이 담겼습니다.");
+//				cs.add(a);
+			}
+			case 2:{
+				System.out.println("초기 화면으로 돌아갑니다.");
+				break;
+			}
+		}
+	}		
+>>>>>>> 15c9c5a9c99d829034df5767c6fd71eb750f1e1f
 
 }

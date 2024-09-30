@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import miniBook.BookService.*;
 
 public class NaverApiCaller {
 	String clientID = "hEXQ0_5PvioNhHNeXSFx";
@@ -71,7 +72,7 @@ public class NaverApiCaller {
 			Integer discount = item.getInt("discount");
 
 			Book book = new Book(String.format("%04d", ++counter), title, author, publisher, isbn, description,
-					discount, 0, false, false);
+					discount, 1000 , false, false);
 			list.add(book);
 			System.out.println(list);
 		}
@@ -80,7 +81,23 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
-		String[] queries = { "유머집" };
+<<<<<<< HEAD
+		String[] queries = { "데미안" };
+=======
+<<<<<<< HEAD
+		String[] queries = { "어린왕자" };
+=======
+<<<<<<< HEAD
+		String[] queries = { "똥", "데미안" };
+=======
+<<<<<<< HEAD
+		String[] queries = { "어린왕자" };
+=======
+		String[] queries = { "데미안" };
+>>>>>>> 9fd113f8bab08a45b8c3fe95dee5d74379dbc89f
+>>>>>>> 22c311ea330043d7a580f765af59f4d8bc3c29e7
+>>>>>>> f41b9839cde56e59f3c723afd251c0e3164f3c70
+>>>>>>> 1c29c5965bec0d7a1232818aff11610bc317dd5e
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 
