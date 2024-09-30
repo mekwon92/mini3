@@ -73,6 +73,7 @@ public class NaverApiCaller {
 			Book book = new Book(String.format("%04d", ++counter), title, author, publisher, isbn, description,
 					discount, 0, false, false);
 			list.add(book);
+			System.out.println(list);
 		}
 		return list;
 	}
