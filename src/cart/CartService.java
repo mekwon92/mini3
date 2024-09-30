@@ -12,7 +12,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import miniBook.*;
+import miniCustomer.CustomerService;
 
+	public void buy() { //로그인한걸 가져온다
 
 public class CartService {
 
@@ -43,6 +45,11 @@ public class CartService {
 //	
 public void add(Book a) {
 	carts.add(a);
+}
+
+public void buy(BookService bs) { //로그인한걸 가져온다
+	carts.add(bs);
+	
 }
 
 //		
@@ -102,8 +109,7 @@ public void add(Book a) {
 	}
 
 	public void buy() { //로그인한걸 가져온다
-		
-	}
+
 //	public void modify() {
 //		// 1. 학번 입력
 //		// 2. 학번을 통한 탐색(배열) >> 학생

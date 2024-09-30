@@ -34,7 +34,7 @@ public class Book implements Serializable{
 	public String toString() {
 		return "\n-------------------------------------------------------------------------------------------------------\n"
 				+ "| *제목 = " + bookName + " | *저자 = " + bookWriter + " | *출판 =" + bookPublisher + " | *도서번호 = " + bookId
-				+ " *ISBN =" + ISBookNum + " | *재고 =" + bookCount + " |"
+				+ " | *재고 =" + bookCount + " |"
 				+ " \n-------------------------------------------------------------------------------------------------------";
 	}
 
