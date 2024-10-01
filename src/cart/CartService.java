@@ -64,7 +64,45 @@ public class CartService {
 //		BookService bookService = new BookService();
 //		bookService.bookSearcher();
 //	}
+//public void add(Book a) {
+//	List<Book> list = cart.getCarts();
+//	if(list.contains(a)) {
+//		
+//	}
+//	boolean flag = false;
+//	Book tmp = null;
+//	for(Book book : list) {
+//		if(book.getBookId().equals(a.getBookId())) {
+//			flag = true;
+//			tmp = book; 
+//			break;
+//		}
+//	}
+//	// 담으려는 책이 카트에 존재하는가?
+//	// 이미 있던 책의 수량 ++
+//	if(flag) {
+//		tmp.increaseBookCount();	
+//	}
+//	// add(클론대상)
+//	else {
+//		list.add(a.clone());
+//	}
+//}
+
+///**
+// * add 메서드 구현, 오버로딩
+// * 
+// * @author LSW
+// * @param Book book
+// */
+//	
+////	public void add() {
+////		
+////		BookService bookService = new BookService();
+////		bookService.bookSearcher();
+////	}
 public void add(Book a) {
+	a.clone();//책 복사
 	List<Book> list = cart.getCarts();
 	if(list.contains(a)) {
 		
@@ -73,8 +111,8 @@ public void add(Book a) {
 	Book tmp = null;
 	for(Book book : list) {
 		if(book.getBookId().equals(a.getBookId())) {
-			flag = true;
-			tmp = book; 
+			flag = true;//조건이 트루일때 
+			tmp = book; //책을 탬에 담는다
 			break;
 		}
 	}
@@ -89,71 +127,33 @@ public void add(Book a) {
 	}
 }
 
-///**
-// * add 메서드 구현, 오버로딩
-// * 
-// * @author LSW
-// * @param Book book
-// */
-//	
-////	public void add() {
-////		
-////		BookService bookService = new BookService();
-////		bookService.bookSearcher();
-////	}
-//public void add(Book a) {
-//	a.clone();//책 복사
-//	List<Book> list = cart.getCarts();
-//	if(list.contains(a)) {
-//		
-//	}
-//	boolean flag = false;
-//	Book tmp = null;
-//	for(Book book : list) {
-//		if(book.getBookId().equals(a.getBookId())) {
-//			flag = true;//조건이 트루일때 
-//			tmp = book; //책을 탬에 담는다
-//			break;
-//		}
-//	}
-//	// 담으려는 책이 카트에 존재하는가?
-//	// 이미 있던 책의 수량 ++
-//	if(flag) {
-//		tmp.increaseBookCount();	
-//	}
-//	// add(클론대상)
-//	else {
-//		list.add(a.clone());
-//	}
-//}
-//
-//public void remove() { // 장바구니에 서적 삭제
-//	Book cs = findBy(MiniUtils.next("책 번호를 입력하세요", String.class, n -> findBy(n) != null, "입력한 책은 존재하지 않습니다."));
-//	cart.getCarts().remove(cs);
-//}
-//	
-//	public Book findBy(String bookid) {
-//		Book newcart  = null;
-//		for(Book ss :booklist) {
-//			if(ss.getBookId()==bookid) {
-//				newcart = ss;
-//			}
-//			
-//			
-//		}
-//		return newcart;
-//	}
-//	
-//	public void printbook(){
-//		List<Book> blist = new ArrayList<Book>();
-//		for(Book se:blist) { 
-//			System.out.println(se);
-//				
-//			}
-//			
-//		}
-//		
-//	}
+public void remove() { // 장바구니에 서적 삭제
+	Book cs = findBy(MiniUtils.next("책 번호를 입력하세요", String.class, n -> findBy(n) != null, "입력한 책은 존재하지 않습니다."));
+	cart.getCarts().remove(cs);
+}
+	
+	public Book findBy(String bookid) {
+		Book newcart  = null;
+		for(Book ss :booklist) {
+			if(ss.getBookId()==bookid) {
+				newcart = ss;
+			}
+			
+			
+		}
+		return newcart;
+	}
+	
+	public void printbook(){
+		List<Book> blist = new ArrayList<Book>();
+		for(Book se:blist) { 
+			System.out.println(se);
+				
+			}
+			
+		}
+		
+	}
 /////**
 //// * add 메서드 구현, 오버로딩
 //// * 
@@ -261,4 +261,3 @@ public void add(Book a) {
 //////		}
 //////	}
 ////// 장바구니 재고 같은경우 클론을 복제하여 장바구니에서 취소할 경우 그 원본과 장바구니 재고가 같게 한다	
-}
