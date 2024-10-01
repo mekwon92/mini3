@@ -16,8 +16,19 @@ import miniCustomer.MiniUtils;
 
 //cs.getLoggedInId() 로그인한 객체 가져오는법
 
-
+//카트 서비스 싱글턴
 public class CartService {
+	private static CartService CartService =new CartService();
+	private CartService() {
+		
+	}
+	
+	
+	public static CartService getCartService() {
+		return CartService;
+	}
+
+
 	Cart cart = new Cart();
 	private List<Book> booklist = new ArrayList<Book>();
 	
@@ -154,6 +165,50 @@ public void remove() { // 장바구니에 서적 삭제
 		}
 		
 	}
+
+//장바구니 들어왔을때 책번호랑 
+	public void cartlist() {
+		// 책 정보
+//		BookService bs = new BookService();
+		int input = MiniUtils.next("1.결제 2.다른 책 검색 3.수량 변경 4.초기로 돌아가기", Integer.class, i -> i <= 5 && i >= 1,
+				"1이상 5이하의 값을 입력하세요");
+		List<Book> tmp = null;
+		switch (input) {
+		case 1:
+
+			buy((Customer) users);
+			System.out.println("결제 취소");
+
+			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
+
+			break;
+//		case 2:
+//			System.out.println("책 수량을 입력해주세요");
+//			// 1.책 입력
+//			// 2.책 번호를 입력하세요 후 입력하면 다시 이창이뜨면 좋곘음
+//			modify();
+//			break;
+//		case 3:
+//			System.out.println("검색할 책을 입력해주세요");
+//			bs.bookSearcher();
+//			return;
+		case 4:
+			System.out.println("초기 화면으로 돌아가기");
+			break;
+		
+		default:
+			System.out.println("????");
+			break;
+		}
+//		for (int i = 0; i < carts.size(); i++) {
+////				System.out.println(students[i]);
+//			System.out.println(carts.get(i));
+//		}
+	}
+
+
+
+
 /////**
 //// * add 메서드 구현, 오버로딩
 //// * 
@@ -190,46 +245,46 @@ public void remove() { // 장바구니에 서적 삭제
 ////		return cart;
 ////	}
 ////
-//////장바구니 들어왔을때 책번호랑 
-////	public void cartlist() {
-////		// 책 정보
-//////		BookService bs = new BookService();
-////		int input = MiniUtils.next("1.결제 2.다른 책 검색 3.수량 변경 4.초기로 돌아가기", Integer.class, i -> i <= 5 && i >= 1,
-////				"1이상 5이하의 값을 입력하세요");
-////		List<Book> tmp = null;
-////		switch (input) {
-////		case 1:
-////
-////			buy((Customer) users);
-////			System.out.println("결제 취소");
-////
-////			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
-////
-////			break;
-//////		case 2:
-//////			System.out.println("책 수량을 입력해주세요");
-//////			// 1.책 입력
-//////			// 2.책 번호를 입력하세요 후 입력하면 다시 이창이뜨면 좋곘음
-//////			modify();
-//////			break;
-//////		case 3:
-//////			System.out.println("검색할 책을 입력해주세요");
-//////			bs.bookSearcher();
-//////			return;
-////		case 4:
-////			System.out.println("초기 화면으로 돌아가기");
-////			break;
-////		
-////		default:
-////			System.out.println("????");
-////			break;
-////		}
-//////		for (int i = 0; i < carts.size(); i++) {
-////////				System.out.println(students[i]);
-//////			System.out.println(carts.get(i));
-//////		}
-////	}
-////
+//장바구니 들어왔을때 책번호랑 
+	public void cartlist() {
+		// 책 정보
+//		BookService bs = new BookService();
+		int input = MiniUtils.next("1.결제 2.다른 책 검색 3.수량 변경 4.초기로 돌아가기", Integer.class, i -> i <= 5 && i >= 1,
+				"1이상 5이하의 값을 입력하세요");
+		List<Book> tmp = null;
+		switch (input) {
+		case 1:
+
+			buy((Customer) users);
+			System.out.println("결제 취소");
+
+			// 여기에 가격이랑 무슨책인지 나왔으면 좋겠음 회원
+
+			break;
+//		case 2:
+//			System.out.println("책 수량을 입력해주세요");
+//			// 1.책 입력
+//			// 2.책 번호를 입력하세요 후 입력하면 다시 이창이뜨면 좋곘음
+//			modify();
+//			break;
+//		case 3:
+//			System.out.println("검색할 책을 입력해주세요");
+//			bs.bookSearcher();
+//			return;
+		case 4:
+			System.out.println("초기 화면으로 돌아가기");
+			break;
+		
+		default:
+			System.out.println("????");
+			break;
+		}
+//		for (int i = 0; i < carts.size(); i++) {
+////				System.out.println(students[i]);
+//			System.out.println(carts.get(i));
+//		}
+	}
+
 ////
 //////	public void modify() {
 //////		// 1. 학번 입력

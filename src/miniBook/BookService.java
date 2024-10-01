@@ -261,4 +261,23 @@ public class BookService {
 		}
 
 	}
+	
+	/**
+	 * 도서 추가 등록
+	 */
+	public void bookAdd() {
+		String bookId = MiniUtils.next("책 번호(서점용)", String.class, n -> n.length() == 4, "올바른 책 번호를 입력하세요 (4자리의 숫자)");
+		String bookName = MiniUtils.next("책 제목", String.class);
+		String bookWriter = MiniUtils.next("저자명", String.class);
+		String bookPublisher = MiniUtils.next("출판사", String.class);
+		String ISBookNum = MiniUtils.next("책 번호(ISBN)", String.class, n -> n.length() == 13, "올바른 책 번호를 입력하세요 (13자리의 숫자)");
+		String bookDetail = MiniUtils.next("상세설명", String.class);
+		int bookPrice = MiniUtils.next("책 가격", Integer.class);
+		int bookCount = MiniUtils.next("책 재고", Integer.class);
+//		boolean ifChecked = MiniUtils.next("책 구매의사 확인용 체크박스", null);
+//		boolean isSearch = MiniUtils.next("장바구니 액션", null);
+		
+//		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount, ifChecked, ifChecked));
+	}
+	
 }
