@@ -59,7 +59,6 @@ public class CartService {
 //		bookService.bookSearcher();
 //	}
 public void add(Book a) {
-	a.clone();
 	List<Book> list = cart.getCarts();
 	if(list.contains(a)) {
 		
