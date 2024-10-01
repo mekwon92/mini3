@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import cart.Cart;
-import cart.CartService;
 import miniCustomer.*;
 
 
@@ -76,7 +75,7 @@ public class BookService {
 		}
 		case 3: {
 			String a = MiniUtils.next("제목 입력", String.class);
-			findByName(a);
+			findByBookName(a);
 			break;
 		}
 		case 4: {
@@ -186,7 +185,7 @@ public class BookService {
 	 * @param String bookName
 	 * @author KHM
 	 */
-	private void findByName(String bookName) {
+	private void findByBookName(String bookName) {
 		List<Book> bookRes = new ArrayList<Book>();
 		for (int i = 0; i < bookList.size(); i++) {
 			Book book = bookList.get(i);
@@ -205,20 +204,21 @@ public class BookService {
 
 	/**
 	 * 도서 상세정보 페이지 구현
+	 * 리스트 리턴
 	 * 
 	 * @param String string
 	 * @author KHM
 	 */
-	public void showBookDetails(String a) {
+	public void showBookDetails(String bookName) {
 		String b = "";
+		List<Book> tmp = new ArrayList<Book>();
 		int bp = 0;
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
 		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getBookId() == a) {
+			if (bookList.get(i).getBookId() == bookName || bookList.get(i).getBookId().contentEquals(bookName) ) {
 				b = bookList.get(i).getBookDetail();
 				bp = bookList.get(i).getBookPrice();
 				System.out.println("*소개 : " + b + " | *정가 : " + bp + " |" + "1.장바구니 2.뒤로가기");
-				break;
 			}
 		}
 
