@@ -9,18 +9,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import cart.Cart;
+import cart.CartService;
 import miniCustomer.*;
 
 
 /**
  * 서적 서비스부
+ * 싱글턴 적용할 것
  * 
  * @author HHJ, KHM
  */
 public class BookService {
+// 싱글턴 적용
+//	필드 초기화
+	private static BookService BookService = new BookService();
+	private BookService() {
+		// TODO Auto-generated constructor stub
+	}
+		
+	public static BookService getInstance() {
+		return BookService;
+	}
 
-// 책 목록
+	// 책 목록
 	private List<Book> bookList = new ArrayList<Book>();
+	public List<Book> bookRes = new ArrayList<Book>();
 	public final int TMPCOUNT = 1000;
 
 // 초기화 블럭
@@ -57,7 +70,7 @@ public class BookService {
 		Book b = null;
 		System.out.printf("SYSTEM :: 도서를 검색합니다.\n1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로가기");
 		int input = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 5, "1~5 사이의 숫자 입력");
-//		printBooks();
+		printBooks();
 		switch (input) {
 		case 1: {
 			b = findByBookId(MiniUtils.next("번호 입력", String.class, s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
@@ -233,11 +246,12 @@ public class BookService {
 	public void showBookDetails(Book a) {
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() + "\n | *정가 : "
 				+ a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기");
+		CartService cs = new CartService();
 		int key = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 2, "SYSTEM :: INPUT ERROR");
 		switch (key) {
 		case 1: {
 			System.out.println("SYSTEM :: 장바구니에 상품이 담겼습니다.");
-//				cs.add(a);
+				cs.add(a);
 		}
 		case 2: {
 			System.out.println("초기 화면으로 돌아갑니다.");
