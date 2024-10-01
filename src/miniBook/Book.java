@@ -119,6 +119,12 @@ public class Book implements Serializable, Cloneable{
 		this.isSearch = isSearch;
 	}
 
+	
+	/**
+	 * 클론 메서드(재고부 활용)
+	 * 
+	 * @author lapela
+	 */
 	@Override
 	public Book clone() {
 		Book book = null;
