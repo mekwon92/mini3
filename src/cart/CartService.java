@@ -50,6 +50,46 @@
 ////	}
 ////	
 //	
+<<<<<<< HEAD
+	
+/**
+ * add 메서드 구현, 오버로딩
+ * 
+ * @author LSW
+ * @param Book book
+ */
+	
+//	public void add() {
+//		
+//		BookService bookService = new BookService();
+//		bookService.bookSearcher();
+//	}
+public void add(Book a) {
+	List<Book> list = cart.getCarts();
+	if(list.contains(a)) {
+		
+	}
+	boolean flag = false;
+	Book tmp = null;
+	for(Book book : list) {
+		if(book.getBookId().equals(a.getBookId())) {
+			flag = true;
+			tmp = book; 
+			break;
+		}
+	}
+	// 담으려는 책이 카트에 존재하는가?
+	// 이미 있던 책의 수량 ++
+	if(flag) {
+		tmp.increaseBookCount();	
+	}
+	// add(클론대상)
+	else {
+		list.add(a.clone());
+	}
+}
+=======
+>>>>>>> a2bca34a3e7d6c7485ece7defae72e0ff04b742e
 ///**
 // * add 메서드 구현, 오버로딩
 // * 
