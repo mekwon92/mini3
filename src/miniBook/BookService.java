@@ -23,6 +23,7 @@ public class BookService {
 // 싱글턴 적용
 //	필드 초기화
 	private static BookService BookService = new BookService();
+	
 	private BookService() {
 		// TODO Auto-generated constructor stub
 	}
