@@ -112,18 +112,15 @@ public class CartService {
 				break;
 		}
 		case 2:{
-			System.out.println("초기 화면으로 돌아가기");
+			System.out.println("수량 변경하기");
 			break;
 		}
 // 장바구니의 1번 상품 " 책 제목 " 을 선택하셨습니다. 다음 책 선택
 	// 와일 문으로 플래그값 하나 세워두고 고객이 입력했던 모든 입력값을 버퍼로 받아서 저장하다가 
 // 특정 탈출값을 입력받거나 입력받은 번호의 갯수가 장바구니 리스트.size() 를 오버할 경우 종료!
 // 전체를 구매하시려면 몇번을 누르세요. 정도는 있으면 편리할 것 같습니다.
-		case 3:{
-			System.out.println("책 화면으로 돌아가기");
-			break;
-		}
 		default:
+			System.out.println("책 화면으로 돌아가기");
 			break;
 
 		}
