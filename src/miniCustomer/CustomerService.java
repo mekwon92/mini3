@@ -30,7 +30,7 @@ import java.util.Set;;
 public class CustomerService {
 	private List<Customer> customers = new ArrayList<Customer>();
 	private Customer loggedInId;
-	BookService bs = new BookService();
+	BookService bs = BookService.getInstance();
 
 	public Customer getLoggedInId() {
 		return loggedInId;
@@ -68,29 +68,26 @@ public class CustomerService {
 			System.out.println("비밀번호 불일치");
 			return;
 
-
 		}
 	}
 
 	// 로그인 후
 	public void afterLogin() {
-	
-			int input = MiniUtils.next("1.도서 검색  2.회원정보  3. 로그아웃 ", Integer.class, t -> t >= 1 && t <= 3,
-					"1에서 3 사이의 수");
-			switch (input) {
-			case 1:
-				bs.bookSearcher();
-				break;
-			case 2:
-				customerInfo();
-				break;
-			case 3:
-				return;
-			default:
-				break;
-			}
+
+		int input = MiniUtils.next("1.도서 검색  2.회원정보  3. 로그아웃 ", Integer.class, t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
+		switch (input) {
+		case 1:
+			bs.bookSearcher();
+			break;
+		case 2:
+			customerInfo();
+			break;
+		case 3:
+			return;
+		default:
+			break;
 		}
-	
+	}
 
 	// 아이디 생성
 	int cnt = 1000;

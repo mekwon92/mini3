@@ -15,12 +15,23 @@ import miniCustomer.*;
 
 /**
  * 서적 서비스부
+ * 싱글턴 적용할 것
  * 
  * @author HHJ, KHM
  */
 public class BookService {
+// 싱글턴 적용
+//	필드 초기화
+	private static BookService BookService = new BookService();
+	private BookService() {
+		// TODO Auto-generated constructor stub
+	}
+		
+	public static BookService getInstance() {
+		return BookService;
+	}
 
-// 책 목록
+	// 책 목록
 	private List<Book> bookList = new ArrayList<Book>();
 	public List<Book> bookRes = new ArrayList<Book>();
 	public final int TMPCOUNT = 1000;
