@@ -1,4 +1,4 @@
-package miniLibrary;
+package miniRental;
 
 public class RentalService {
 
