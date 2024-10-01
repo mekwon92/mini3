@@ -1,26 +1,26 @@
-//package cart;
-//
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
-//import java.io.IOException;
-//import java.io.ObjectInputStream;
-//import java.io.ObjectOutputStream;
-//import java.util.ArrayList;
-//import java.util.List;
-//import miniBook.*;
-//import miniCustomer.Customer;
-//import miniCustomer.CustomerService;
-//import miniCustomer.MiniUtils;
-//
-//
-////cs.getLoggedInId() 로그인한 객체 가져오는법
-//
-//
-//public class CartService {
-//	Cart cart = new Cart();
-//	private List<Book> booklist = new ArrayList<Book>();
-//	
+package cart;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import miniBook.*;
+import miniCustomer.Customer;
+import miniCustomer.CustomerService;
+import miniCustomer.MiniUtils;
+
+
+//cs.getLoggedInId() 로그인한 객체 가져오는법
+
+
+public class CartService {
+	Cart cart = new Cart();
+	private List<Book> booklist = new ArrayList<Book>();
+	
 //	
 //	
 //	// 일단 출력 보려고 필드에 선언을 해 놓은 상태
@@ -50,7 +50,7 @@
 ////	}
 ////	
 //	
-<<<<<<< HEAD
+
 	
 /**
  * add 메서드 구현, 오버로딩
@@ -88,8 +88,7 @@ public void add(Book a) {
 		list.add(a.clone());
 	}
 }
-=======
->>>>>>> a2bca34a3e7d6c7485ece7defae72e0ff04b742e
+
 ///**
 // * add 메서드 구현, 오버로딩
 // * 
@@ -262,5 +261,4 @@ public void add(Book a) {
 //////		}
 //////	}
 ////// 장바구니 재고 같은경우 클론을 복제하여 장바구니에서 취소할 경우 그 원본과 장바구니 재고가 같게 한다	
-//
-////}
+}
