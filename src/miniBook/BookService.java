@@ -1,6 +1,5 @@
 package miniBook;
 
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,14 +7,11 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import cart.Cart;
 import cart.CartService;
 import miniCustomer.*;
 
-
 /**
- * 서적 서비스부
- * 싱글턴 적용할 것
+ * 서적 서비스부 싱글턴 적용할 것
  * 
  * @author HHJ, KHM
  */
@@ -23,11 +19,11 @@ public class BookService {
 // 싱글턴 적용
 //	필드 초기화
 	private static BookService BookService = new BookService();
-	
+
 	private BookService() {
 		// TODO Auto-generated constructor stub
 	}
-		
+
 	public static BookService getInstance() {
 		return BookService;
 	}
@@ -74,38 +70,54 @@ public class BookService {
 		printBooks();
 		switch (input) {
 		case 1: {
-			b = findByBookId(MiniUtils.next("번호 입력", String.class, s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
-			System.out.println("=====검색 결과=====");
-			System.out.println(b);
-			showBookDetails(b);
+			b = findByBookId(MiniUtils.next("도서번호 입력", String.class, s -> findByBookId(s) != null, "존재하지 않는 도서번호입니다."));
+			if (b != null) {
+				System.out.println("==================== 검색 결과 ====================");
+				System.out.println(b);
+				showBookDetails(b);
+			} else {
+				System.out.println("SYSTEM :: 해당 도서를 찾을 수 없습니다.");
+			}
 			break;
 		}
 		case 2: {
 			b = findByBookISBN(
-					MiniUtils.next("번호 입력", String.class, s -> findByBookISBN(s) != null, "존재하지 않는 ISBN입니다."));
-			System.out.println("=====검색 결과=====");
-			System.out.println(b);
+					MiniUtils.next("ISBN 입력", String.class, s -> findByBookISBN(s) != null, "존재하지 않는 ISBN입니다."));
+			if (b != null) {
+				System.out.println("==================== 검색 결과 ====================");
+				System.out.println(b);
+				showBookDetails(b);
+			} else {
+				System.out.println("SYSTEM :: 해당 도서를 찾을 수 없습니다.");
+			}
 			break;
 		}
 		case 3: {
-			String a = MiniUtils.next("제목 입력", String.class);
-			findByBookName(a);
+			String title = MiniUtils.next("제목 입력", String.class);
+			List<Book> books = findByBookName(title);
+			if (!books.isEmpty()) {
+				System.out.println("==================== 검색 결과 ====================");
+				printBooks(books);
+			} else {
+				System.out.println("SYSTEM :: 해당 제목의 도서를 찾을 수 없습니다.");
+			}
 			break;
 		}
 		case 4: {
-			String a = MiniUtils.next("저자 입력", String.class);
-			findByWriter(a);
+			String author = MiniUtils.next("저자 입력", String.class);
+			findByWriter(author); // 저자 검색
 			break;
 		}
 		case 5: {
-			printBooks();
+			printBooks(); // 전체 도서 출력
 			break;
 		}
 		case 6: {
-
+			System.out.println("SYSTEM :: 이전 메뉴로 돌아갑니다.");
 			break;
 		}
 		default:
+			System.out.println("SYSTEM :: 잘못된 입력입니다. 다시 선택하세요.");
 			break;
 		}
 	}
@@ -151,8 +163,7 @@ public class BookService {
 		}
 		if (flag == true) {
 			System.out.println("SYSTEM :: 일치하는 검색결과가 있습니다.");
-		}
-		else {
+		} else {
 			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
 		}
 		return book;
@@ -196,46 +207,64 @@ public class BookService {
 	 * 일치하는 제목에 따른 검색결과 반환 제목 하나가 출판사에 따른 다양한 검색결과를 가질 수 있기 때문에 리스트 사용 마지막 일치하는 검색
 	 * 결과가 있을 경우 + 후에 트림 사용해서 띄어쓰기 이슈 해결 필요 + 제목 일부분만 검색해도 되게 하려면 contains 사용해야 할듯.
 	 * 
+	 * + findByBookName 메서드가 List<Book>을 반환하도록 수정
+	 * 
 	 * @param String bookName
 	 * @author KHM
 	 */
-	private void findByBookName(String bookName) {
-		List<Book> bookRes = new ArrayList<Book>();
-		for (int i = 0; i < bookList.size(); i++) {
-			Book book = bookList.get(i);
-			if (book.getBookName().equals(bookName)) {
-				bookRes.add(book);
+	public List<Book> findByBookName(String bookName) {
+		List<Book> result = new ArrayList<>();
+		for (Book book : bookList) {
+			if (book.getBookName().contains(bookName)) {
+				result.add(book);
 			}
 		}
-		if (bookRes.isEmpty()) {
-			System.out.println("SYSTEM :: 제목 : " + bookName + ", 이에 따른 검색결과가 없습니다. ::");
-		} else {
-			System.out.println("SYSTEM :: 제목 : " + bookName + ", 이에 따른 검색 결과입니다. ::");
-			printBooks(bookRes);
-		}
-		System.out.println("SYSTEM :: END OF QUERRY");
+		return result;
 	}
 
 	/**
-	 * 도서 상세정보 페이지 구현
-	 * 리스트 리턴
+	 * 도서 상세정보 페이지 구현 리스트 리턴
 	 * 
 	 * @param String string
 	 * @author KHM
 	 */
-	public void showBookDetails(String bookName) {
-		String b = "";
-		List<Book> tmp = new ArrayList<Book>();
-		int bp = 0;
+	public List<Book> showBookDetails(String bookName) {
+		List<Book> tmp = new ArrayList<Book>(); // 검색된 책들을 담을 리스트
+		List<Book> cartList = new ArrayList<>(); // 장바구니에 추가할 책 리스트
 		System.out.println("SYSTEM :: 상세정보 페이지를 로드합니다.");
+
 		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getBookId() == bookName || bookList.get(i).getBookId().contentEquals(bookName) ) {
-				b = bookList.get(i).getBookDetail();
-				bp = bookList.get(i).getBookPrice();
-				System.out.println("*소개 : " + b + " | *정가 : " + bp + " |" + "1.장바구니 2.뒤로가기");
+			Book book = bookList.get(i);
+			if (book.getBookName().equals(bookName) || book.getBookName().contains(bookName)) {
+				tmp.add(book);
+			}
+		}
+		if (tmp.isEmpty()) {
+			System.out.println("SYSTEM :: 검색 결과가 없습니다.");
+		} else {
+			for (Book book : tmp) {
+				System.out.println("*제목: " + book.getBookName() + " | *소개: " + book.getBookDetail() + " | *정가: "
+						+ book.getBookPrice());
+			}
+			System.out.println("1. 장바구니에 추가 2. 뒤로가기");
+			int key = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 2, "SYSTEM :: INPUT ERROR");
+			CartService cs = new CartService();
+			switch (key) {
+			case 1:
+				cartList.addAll(tmp);
+				for (Book book : cartList) {
+					cs.add(book);
+				}
+				System.out.println("SYSTEM :: 장바구니에 " + cartList.size() + "개 상품이 담겼습니다.");
+				break;
+			case 2:
+				System.out.println("SYSTEM :: 초기 화면으로 돌아갑니다.");
+				break;
 			}
 		}
 
+		// 장바구니에 추가된 책 리스트를 리턴
+		return cartList;
 	}
 
 	/**
@@ -252,7 +281,7 @@ public class BookService {
 		switch (key) {
 		case 1: {
 			System.out.println("SYSTEM :: 장바구니에 상품이 담겼습니다.");
-				cs.add(a);
+			cs.add(a);
 		}
 		case 2: {
 			System.out.println("초기 화면으로 돌아갑니다.");
@@ -261,23 +290,26 @@ public class BookService {
 		}
 
 	}
-	
+
 	/**
 	 * 도서 추가 등록
+	 * 
+	 * @author HHJ
 	 */
 	public void bookAdd() {
 		String bookId = MiniUtils.next("책 번호(서점용)", String.class, n -> n.length() == 4, "올바른 책 번호를 입력하세요 (4자리의 숫자)");
 		String bookName = MiniUtils.next("책 제목", String.class);
 		String bookWriter = MiniUtils.next("저자명", String.class);
 		String bookPublisher = MiniUtils.next("출판사", String.class);
-		String ISBookNum = MiniUtils.next("책 번호(ISBN)", String.class, n -> n.length() == 13, "올바른 책 번호를 입력하세요 (13자리의 숫자)");
+		String ISBookNum = MiniUtils.next("책 번호(ISBN)", String.class, n -> n.length() == 13,
+				"올바른 책 번호를 입력하세요 (13자리의 숫자)");
 		String bookDetail = MiniUtils.next("상세설명", String.class);
 		int bookPrice = MiniUtils.next("책 가격", Integer.class);
 		int bookCount = MiniUtils.next("책 재고", Integer.class);
 //		boolean ifChecked = MiniUtils.next("책 구매의사 확인용 체크박스", null);
 //		boolean isSearch = MiniUtils.next("장바구니 액션", null);
-		
+
 //		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount, ifChecked, ifChecked));
 	}
-	
+
 }
