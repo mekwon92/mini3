@@ -19,6 +19,8 @@ import java.util.List;
 //사용자아이디만 알아도됨
 //책번호로 책... id...회원
 
+//리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 
+
 public class CustomerService {
 	private static CustomerService costomerService = new CustomerService();
 	private List<Customer> customers = new ArrayList<Customer>();
@@ -74,7 +76,7 @@ public class CustomerService {
 
 	// 로그인 후
 	public void afterLogin() {
-		System.out.println(loginUser.getName()+"님 환영합니다.");
+		System.out.println(loginUser.getName()+"님. 원하시는 항목을 선택하세요");
 		int input = MiniUtils.next("1.도서 검색  2.마이페이지  3. 로그아웃 ", Integer.class, t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
 		switch (input) {
 		case 1:
@@ -84,7 +86,7 @@ public class CustomerService {
 			myPage();
 			break;
 		case 3:
-			logOut();
+			logout();
 			break;
 		default:
 			break;
@@ -93,7 +95,7 @@ public class CustomerService {
 	
 
 	//로그아웃
-	public void logOut() {
+	public void logout() {
 		loginUser = null;
 	}
 	
@@ -156,7 +158,7 @@ public class CustomerService {
 		
 	//비밀번호 수정
 		public void customerModify() {
-			String pw =  MiniUtils.next("수정할 비밀번호를 입력하세요", String.class,s->s.equals(loginUser.getPw()),"현재 본인 비밀번호와 동일합니다. 다시 입력해주세요");
+			String pw =  MiniUtils.next("수정할 비밀번호를 입력하세요", String.class,s-> !s.equals(loginUser.getPw()),"현재 본인 비밀번호와 같습니다. 다시 입력해주세요");
 			loginUser.setPw(pw);
 			System.out.println(pw + "로 수정되었습니다");
 			
@@ -206,7 +208,7 @@ public class CustomerService {
 				}
 			}
 			else {
-				System.out.println("관리자 키 불일치. 첫 화면으로 돌아갑니다.");
+				System.out.println("관리자 키 불일치. 접근불가");
 				return;
 			}
 		}

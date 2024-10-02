@@ -9,7 +9,7 @@ public class Customer {
 	private String pw;
 	private String name;
 	private int userNum;
-//	private List<Book?> purchaseList;
+//	private List<cart> purchaseList;
 	
 
 	public Customer(String id, String pw, String name) {
