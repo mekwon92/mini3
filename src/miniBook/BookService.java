@@ -65,7 +65,6 @@ public class BookService {
 	public void bookSearcher() {
 		while (true) {
 			Book b = null;
-			printBooks();
 			System.out.printf("SYSTEM :: 도서를 검색합니다.\n 1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로 7.장바구니");
 			int input = MiniUtils.next(" ::: 카테고리 입력", Integer.class, i -> i >= 1 && i <= 7, "1~7 사이의 숫자 입력");
 			switch (input) {
@@ -280,7 +279,7 @@ public class BookService {
 	public void showBookDetails(Book a) {
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() + "\n | *정가 : "
 				+ a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기");
-		CartService cs = new CartService();
+		CartService cs = CartService.getCartService();
 		int key = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 2, "SYSTEM :: INPUT ERROR");
 		switch (key) {
 		case 1: {
