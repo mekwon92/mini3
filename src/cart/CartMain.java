@@ -16,18 +16,9 @@ public class CartMain {
 				case 1:
 					cs.cartlist();
 					break;
-//				case 2:
-//					cs.back();
-//					break;
-//				case 3:
-//					cs.add(); //
-//					break;
-				case 4:
-					cs.remove();
-//					break;
-//				case 5:
-//					System.out.println("책 구매을 종료합니다");
-//					cs.cancel();				
+					
+				case 5:
+					System.out.println("bye");
 					return;
 				default:
 					break;
@@ -43,4 +34,8 @@ public class CartMain {
 			
 		}
 	}
+		
+	
 }
+			
+
