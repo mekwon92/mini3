@@ -40,7 +40,7 @@ public class CartService {
 	for(Book book : cartList) {
 		System.out.println(book.getBookName()+":::" +book.getBookCount() + "권");
 	}	
-		int i=0;
+		
 	 	int sum =cartList.stream().mapToInt(b -> b.getBookCount()* b.getBookPrice()).sum();
 	 	System.out.println("총 금액은"+sum+"원 입니다");
 	}
