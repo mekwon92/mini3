@@ -5,14 +5,28 @@ import miniBook.*;
 public class Customer {
 	private String id;
 	private String pw;
+	private String name;
 	private int userNum;
-//	private List<Book?> purchaseList;
+//	private List<cart> purchaseList;
 	
 
-	public Customer(String id, String pw) {
+	public Customer(String id, String pw, String name) {
 		this.id = id;
 		this.pw = pw;
+		this.name = name;
 	}
+	
+	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	public String getId() {
 		return id;
 	}
