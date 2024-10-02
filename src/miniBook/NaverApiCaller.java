@@ -68,7 +68,6 @@ public class NaverApiCaller {
 			String isbn = item.getString("isbn");
 			String publisher = item.getString("publisher");
 			String description = item.getString("description");
-//			String pubdate = item.getString("pubdate"); // ? 안쓰는듯
 			Integer discount = item.getInt("discount");
 
 			Book book = new Book(String.format("%04d", ++counter), title, author, publisher, isbn, description,
@@ -81,7 +80,7 @@ public class NaverApiCaller {
 
 	public static void main(String[] args) throws Exception {
 		NaverApiCaller nac = new NaverApiCaller();
-		String[] queries = { "데미안" };
+		String[] queries = { "전래동화" };
 		List<Book> results = new ArrayList<Book>();
 		Arrays.asList(queries).forEach(s -> results.addAll(nac.call(s)));
 

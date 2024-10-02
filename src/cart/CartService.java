@@ -34,10 +34,19 @@ public class CartService {
 	Cart cart = new Cart();
 	public List<Book> cartList = new Cart().getCarts();
 	private List<Book> booklist = new ArrayList<Book>();
+	BookService sw = BookService.getInstance();
 
+	public void printCart() {
+	for(Book book : cartList) {
+		System.out.println(book.getBookName()+":::" +book.getBookCount() + "권");
+	}	
+		int i=0;
+	 	int sum =cartList.stream().mapToInt(b -> b.getBookCount()* b.getBookPrice()).sum();
+	 	System.out.println("총 금액은"+sum+"원 입니다");
+	}
 
 	public void add(Book a) {
-		a.clone();// 책 복사
+//		a.clone();// 책 복사
 		List<Book> list = cart.getCarts();
 		boolean flag = false;
 		Book tmp = null;
@@ -85,24 +94,25 @@ public class CartService {
 		}
 
 	}
-
+//갯타입에 객체하나 리턴하는 느낌인데 단체로 검색되는 경우 제목 저자로 나올때 리스트를 던진다
 //장바구니 들어왔을때 책번호랑 
 	public void cartlist() {
 		// 책 정보
 		List<Book> list=cart.getCarts();
-		int input = MiniUtils.next("1.결제 2.수량 변경 3.돌아가기", Integer.class, i -> i <= 5 && i >= 1,
+		int input = MiniUtils.next("1.결제 2.수량 변경 3.돌아가기", Integer.class, i -> i <= 3 && i >= 1,
 				"1이상 5이하의 값을 입력하세요");
 		switch (input) {
 		case 1:	{
 			boolean flag = true;
-				int input1 = MiniUtils.next("목록의 원하시는 부분을 입력하세요.", Integer.class, n -> n <= 5 && n >=1, "1.선택 결제 2.전체 결제");
+				int input1 = MiniUtils.next("1.선택 결제 2.전체 결제.", Integer.class, n -> n <= 2 && n >=1, "1번이나 2번을 눌러주세요");
 				if (input1 == 2)
 					flag = false;
 				if(flag) {
 					// 추후에 구현,선택구매
 					for(int i = 0; i < list.size(); i++) {
-						int input2 = MiniUtils.next("목록의 원하시는 부분을 입력하세요.", Integer.class, n -> n <= list.size() && n >=0, "1.선택 결제 2.전체 결제");
+						int input2 = MiniUtils.next("1.선택 결제 2.전체 결제", Integer.class, n -> n <= list.size() && n >=0, "1번이나 2번을 눌러주세요");
 						remove();
+						
 					}
 				}
 				else {
@@ -112,18 +122,23 @@ public class CartService {
 				break;
 		}
 		case 2:{
-			System.out.println("초기 화면으로 돌아가기");
+			System.out.println("수량 변경하기");
+			boolean flag=false;
+				int input2 = MiniUtils.next("1.수량 변경할 책을 입력하세요 2.변경 취소",Integer.class , n-> n<=2 && n>=1, "1번이나 2번을 눌러주세요");
+				Book tmp = null;
+				for(Book book  :list )
+					if(book.getBookId().equals(list))
+						flag=true;
+				//tmp=Book;
 			break;
 		}
 // 장바구니의 1번 상품 " 책 제목 " 을 선택하셨습니다. 다음 책 선택
 	// 와일 문으로 플래그값 하나 세워두고 고객이 입력했던 모든 입력값을 버퍼로 받아서 저장하다가 
 // 특정 탈출값을 입력받거나 입력받은 번호의 갯수가 장바구니 리스트.size() 를 오버할 경우 종료!
 // 전체를 구매하시려면 몇번을 누르세요. 정도는 있으면 편리할 것 같습니다.
-		case 3:{
-			System.out.println("책 화면으로 돌아가기");
-			break;
-		}
 		default:
+			System.out.println("책 검색 화면으로 돌아가기");
+			sw.bookSearcher();
 			break;
 
 		}
