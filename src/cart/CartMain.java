@@ -44,3 +44,33 @@
 //		}
 //	}
 //}
+
+import java.util.List;
+
+import miniBook.Book;
+
+public void add(Book a) {
+		a.clone();// 책 복사
+		List<Book> list = cart.getCarts();
+		if (list.contains(a)) {
+
+		}
+		boolean flag = false;
+		Book tmp = null;
+		for (Book book : list) {
+			if (book.getBookId().equals(a.getBookId())) {
+				flag = true;// 조건이 트루일때
+				tmp = book; // 책을 탬에 담는다
+				break;
+			}
+		}
+		// 담으려는 책이 카트에 존재하는가?
+		// 이미 있던 책의 수량 ++
+		if (flag) {
+			tmp.increaseBookCount();
+		}
+		// add(클론대상)
+		else {
+			list.add(a.clone());
+		}
+	}
