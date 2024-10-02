@@ -7,7 +7,7 @@ public class CartMain {
 	public static void main(String[] args) {
 		// UI
 		// Create Read Update Delete
-		  CartService cs = new CartService();
+		  CartService cs = CartService.getCartService();
 		
 		while(true) {
 			try {
