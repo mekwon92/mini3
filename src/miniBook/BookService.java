@@ -313,21 +313,20 @@ public class BookService {
 		String bookDetail = MiniUtils.next("상세설명", String.class);
 		int bookPrice = MiniUtils.next("책 가격", Integer.class, n -> true, "올바른 숫자를 입력하세요");
 		int bookCount = MiniUtils.next("책 재고", Integer.class, n -> true, "올바른 숫자를 입력하세요");
-		boolean ifChecked = MiniUtils.next("책 구매의사 확인용 체크박스", boolean.class, n -> false, "");
-		boolean isSearch = MiniUtils.next("장바구니 액션", null);
+		boolean ifChecked = false;
+		boolean isSearch = false;
 
-		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount,
-				ifChecked, isSearch));
+		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount, ifChecked, isSearch));
 	}
-
+	
 	/**
 	 * 도서 정보 수정
 	 */
-	public void bookModify() {
+	public void bookModify(){
 		Book b = findBy(MiniUtils.next("책 번호(서점용)", String.class, n -> true, null));
 		String bookId = MiniUtils.next("책 번호(서점용)", String.class, n -> n.length() == 4, "올바른 책 번호를 입력하세요 (4자리의 숫자)");
 		b.setBookId(bookId);
-		String bookName = MiniUtils.next("책 제목", String.class);
+		String bookName = MiniUtils.next("책 제목",String.class);
 		b.setBookName(bookName);
 		String bookWriter = MiniUtils.next("저자명", String.class);
 		b.setBookWriter(bookWriter);
@@ -341,27 +340,27 @@ public class BookService {
 		int bookPrice = MiniUtils.next("책 가격", Integer.class);
 		b.setBookPrice(bookPrice);
 		int bookCount = MiniUtils.next("책 재고", Integer.class);
-		b.setBookCount(bookCount);
-	}
-
+		b.setBookCount(bookCount);		
+	}	
+	
 	/**
 	 * 도서 삭제
 	 * 
 	 * @author HHJ
 	 */
 	public void bookRemove() {
-		Book b = findBy(MiniUtils.next("책 번호", String.class, n -> findBy(n) != null, "입력한 책 번호는 존재하지 않습니다"));
-		bookList.remove(b);
-	}
+        Book b = findBy(MiniUtils.next("책 번호", String.class, n -> findBy(n) != null, "입력한 책 번호는 존재하지 않습니다"));
+        bookList.remove(b);
+    }
+    private Book findBy(String bookId) {
+        Book book = null;
+        for(int i = 0 ; i < bookList.size() ; i++ ) {
+            if(bookList.get(i).getBookId() == bookId) {
+                book = bookList.get(i);
+            }
+        }
+        return book;
+    }
 
-	private Book findBy(String bookId) {
-		Book book = null;
-		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getBookId() == bookId) {
-				book = bookList.get(i);
-			}
-		}
-		return book;
-	}
 
 }
