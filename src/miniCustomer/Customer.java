@@ -1,7 +1,5 @@
 package miniCustomer;
 
-import java.util.List;
-import cart.*;
 import miniBook.*;
 
 public class Customer {

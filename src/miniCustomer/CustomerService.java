@@ -1,7 +1,6 @@
 package miniCustomer;
 
 import miniBook.*;
-import cart.*;
 
 import java.util.ArrayList;
 import java.util.List;
