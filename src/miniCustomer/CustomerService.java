@@ -19,7 +19,7 @@ import java.util.List;
 //사용자아이디만 알아도됨
 //책번호로 책... id...회원
 
-//리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 
+//리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 편하다..
 
 public class CustomerService {
 	private static CustomerService costomerService = new CustomerService();
@@ -174,6 +174,17 @@ public class CustomerService {
 			System.out.println();
 		}
 	}
+	//매출확인
+	private void profit() {
+		System.out.println();
+		
+	}
+	
+	//환불
+	
+	
+	
+	
 
 	// 중복체크메서드(객체반환)
 	private Customer findBy(String id) {
