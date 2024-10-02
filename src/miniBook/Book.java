@@ -2,7 +2,7 @@ package miniBook;
 
 import java.io.Serializable;
 
-public class Book implements Serializable, Cloneable{
+public class Book implements Serializable, Cloneable {
 	// 필드
 	private String bookId; // 책 번호(서점용)
 	private String bookName; // 책 제목
@@ -32,9 +32,10 @@ public class Book implements Serializable, Cloneable{
 
 	@Override
 	public String toString() {
-		return "\n-------------------------------------------------------------------------------------------------------\n"
-				+ "| *제목 = " + bookName + " | *저자 = " + bookWriter + " | *출판 =" + bookPublisher + " | *도서번호 = " + bookId
-				+ " | *재고 =" + bookCount + " |"
+		return " | *제목 =  " + bookName + "\n"
+				+ "-------------------------------------------------------------------------------------------------------\n"
+				+ " | *저자 = " + bookWriter + " | *출판 =" + bookPublisher + " | *도서번호 = " + bookId + " | *재고 ="
+				+ bookCount + " |"
 				+ " \n-------------------------------------------------------------------------------------------------------";
 	}
 
@@ -119,7 +120,6 @@ public class Book implements Serializable, Cloneable{
 		this.isSearch = isSearch;
 	}
 
-	
 	/**
 	 * 클론 메서드(재고부 활용)
 	 * 
@@ -131,19 +131,17 @@ public class Book implements Serializable, Cloneable{
 		try {
 			book = (Book) super.clone();
 			// 클론 지정 (목표 : 장바구니에 담기 목표)
-			book.bookCount = 1; // 
+			book.bookCount = 1; //
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return book;
 	}
-	
+
 	// 장바구니용 수량 증가 메서드
 	public void increaseBookCount() {
 		bookCount++;
 	}
 
-	
-	
 }
