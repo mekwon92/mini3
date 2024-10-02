@@ -1,4 +1,4 @@
-package cart;
+package miniCart;
 
 import miniCustomer.MiniUtils;
 import miniBook.*;
@@ -14,7 +14,7 @@ public class CartMain {
                 int input = MiniUtils.next("1.구매 " , Integer.class, n -> n >= 1 && n <= 5, "1~5사이의 값을 입력하세요");
                 switch (input) {
                 case 1:
-                    cs.cartlist();
+//                    cs.cartlist();
                     break;
                     
                 case 5:

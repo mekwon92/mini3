@@ -1,4 +1,4 @@
-package cart;
+package miniCart;
 
 import java.util.ArrayList;
 import java.util.List;

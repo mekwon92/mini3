@@ -2,8 +2,7 @@ package sale;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cart.Cart;
+import miniCart.Cart;
 import miniBook.Book;
 import miniCustomer.CustomerService;
 import miniCustomer.MiniUtils;
