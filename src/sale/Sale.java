@@ -10,16 +10,16 @@ public class Sale {
 	private int saleId; // PK
 	private String id; // Customer id
 	private List<Book> books = new ArrayList<Book>(); // 클론예정
-	private long regDate = System.currentTimeMillis(); //구매했을때 시간
-	
-	// 총액 계산 메서드
+	private long regDate = System.currentTimeMillis(); // 구매했을때 시간
+
+// 총액 계산 메서드
 	public int total() {
 		int sum = 0;
-		for(Book book : books) {
-			sum += book.getBookCount() * book.getBookPrice();
-		}
 		return sum;
 	}
+
+	// 책정보 조회 메서드
+
 	public int getSaleId() {
 		return saleId;
 	}
@@ -56,8 +56,4 @@ public class Sale {
 	public String toString() {
 		return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" + regDate + ", total()=" + total() + "]";
 	}
-	
-	
-	
-	
 }
