@@ -4,11 +4,9 @@ package miniCustomer;
 public class CustomerMain {
 	public static void main(String[] args) {
 		CustomerService cs = CustomerService.getInstance();
-<<<<<<< HEAD
-=======
+
 	System.out.println(cs.getLoggedInUser()+"\n");
 	//cs.getLoggedInUser().getId();
->>>>>>> 37af8aad12a7d1d6d8565ed4e1b003d2ac5f8654
 		System.out.println("****얼라딘입니다. 어서오세요****");
 		
 		while(true) {

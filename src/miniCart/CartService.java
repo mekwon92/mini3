@@ -36,14 +36,6 @@ public class CartService {
 	public List<Book> cartList = cart.getCarts();
 	private List<Book> booklist = new ArrayList<Book>();
 	BookService sw = BookService.getInstance();
-//	{
-//		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("money.ser"))) {
-//			cart = (List<cart>) ois.readObject();
-//		} catch (FileNotFoundException e) {
-//		}
-//		e.printStackTrace();
-//	}
-//	}
 
 	public void printCart() {
 		int cnt = 1;
@@ -159,14 +151,6 @@ public class CartService {
 			cart.getCarts().remove(book);
 		} else {
 			book.setBookCount(amount);
-		}
-	}
-
-	public void save() {
-		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("money.ser"))) {
-			stream.writeObject(cart);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 

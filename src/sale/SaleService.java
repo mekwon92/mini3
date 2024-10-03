@@ -1,5 +1,11 @@
 package sale;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import miniCart.Cart;
@@ -7,17 +13,29 @@ import miniBook.Book;
 import miniCustomer.CustomerService;
 import miniCustomer.MiniUtils;
 
+@SuppressWarnings("unchecked")
 public class SaleService {
-    // 싱글턴
-    private static SaleService saleService = new SaleService();
-    private  SaleService() {}
-    public static SaleService getInstance() {
-        return saleService;
-    }
-    
-    private List<Sale> sales = new ArrayList<Sale>();
-    
-    {
+	// 싱글턴
+	private static SaleService saleService = new SaleService();
+
+	private SaleService() {
+	}
+
+	public static SaleService getInstance() {
+		return saleService;
+	}
+
+	private List<Sale> sales = new ArrayList<Sale>();
+
+	{
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("money.ser"))) {
+			sales = (List<Sale>) ois.readObject();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch(IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	
         Sale sale = new Sale();
         sale.setSaleId(1);
         sale.setId("id1");
@@ -29,63 +47,70 @@ public class SaleService {
         sale.setBooks(list);
         sales.add(sale);
     }
-    
-    public List<Sale> getSales() {
-        return sales;
-    }
 
-    private CustomerService customerService = CustomerService.getInstance();
+	public List<Sale> getSales() {
+		return sales;
+	}
 
-    
-    // 회원에서 현재 로그인한 사용자의 구매내역
-    public List<Sale> getMySale() {
-        String id = customerService.getLoggedInUser().getId();
-        
-        List<Sale> ret = new ArrayList<>();
-        for(Sale s : sales) {
-            if(s.getId().equals(id)) {
-                ret.add(s);
-            }
-        }
-        return ret;
-    }
-    
-    // 구매 진행
-    public void add(Cart c) {
-        Sale sale = new Sale();
-        List<Book> list = new ArrayList<Book>(c.getCarts());
-        String id = customerService.getLoggedInUser().getId();
-        
-        sale.setId(id);
-        sale.setSaleId(sales.isEmpty() ? 1 : sales.get(sales.size()-1).getSaleId()+1);
-        sale.setBooks(list);
-        
-        sales.add(sale);
-        // [new Sale(), new Sale(), new Sale(), new Sale(), new Sale(), new Sale()]
-        // [3,4]
-    }
-    
-    // 매출 기록 삭제
-    public void remove() {
-        int input = MiniUtils.next("취소할 구매 번호를 입력", Integer.class);
-        Sale s = findBy(input);
-        if(s == null) {
-            System.out.println("올바른 구매번호가 아닙니다");
-            return;
-        }
-        sales.remove(s);
-    }
-    
-    public Sale findBy(int saleId) {
-        for(Sale s : sales) {
-            if(saleId == s.getSaleId()) {
-                return s;
-            }
-        }
-        return null;
-    }
-    
-    // 10-01 30000  
-    // 10-02 20000
-    
+	private CustomerService customerService = CustomerService.getInstance();
+
+	// 회원에서 현재 로그인한 사용자의 구매내역
+	public List<Sale> getMySale() {
+		String id = customerService.getLoggedInUser().getId();
+
+		List<Sale> ret = new ArrayList<>();
+		for (Sale s : sales) {
+			if (s.getId().equals(id)) {
+				ret.add(s);
+			}
+		}
+		return ret;
+	}
+
+	// 구매 진행
+	public void add(Cart c) {
+		Sale sale = new Sale();
+		List<Book> list = new ArrayList<Book>(c.getCarts());
+		String id = customerService.getLoggedInUser().getId();
+
+		sale.setId(id);
+		sale.setSaleId(sales.isEmpty() ? 1 : sales.get(sales.size() - 1).getSaleId() + 1);
+		sale.setBooks(list);
+
+		sales.add(sale);
+		// [new Sale(), new Sale(), new Sale(), new Sale(), new Sale(), new Sale()]
+		// [3,4]
+	}
+
+	// 매출 기록 삭제
+	public void remove() {
+		int input = MiniUtils.next("취소할 구매 번호를 입력", Integer.class);
+		Sale s = findBy(input);
+		if (s == null) {
+			System.out.println("올바른 구매번호가 아닙니다");
+			return;
+		}
+		sales.remove(s);
+	}
+
+	public Sale findBy(int saleId) {
+		for (Sale s : sales) {
+			if (saleId == s.getSaleId()) {
+				return s;
+			}
+		}
+		return null;
+	}
+
+	public void save() {
+		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("money.ser"))) {
+			stream.writeObject(sales);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 10-01 30000
+	// 10-02 20000
+
 }

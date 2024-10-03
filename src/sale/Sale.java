@@ -1,12 +1,13 @@
 package sale;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import miniBook.Book;
 import miniCustomer.Customer;
 
-public class Sale {
+public class Sale implements Serializable {
     private int saleId; // PK
     private String id; // Customer id
     private List<Book> books = new ArrayList<Book>(); // 클론예정
