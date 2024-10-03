@@ -110,6 +110,7 @@ public class CartService {
 			saleService.add(cart);
 			System.out.println("결제완료");
 			cart.getCarts().clear(); // 장바구니 비우기
+			saleService.getInstance().getMySale();
 
 			break;
 		case 2:

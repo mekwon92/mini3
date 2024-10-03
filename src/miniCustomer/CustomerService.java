@@ -30,6 +30,7 @@ public class CustomerService {
 	private Customer loginUser;
 	
 	
+	
 	BookService bs = BookService.getInstance();
 	SaleService ss = SaleService.getInstance();
 	
@@ -81,7 +82,9 @@ public class CustomerService {
 	}
 
 	// 로그인 후
+	
 	public void afterLogin() {
+		ss.setcustomerService();
 		System.out.println(loginUser.getName()+"님. 원하시는 항목을 선택하세요");
 		int input = MiniUtils.next("1.도서 검색  2.마이페이지  3. 로그아웃 ", Integer.class, t -> t >= 1 && t <= 3, "1에서 3 사이의 수");
 		switch (input) {

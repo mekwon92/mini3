@@ -16,6 +16,7 @@ import miniCustomer.MiniUtils;
 @SuppressWarnings("unchecked")
 public class SaleService {
 	// 싱글턴
+	private CustomerService customerService;
 	private static SaleService saleService = new SaleService();
 
 	private SaleService() {
@@ -24,18 +25,21 @@ public class SaleService {
 	public static SaleService getInstance() {
 		return saleService;
 	}
-
+	public void setcustomerService() {
+		customerService=customerService.getInstance();
+	}
+			
 	private List<Sale> sales = new ArrayList<Sale>();
 
 	{
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("money.ser"))) {
-			sales = (List<Sale>) ois.readObject();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch(IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	
+//		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./src/sale/money.ser"))) {
+//			sales = (List<Sale>) ois.readObject();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch(IOException | ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	
         Sale sale = new Sale();
         sale.setSaleId(1);
         sale.setId("id1");
@@ -52,7 +56,6 @@ public class SaleService {
 		return sales;
 	}
 
-	private CustomerService customerService = CustomerService.getInstance();
 
 	// 회원에서 현재 로그인한 사용자의 구매내역
 	public List<Sale> getMySale() {
@@ -64,6 +67,7 @@ public class SaleService {
 				ret.add(s);
 			}
 		}
+		save();// 저장한거 호출
 		return ret;
 	}
 
@@ -103,7 +107,7 @@ public class SaleService {
 	}
 
 	public void save() {
-		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("money.ser"))) {
+		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("./src/sale/money.ser"))) {
 			stream.writeObject(sales);
 		} catch (IOException e) {
 			e.printStackTrace();
