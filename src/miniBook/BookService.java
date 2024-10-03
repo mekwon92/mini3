@@ -131,7 +131,8 @@ public class BookService {
 				return;
 			}
 			case 7: {
-				System.out.println("SYSTEM :: 추후 구현 예정입니다.");
+			miniCart.CartService.getCartService().cartlist();
+				System.out.println("SYSTEM :: 장바구니로 이동합니다.");
 				break;
 			}
 			default:
@@ -279,7 +280,7 @@ public class BookService {
 	public void showBookDetails(Book a) {
 		System.out.println("*소개 : " + bookList.get(Integer.parseInt(a.getBookId())).getBookDetail() + "\n | *정가 : "
 				+ a.getBookPrice() + " |" + "1.장바구니 2.뒤로가기");
-		CartService cs = CartService.getCartService();
+		miniCart.CartService cs = miniCart.CartService.getCartService();
 		int key = MiniUtils.next("입력", Integer.class, i -> i >= 1 && i <= 2, "SYSTEM :: INPUT ERROR");
 		switch (key) {
 		case 1: {
