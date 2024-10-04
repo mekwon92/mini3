@@ -1,13 +1,19 @@
 package miniCustomer;
 
-import miniBook.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import miniBook.BookService;
 import sale.Sale;
 import sale.SaleService;
-
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.SimpleDateFormat;
 
 /* 지금 하고있는 작업
  * 1.로그인 후 마이페이지에서 본인의 구매이력 확인
@@ -24,6 +30,7 @@ import java.text.SimpleDateFormat;
 */
 //리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 편하다..
 
+@SuppressWarnings("unchecked")
 public class CustomerService {
 	private static CustomerService costomerService = new CustomerService();
 	private List<Customer> customers = new ArrayList<Customer>();
@@ -47,13 +54,24 @@ public class CustomerService {
 	}
 
 	{
-		Customer customer = new Customer("id1", "pw1","권미은");
-		Customer customer2 = new Customer("id2", "pw2","김미미");
-		customer.setUserNum(998);
-		customer2.setUserNum(999);
 		
-		customers.add(customer);
-		customers.add(customer2);
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.ser"))){
+			ois.readObject();
+			customers = (List<Customer>) ois.readObject();
+		}catch (FileNotFoundException e) {
+			Customer customer = new Customer("id1", "pw1","권미은");
+			Customer customer2 = new Customer("id2", "pw2","김미미");
+			customer.setUserNum(998);
+			customer2.setUserNum(999);
+			
+			customers.add(customer);
+			customers.add(customer2);
+			System.out.println("초기화 더미 데이터 처리 완료");
+		} 
+		catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 //
@@ -236,11 +254,11 @@ public class CustomerService {
 
 	// 고객리스트 출력
 	public void printCustomer() {
-		System.out.println("==============================");
-		System.out.println("회원번호       ID     PASSWORD");
-		System.out.println("==============================");
+		System.out.println("==========================================");
+		System.out.println("회원번호       ID     PASSWORD     이름");
+		System.out.println("==========================================");
 		for (Customer c : customers) {
-			System.out.printf("%5d %11s %11s", c.getUserNum(), c.getId(), c.getPw());
+			System.out.printf("%5d %11s %11s %6s", c.getUserNum(), c.getId(), c.getPw(), c.getName());
 			System.out.println();
 		}
 	}
@@ -255,6 +273,14 @@ public class CustomerService {
 		ss.remove();
 		System.out.println("환불완료");
 	}
+	
+	public void save() {
+		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("users.ser"))){
+			stream.writeObject(customers);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}	
 	
 		
 		
