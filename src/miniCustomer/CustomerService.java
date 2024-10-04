@@ -253,18 +253,10 @@ public class CustomerService {
 	//매출확인
 	int sum = 0;
 	public void profit() {
-<<<<<<< HEAD
-		
-		Sale sale = new Sale();;
-		System.out.println(sale.getBooks());
-		
-		
-=======
 		for(Sale s : SaleService.getInstance().getSales()) {
 		sum += s.total();
 		System.out.println(sum);			
 		}
->>>>>>> 071d1760ee9c62c8718fc454061cb819270119eb
 	}
 	
 
