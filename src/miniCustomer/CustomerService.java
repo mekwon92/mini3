@@ -251,13 +251,20 @@ public class CustomerService {
 	}
 	
 
-	//매출확인(전체?월별?)
-	int sum = 0;
-	public void profit() {
-		
-		
-	}
-	
+//	매출확인(전체?월별?)
+//	int sum = 0;
+//	public void profit() {
+//		Iterable<T>
+//		Sale sale = new Sale();
+//		
+//		for(Sale s : ss.getInstance()) {
+//		sum += s.total();
+//		System.out.println(sum);
+//			
+//		}		
+//		
+//	}
+//	
 
 	// 고객리스트 출력
 	public void printCustomer() {
