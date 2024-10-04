@@ -1,13 +1,20 @@
 package miniCustomer;
 
-import miniBook.*;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import miniBook.BookService;
 import sale.Sale;
 import sale.SaleService;
-
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.text.SimpleDateFormat;
 
 /* 지금 하고있는 작업
  * 1.로그인 후 마이페이지에서 본인의 구매이력 확인
@@ -24,6 +31,7 @@ import java.text.SimpleDateFormat;
 */
 //리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 편하다..
 
+@SuppressWarnings("unchecked")
 public class CustomerService {
 	private static CustomerService costomerService = new CustomerService();
 	private List<Customer> customers = new ArrayList<Customer>();
@@ -47,13 +55,26 @@ public class CustomerService {
 	}
 
 	{
-		Customer customer = new Customer("id1", "pw1","권미은");
-		Customer customer2 = new Customer("id2", "pw2","김미미");
-		customer.setUserNum(998);
-		customer2.setUserNum(999);
 		
-		customers.add(customer);
-		customers.add(customer2);
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.ser"));
+			customers = (List<Customer>) ois.readObject();
+			ois.close();
+		}catch (FileNotFoundException  e) {
+			Customer customer = new Customer("id1", "pw1","권미은");
+			Customer customer2 = new Customer("id2", "pw2","김미미");
+			customer.setUserNum(998);
+			customer2.setUserNum(999);
+			
+			customers.add(customer);
+			customers.add(customer2);
+			System.out.println("초기화 더미 데이터 처리 완료");
+			e.printStackTrace();
+		} 
+		catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 //
@@ -122,6 +143,8 @@ public class CustomerService {
 		customers.add(c);
 		System.out.println("ID(" + id + ") PASSWORD(" + pw + ") 생성 완료. 회원 번호 부여: " + c.getUserNum());
 		cnt++;
+		
+		save();
 
 	}
 
@@ -158,6 +181,7 @@ public class CustomerService {
 		if (loginUser.getPw().equals(pw)) {
 			customers.remove(loginUser);
 			loginUser = null;
+			save();
 			System.out.println("삭제완료");
 			return;		
 		}
@@ -170,6 +194,7 @@ public class CustomerService {
 		String pw =  MiniUtils.next("수정할 비밀번호를 입력하세요", String.class,s-> !s.equals(loginUser.getPw()),"현재 본인 비밀번호와 같습니다. 다시 입력해주세요");
 		loginUser.setPw(pw);
 		System.out.println(pw + "로 수정되었습니다");	
+		save();
 	}
 
 	
@@ -198,7 +223,7 @@ public class CustomerService {
 		String key = MiniUtils.next("관리자 키를 입력하세요", String.class);
 		while(true) {
 			if(key.equals("abcd")) {
-				int input = MiniUtils.next("1. 매출확인 2. 책정보 변경 3. 회원리스트 4. 환불 5. 뒤로가기 ", Integer.class, t -> t >= 1 && t <= 4, "1에서 4 사이의 수");
+				int input = MiniUtils.next("1. 매출확인 2. 책정보 변경 3. 회원리스트 4. 환불 5. 뒤로가기 ", Integer.class, t -> t >= 1 && t <= 5, "1에서 5 사이의 수");
 				switch (input) {
 				case 1:
 					
@@ -236,11 +261,11 @@ public class CustomerService {
 
 	// 고객리스트 출력
 	public void printCustomer() {
-		System.out.println("==============================");
-		System.out.println("회원번호       ID     PASSWORD");
-		System.out.println("==============================");
+		System.out.println("==========================================");
+		System.out.println("회원번호       ID     PASSWORD     이름");
+		System.out.println("==========================================");
 		for (Customer c : customers) {
-			System.out.printf("%5d %11s %11s", c.getUserNum(), c.getId(), c.getPw());
+			System.out.printf("%5d %11s %11s %6s", c.getUserNum(), c.getId(), c.getPw(), c.getName());
 			System.out.println();
 		}
 	}
@@ -251,13 +276,20 @@ public class CustomerService {
 	
 	public void refund() { 
 		for(Sale s : ss.getSales())
-		System.out.println("구매번호 " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 " + sdf.format(new Date(s.getRegDate())));
+		System.out.println("구매번호 : " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
 		ss.remove();
 		System.out.println("환불완료");
 	}
 	
-		
-		
-		
+	
+	//영속화?
+	public void save() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.ser"))){
+			oos.writeObject(customers);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}			
 }
 

@@ -32,11 +32,9 @@ public class Book implements Serializable, Cloneable {
 
 	@Override
 	public String toString() {
-		return " | *제목 =  " + bookName + "\n"
-				+ "-------------------------------------------------------------------------------------------------------\n"
-				+ " | *저자 = " + bookWriter + " | *출판 =" + bookPublisher + " | *도서번호 = " + bookId + " | *재고 ="
-				+ bookCount + " |"
-				+ " \n-------------------------------------------------------------------------------------------------------";
+		return  "-----------------------------------------------------------\n"
+				+ " | *제목 =  [" + bookName + "] :: *재고 =  " + bookCount + " | \n"
+				+ " | *저자 = [" + bookWriter + "] , *출판 = [" + bookPublisher + "] , *도서번호 = " + bookId + " | \n";
 	}
 
 	// getter, setter
