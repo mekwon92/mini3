@@ -64,7 +64,8 @@ public class BookService {
 	 * @author KHM
 	 */
 	public void bookSearcher() {
-		while (true) {
+		boolean flag = true;
+		while (flag) {
 			Book b = null;
 			System.out.printf("SYSTEM :: 도서를 검색합니다.\n 1.도서번호 2.ISBN 3.제목 4.저자 5.전체 6.뒤로 7.장바구니");
 			int input = MiniUtils.next(" ::: 카테고리 입력", Integer.class, i -> i >= 1 && i <= 7, "1~7 사이의 숫자 입력");
@@ -134,12 +135,14 @@ public class BookService {
 			case 7: {
 				System.out.println("SYSTEM :: 추후 구현 예정입니다.");
 				cartService.cartlist();
+				flag = false;
 				return;
 			}
 			default:
 				break;
 			}
 		}
+
 	}
 
 	/**
@@ -255,6 +258,26 @@ public class BookService {
 			System.out.println("초기 화면으로 돌아갑니다.");
 			break;
 		}
+		}
+	}
+
+	public void bookAlter() {
+		int input = MiniUtils.next(("1. 책 등록 2. 책 정보 수정 3. 책 삭제"), Integer.class, i -> i <= 3 && i >= 1,
+				"1이상 4이하의 값을 입력하세요");
+		List<Book> tmp = null;
+		switch (input) {
+		case 1:
+			bookAdd();
+			break;
+		case 2:
+			bookModify();
+			break;
+		case 3:
+			bookRemove();
+			break;
+		default:
+
+			break;
 		}
 	}
 
