@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.classfile.ClassFile.Option;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -108,7 +109,7 @@ public class CartService {
 			saleService.add(cart);
 			System.out.println("결제완료");
 			cart.getCarts().clear(); // 장바구니 비우기
-			saleService.getInstance().getMySale();
+			saleService.getMySale();
 
 			break;
 		case 2:
@@ -118,9 +119,13 @@ public class CartService {
 			}
 			System.out.println("수량 변경하기");
 			modifyAmount();
-		default:
+			break;
+		case 3:
 			System.out.println("책 검색 화면으로 돌아가기");
 			sw.bookSearcher();
+			return;
+		default:
+
 			break;
 
 		}
@@ -131,8 +136,7 @@ public class CartService {
 		Book book = cart.getCarts().get(
 				MiniUtils.next("수정할 항목입력", Integer.class, i -> i >= 1 && i <= cart.getCarts().size(), "올바른 범위의 값 입력")
 						- 1);
-
-		int amount = MiniUtils.next("변경할 수량을 입력", Integer.class, i -> i < book.getBookCount() && i >= 0,
+		int amount = MiniUtils.next("변경할 수량을 입력", Integer.class, i -> true,
 				"올바른 범위의 값 입력");
 		if (amount == 0) {
 			cart.getCarts().remove(book);
