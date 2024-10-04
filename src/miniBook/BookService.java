@@ -133,7 +133,7 @@ public class BookService {
 			case 7: {
 			miniCart.CartService.getCartService().cartlist();
 				System.out.println("SYSTEM :: 장바구니로 이동합니다.");
-				break;
+				return;
 			}
 			default:
 				break;
