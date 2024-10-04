@@ -80,11 +80,11 @@ public class BookService {
 			System.out.println();
 			int input = MiniUtils.next(" ::: 카테고리 입력", Integer.class, i -> i >= 1 && i <= 7, "1~7 사이의 숫자 입력");
 			switch (input) {
-				case 1:
-				case 2:
-				case 3:
-				case 4: {
-					searchBook(input, MiniUtils.next("SYSTEM :: 검색어를 입력하세요", String.class));
+			case 1:
+			case 2:
+			case 3:
+			case 4: {
+				searchBook(input, MiniUtils.next("SYSTEM :: 검색어를 입력하세요", String.class));
 				break;
 			}
 			case 5: {
@@ -111,16 +111,16 @@ public class BookService {
 		Book b = null;
 		List<Book> books = null;
 		switch (search) {
-		case 1: 
+		case 1:
 			b = findByBookId(target);
 			break;
-		case 2: 
+		case 2:
 			b = findByBookISBN(target);
 			break;
-		case 3: 
+		case 3:
 			books = findByBookName(target);
 			break;
-		case 4: 
+		case 4:
 			books = findByWriter(target);
 			break;
 		default:
@@ -132,11 +132,10 @@ public class BookService {
 			System.out.println("SYSTEM :: 출력이 완료되었습니다.");
 			System.out.println("SYSTEM :: " + b.getBookName() + "의 상세정보를 로드합니다.");
 			showBookDetails(b);
-		}
-		else if (books != null && !books.isEmpty()) {
+		} else if (books != null && !books.isEmpty()) {
 			System.out.println("========================= 검색 결과 =========================");
 			for (int i = 0; i < books.size(); i++) {
-				System.out.print(" :: " + (i + 1) +  " :: ");
+				System.out.print(" :: " + (i + 1) + " :: ");
 				System.out.println(books.get(i));
 			}
 			System.out.println("SYSTEM :: 출력이 완료되었습니다.");
@@ -266,8 +265,11 @@ public class BookService {
 		}
 	}
 
+	/**
+	 * 관리자 페이지의 책 정보 변경 하위 페이지
+	 */
 	public void bookAlter() {
-		int input = MiniUtils.next(("1. 책 등록 2. 책 정보 수정 3. 책 삭제"), Integer.class, i -> i <= 3 && i >= 1,
+		int input = MiniUtils.next(("1. 책 등록 2. 책 정보 수정 3. 책 삭제 4. 뒤로가기"), Integer.class, i -> i <= 4 && i >= 1,
 				"1이상 4이하의 값을 입력하세요");
 		List<Book> tmp = null;
 		switch (input) {
@@ -281,8 +283,7 @@ public class BookService {
 			bookRemove();
 			break;
 		default:
-
-			break;
+			return;
 		}
 	}
 
@@ -311,7 +312,7 @@ public class BookService {
 	/**
 	 * 도서 정보 수정
 	 */
-	public void bookModify() {
+	public void bookModify() {		
 		Book b = findBy(MiniUtils.next("책 번호(서점용)", String.class, n -> true, null));
 		String bookId = MiniUtils.next("책 번호(서점용)", String.class, n -> n.length() == 4, "올바른 책 번호를 입력하세요 (4자리의 숫자)");
 		b.setBookId(bookId);
@@ -330,6 +331,11 @@ public class BookService {
 		b.setBookPrice(bookPrice);
 		int bookCount = MiniUtils.next("책 재고", Integer.class);
 		b.setBookCount(bookCount);
+		boolean ifChecked = false;
+		boolean isSearch = false;
+		
+		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount,
+				ifChecked, isSearch));
 	}
 
 	/**
