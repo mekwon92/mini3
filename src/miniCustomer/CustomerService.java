@@ -204,7 +204,7 @@ public class CustomerService {
 					
 					break;
 				case 2:
-					
+					bs.bookAlter();
 					break;
 				case 3:
 					printCustomer();

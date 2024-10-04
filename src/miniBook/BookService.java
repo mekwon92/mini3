@@ -260,9 +260,12 @@ public class BookService {
 		}
 		}
 	}
-
+	
+	/**
+	 * 관리자 페이지의 책 정보 변경 하위 페이지  
+	 */
 	public void bookAlter() {
-		int input = MiniUtils.next(("1. 책 등록 2. 책 정보 수정 3. 책 삭제"), Integer.class, i -> i <= 3 && i >= 1,
+		int input = MiniUtils.next(("1. 책 등록 2. 책 정보 수정 3. 책 삭제 4. 뒤로가기"), Integer.class, i -> i <= 4 && i >= 1,
 				"1이상 4이하의 값을 입력하세요");
 		List<Book> tmp = null;
 		switch (input) {
@@ -276,8 +279,7 @@ public class BookService {
 			bookRemove();
 			break;
 		default:
-
-			break;
+			return;
 		}
 	}
 
@@ -307,6 +309,7 @@ public class BookService {
 	 * 도서 정보 수정
 	 */
 	public void bookModify() {
+//		List<Book> book = 
 		Book b = findBy(MiniUtils.next("책 번호(서점용)", String.class, n -> true, null));
 		String bookId = MiniUtils.next("책 번호(서점용)", String.class, n -> n.length() == 4, "올바른 책 번호를 입력하세요 (4자리의 숫자)");
 		b.setBookId(bookId);
