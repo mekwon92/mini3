@@ -255,6 +255,10 @@ public class CustomerService {
 	int sum = 0;
 	public void profit() {
 		
+		Sale sale = new Sale();;
+		ss.getSales().total
+		sale.total();
+		
 		
 	}
 	
