@@ -1,26 +1,26 @@
-package miniBook;
-
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+//package miniBook;
+//
+//import java.io.BufferedReader;
+//import java.io.FileOutputStream;
+//import java.io.InputStream;
+//import java.io.InputStreamReader;
+//import java.io.ObjectOutputStream;
+//import java.net.HttpURLConnection;
+//import java.net.URL;
+//import java.net.URLEncoder;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
+//
 //import org.json.JSONArray;
 //import org.json.JSONObject;
 //import miniBook.BookService.*;
-
-public class NaverApiCaller {
-	String clientID = "hEXQ0_5PvioNhHNeXSFx";
-	String secret = "m8VlYwqi8t";
-	static int counter;
-
+//
+//public class NaverApiCaller {
+//	String clientID = "hEXQ0_5PvioNhHNeXSFx";
+//	String secret = "m8VlYwqi8t";
+//	static int counter;
+//
 //	public List<Book> call(String query) {
 //		List<Book> list = new ArrayList<Book>();
 //		int respCode = 0;
@@ -89,4 +89,4 @@ public class NaverApiCaller {
 //		oos.writeObject(results);
 //		oos.close();
 //	}
-}
+//}

@@ -96,8 +96,6 @@ public class CartService {
 
 	}
 
-//갯타입에 객체하나 리턴하는 느낌인데 단체로 검색되는 경우 제목 저자로 나올때 리스트를 던진다
-//장바구니 들어왔을때 책번호랑 
 	public void cartlist() {
 		// 책 정보
 		printCart();
@@ -120,18 +118,6 @@ public class CartService {
 			}
 			System.out.println("수량 변경하기");
 			modifyAmount();
-//            boolean flag=false;
-//                int input2 = MiniUtils.next("1.수량 변경할 책을 입력하세요 2.변경 취소",Integer.class , n-> n<=2 && n>=1, "1번이나 2번을 눌러주세요");
-//                Book tmp = null;
-//                for(Book book  :list )
-//                    if(book.getBookId().equals(list))
-//                        flag=true;
-//                //tmp=Book;
-//            break;
-// 장바구니의 1번 상품 " 책 제목 " 을 선택하셨습니다. 다음 책 선택
-			// 와일 문으로 플래그값 하나 세워두고 고객이 입력했던 모든 입력값을 버퍼로 받아서 저장하다가
-// 특정 탈출값을 입력받거나 입력받은 번호의 갯수가 장바구니 리스트.size() 를 오버할 경우 종료!
-// 전체를 구매하시려면 몇번을 누르세요. 정도는 있으면 편리할 것 같습니다.
 		default:
 			System.out.println("책 검색 화면으로 돌아가기");
 			sw.bookSearcher();

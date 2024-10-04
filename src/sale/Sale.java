@@ -1,7 +1,9 @@
 package sale;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import miniBook.Book;
@@ -52,9 +54,12 @@ public class Sale implements Serializable {
     public void setRegDate(long regDate) {
         this.regDate = regDate;
     }
-
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
     @Override
     public String toString() {
-        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" + regDate + ", total()=" + total() + "]";
+        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" +sdf.format(new Date(regDate)) + ", total()=" + total() + "]";
+    
+ 
     }
 }
