@@ -1,30 +1,26 @@
-package miniBook;
-
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+//package miniBook;
+//
+//import java.io.BufferedReader;
+//import java.io.FileOutputStream;
+//import java.io.InputStream;
+//import java.io.InputStreamReader;
+//import java.io.ObjectOutputStream;
+//import java.net.HttpURLConnection;
+//import java.net.URL;
+//import java.net.URLEncoder;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
+//
 //import org.json.JSONArray;
 //import org.json.JSONObject;
-<<<<<<< HEAD
-import miniBook.BookService.*;
-=======
 //import miniBook.BookService.*;
->>>>>>> 2963e5fcf7543a0e251c98af75b83149c76d7d52
-
-public class NaverApiCaller {
-	String clientID = "hEXQ0_5PvioNhHNeXSFx";
-	String secret = "m8VlYwqi8t";
-	static int counter;
-
+//
+//public class NaverApiCaller {
+//	String clientID = "hEXQ0_5PvioNhHNeXSFx";
+//	String secret = "m8VlYwqi8t";
+//	static int counter;
+//
 //	public List<Book> call(String query) {
 //		List<Book> list = new ArrayList<Book>();
 //		int respCode = 0;
@@ -59,11 +55,7 @@ public class NaverApiCaller {
 //		return list;
 //
 //	}
-<<<<<<< HEAD
-
-=======
 //
->>>>>>> 2963e5fcf7543a0e251c98af75b83149c76d7d52
 //	public List<Book> StringJSON2List(String str) {
 //		JSONObject jObject = new JSONObject(str);
 //		JSONArray jArray = (JSONArray) jObject.get("items");
@@ -85,11 +77,7 @@ public class NaverApiCaller {
 //		}
 //		return list;
 //	}
-<<<<<<< HEAD
-
-=======
 //
->>>>>>> 2963e5fcf7543a0e251c98af75b83149c76d7d52
 //	public static void main(String[] args) throws Exception {
 //		NaverApiCaller nac = new NaverApiCaller();
 //		String[] queries = { "전래동화", "서양고전" };
@@ -101,4 +89,4 @@ public class NaverApiCaller {
 //		oos.writeObject(results);
 //		oos.close();
 //	}
-}
+//}
