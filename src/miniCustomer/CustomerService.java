@@ -251,7 +251,7 @@ public class CustomerService {
 	
 	public void refund() { 
 		for(Sale s : ss.getSales())
-		System.out.println("구매번호 " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 " + sdf.format(new Date(s.getRegDate())));
+		System.out.println("구매번호 : " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
 		ss.remove();
 		System.out.println("환불완료");
 	}

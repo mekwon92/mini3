@@ -6,7 +6,6 @@ public class CustomerMain {
 		CustomerService cs = CustomerService.getInstance();
 
 	System.out.println(cs.getLoggedInUser()+"\n");
-	//cs.getLoggedInUser().getId();
 		System.out.println("****얼라딘입니다. 어서오세요****");
 		
 		while(true) {
