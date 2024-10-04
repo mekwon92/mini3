@@ -226,7 +226,7 @@ public class CustomerService {
 				int input = MiniUtils.next("1. 매출확인 2. 책정보 변경 3. 회원리스트 4. 환불 5. 뒤로가기 ", Integer.class, t -> t >= 1 && t <= 5, "1에서 5 사이의 수");
 				switch (input) {
 				case 1:
-					
+					profit();
 					break;
 				case 2:
 					
@@ -256,8 +256,7 @@ public class CustomerService {
 	public void profit() {
 		
 		Sale sale = new Sale();;
-		ss.getSales().total
-		sale.total();
+		System.out.println(sale.getBooks());
 		
 		
 	}
