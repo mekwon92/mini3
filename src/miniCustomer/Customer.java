@@ -1,8 +1,8 @@
 package miniCustomer;
 
-import miniBook.*;
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Customer implements Serializable{
 	private String id;
 	private String pw;

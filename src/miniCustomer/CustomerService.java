@@ -1,5 +1,6 @@
 package miniCustomer;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -55,10 +56,11 @@ public class CustomerService {
 
 	{
 		
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.ser"))){
-			ois.readObject();
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("users.ser"));
 			customers = (List<Customer>) ois.readObject();
-		}catch (FileNotFoundException e) {
+			ois.close();
+		}catch (FileNotFoundException  e) {
 			Customer customer = new Customer("id1", "pw1","권미은");
 			Customer customer2 = new Customer("id2", "pw2","김미미");
 			customer.setUserNum(998);
@@ -67,6 +69,7 @@ public class CustomerService {
 			customers.add(customer);
 			customers.add(customer2);
 			System.out.println("초기화 더미 데이터 처리 완료");
+			e.printStackTrace();
 		} 
 		catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -140,6 +143,8 @@ public class CustomerService {
 		customers.add(c);
 		System.out.println("ID(" + id + ") PASSWORD(" + pw + ") 생성 완료. 회원 번호 부여: " + c.getUserNum());
 		cnt++;
+		
+		save();
 
 	}
 
@@ -176,6 +181,7 @@ public class CustomerService {
 		if (loginUser.getPw().equals(pw)) {
 			customers.remove(loginUser);
 			loginUser = null;
+			save();
 			System.out.println("삭제완료");
 			return;		
 		}
@@ -188,6 +194,7 @@ public class CustomerService {
 		String pw =  MiniUtils.next("수정할 비밀번호를 입력하세요", String.class,s-> !s.equals(loginUser.getPw()),"현재 본인 비밀번호와 같습니다. 다시 입력해주세요");
 		loginUser.setPw(pw);
 		System.out.println(pw + "로 수정되었습니다");	
+		save();
 	}
 
 	
@@ -216,7 +223,7 @@ public class CustomerService {
 		String key = MiniUtils.next("관리자 키를 입력하세요", String.class);
 		while(true) {
 			if(key.equals("abcd")) {
-				int input = MiniUtils.next("1. 매출확인 2. 책정보 변경 3. 회원리스트 4. 환불 5. 뒤로가기 ", Integer.class, t -> t >= 1 && t <= 4, "1에서 4 사이의 수");
+				int input = MiniUtils.next("1. 매출확인 2. 책정보 변경 3. 회원리스트 4. 환불 5. 뒤로가기 ", Integer.class, t -> t >= 1 && t <= 5, "1에서 5 사이의 수");
 				switch (input) {
 				case 1:
 					
@@ -274,16 +281,15 @@ public class CustomerService {
 		System.out.println("환불완료");
 	}
 	
+	
+	//영속화?
 	public void save() {
-		try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("users.ser"))){
-			stream.writeObject(customers);
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("users.ser"))){
+			oos.writeObject(customers);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}	
-	
-		
-		
-		
+	}			
 }
 
