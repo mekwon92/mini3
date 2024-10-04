@@ -56,10 +56,15 @@ public class Sale implements Serializable {
     }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
+//   
+//    @Override
+//    public String toString() {
+//        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" +sdf.format(new Date(regDate)) + ", total()=" + total() + "]";
+//    }
+//    
     @Override
     public String toString() {
-        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" +sdf.format(new Date(regDate)) + ", total()=" + total() + "]";
+        return " 구매번호 " + saleId +  " ::: 주문금액 " + total() + "원 ::: 구매시간 " +sdf.format(new Date(regDate)) ;
     
- 
     }
 }
