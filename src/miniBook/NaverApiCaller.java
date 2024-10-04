@@ -14,7 +14,11 @@ import java.util.List;
 
 //import org.json.JSONArray;
 //import org.json.JSONObject;
+<<<<<<< HEAD
 import miniBook.BookService.*;
+=======
+//import miniBook.BookService.*;
+>>>>>>> 2963e5fcf7543a0e251c98af75b83149c76d7d52
 
 public class NaverApiCaller {
 	String clientID = "hEXQ0_5PvioNhHNeXSFx";
@@ -55,7 +59,11 @@ public class NaverApiCaller {
 //		return list;
 //
 //	}
+<<<<<<< HEAD
 
+=======
+//
+>>>>>>> 2963e5fcf7543a0e251c98af75b83149c76d7d52
 //	public List<Book> StringJSON2List(String str) {
 //		JSONObject jObject = new JSONObject(str);
 //		JSONArray jArray = (JSONArray) jObject.get("items");
@@ -77,7 +85,11 @@ public class NaverApiCaller {
 //		}
 //		return list;
 //	}
+<<<<<<< HEAD
 
+=======
+//
+>>>>>>> 2963e5fcf7543a0e251c98af75b83149c76d7d52
 //	public static void main(String[] args) throws Exception {
 //		NaverApiCaller nac = new NaverApiCaller();
 //		String[] queries = { "전래동화", "서양고전" };
