@@ -61,7 +61,6 @@ public class BookService {
 	}
 
 	/**
-	 * 검색 메서드 구현 도서번호 리딩 제로 제외하고도 잘 나오게 추가할 것
 	 * 
 	 * @author KHM
 	 */
@@ -71,8 +70,6 @@ public class BookService {
 
 		while (flag) {
 			Book b = null;
-
-			// 람다식을 이용해 카테고리 출력
 			System.out.println("SYSTEM :: 도서를 검색합니다.");
 			for (int i = 0; i < categories.length; i++) {
 				System.out.printf(" %d.%s", (i + 1), categories[i]);
@@ -358,4 +355,15 @@ public class BookService {
 		return book;
 	}
 
+	public void bookEvent(List<Book> listTarget){
+		Collections.shuffle(listTarget);
+		Book book = bookList.get(0);
+		System.out.println("[ 이달의 추천 도서 ::: < " + book.getBookName() + " > ::: ]");
+		List<Book> pBook = new ArrayList<>(listTarget);
+		pBook.sort((p1, p2) -> p1.getBookName().compareTo(p2.getBookName()));
+	}
+	
+	public void bookBestSell() {
+		
+	}
 }
