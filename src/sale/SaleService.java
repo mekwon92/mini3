@@ -1,19 +1,13 @@
 package sale;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import miniCart.Cart;
-import miniBook.Book;
-import miniCustomer.CustomerService;
-import miniCustomer.MiniUtils;
+import miniCart.*;
+import miniBook.*;
+import miniCustomer.*;
 
 @SuppressWarnings("unchecked")
 public class SaleService {
@@ -34,14 +28,6 @@ public class SaleService {
 	private List<Sale> sales = new ArrayList<Sale>();
 
 	{
-//		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./src/sale/money.ser"))) {
-//			sales = (List<Sale>) ois.readObject();
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch(IOException | ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	
         Sale sale = new Sale();
         sale.setSaleId(1);
         sale.setId("id1");
@@ -84,8 +70,6 @@ public class SaleService {
 		sale.setBooks(list);
 
 		sales.add(sale);
-		// [new Sale(), new Sale(), new Sale(), new Sale(), new Sale(), new Sale()]
-		// [3,4]
 	}
 
 	// 매출 기록 삭제
@@ -115,10 +99,5 @@ public class SaleService {
 			e.printStackTrace();
 		}
 	}
-
-	
-
-	// 10-01 30000
-	// 10-02 20000
 
 }
