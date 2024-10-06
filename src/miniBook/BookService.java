@@ -5,12 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import miniCart.CartService;
+import miniCustomer.Customer;
+import miniCustomer.CustomerService;
 import miniCustomer.MiniUtils;
+
 
 /**
  * 서적 서비스부 싱글턴 적용할 것
@@ -38,19 +41,8 @@ public class BookService {
 
 // 초기화 블럭
 	{
-		System.out.println("[ SYSTEM :: 초기 데이터를 삽입합니다. ]");
 		bookList.add(new Book("0000", "홍길동전", "홍길동", "길동사", "0000000000001", "정의의 사도 홍길동의 모험", 10_000, TMPCOUNT, false,
 				false));
-		bookList.add(new Book("0001", "경애하는 경애에게", "홍길동", "길동사", "0000000000002", "경애는 회사를 그만두고 무작정 베트남으로 떠난다.", 11_000,
-				TMPCOUNT, false, false));
-		bookList.add(new Book("0002", "상수의 마음", "홍길동", "길동사", "0000000000003", "어느날 상수에게 경애가 다가온다. 그의 마음은 움직였다.",
-				12_000, TMPCOUNT, false, false));
-		bookList.add(new Book("0003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", "길고도 복잡한 이야기를 원한다면.", 13_000,
-				TMPCOUNT, false, false));
-		bookList.add(new Book("0004", "달과6펜스", "홍길동", "길동사", "0000000000005", "위대한 개츠비, 더블린 사람들의 뒤를 잇는 고전필독서", 14_000,
-				TMPCOUNT, false, false));
-		System.out.println("[ SYSTEM :: 초기데이터 삽입 완료. ]");
-		System.out.println("SYSTEM :: 임시재고는" + TMPCOUNT + "입니다. 추후에 변동예정");
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data.ser"));) {
 			bookList = (List<Book>) ois.readObject();
 		} catch (FileNotFoundException e) {
@@ -65,11 +57,10 @@ public class BookService {
 	 * @author KHM
 	 */
 	public void bookSearcher() {
+		bookEvent(bookList);
 		boolean flag = true;
 		String[] categories = { "도서번호", "ISBN", "제목", "저자", "전체", "뒤로", "장바구니" };
-
 		while (flag) {
-			Book b = null;
 			System.out.println("SYSTEM :: 도서를 검색합니다.");
 			for (int i = 0; i < categories.length; i++) {
 				System.out.printf(" %d.%s", (i + 1), categories[i]);
@@ -105,14 +96,13 @@ public class BookService {
 	}
 
 	public void searchBook(int search, String target) {
-		Book b = null;
 		List<Book> books = null;
 		switch (search) {
 		case 1:
-			b = findByBookId(target);
+			books = findByBookId(target);
 			break;
 		case 2:
-			b = findByBookISBN(target);
+			books = findByBookISBN(target);
 			break;
 		case 3:
 			books = findByBookName(target);
@@ -123,13 +113,7 @@ public class BookService {
 		default:
 			return;
 		}
-		if (b != null) {
-			System.out.println("========================= 검색 결과 =========================");
-			System.out.println(b);
-			System.out.println("SYSTEM :: 출력이 완료되었습니다.");
-			System.out.println("SYSTEM :: " + b.getBookName() + "의 상세정보를 로드합니다.");
-			showBookDetails(b);
-		} else if (books != null && !books.isEmpty()) {
+		if (books != null && !books.isEmpty()) {
 			System.out.println("========================= 검색 결과 =========================");
 			for (int i = 0; i < books.size(); i++) {
 				System.out.print(" :: " + (i + 1) + " :: ");
@@ -137,11 +121,11 @@ public class BookService {
 			}
 			System.out.println("SYSTEM :: 출력이 완료되었습니다.");
 			int sizebook = books.size();
-			int input2 = MiniUtils.next("번호로 책을 골라주세요", Integer.class, s -> s >= 1 && s <= sizebook, "올바른 값 입력");
+			int input2 = MiniUtils.next("번호로 책을 골라주세요", Integer.class, s -> s >= 1 && s <= sizebook, "SYSTEM :: INPUT ERROR");
 			System.out.println("SYSTEM :: " + books.get(input2 - 1).getBookName() + "의 상세정보를 로드합니다.");
 			showBookDetails(books.get(input2 - 1));
 		} else {
-			System.out.println("SYSTEM :: 검색 결과가 없습니다.");
+			System.err.println("SYSTEM :: 검색 결과가 없습니다.");
 		}
 	}
 
@@ -175,31 +159,47 @@ public class BookService {
 	 * @param String bookID
 	 * @author KHM
 	 */
-	public Book findByBookId(String no) {
-		Book book = null;
-		boolean flag = false;
-		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getBookId().contains(no)) {
-				book = bookList.get(i);
-				flag = true;
+	public List<Book> findByBookId(String no) {
+//		List<Book> tmp = new ArrayList<>();
+//		Book book = null;
+//		boolean flag = false;
+//		for (int i = 0; i < bookList.size(); i++) {
+//			if (bookList.get(i).getBookId().contains(no)) {
+//				book = bookList.get(i);
+//				flag = true;
+//			}
+//		}
+//		if (flag == true) {
+//			System.out.println("SYSTEM :: 일치하는 검색결과를 출력합니다.");
+//		} else {
+//			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
+//		}
+//		return book;
+		List<Book> tmp = new ArrayList<>();
+		for (Book book : bookList) {
+			if (book.getBookId().contains(no)) {
+				tmp.add(book);
 			}
 		}
-		if (flag == true) {
-			System.out.println("SYSTEM :: 일치하는 검색결과를 출력합니다.");
-		} else {
-			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
-		}
-		return book;
+		return tmp;
 	}
 
-	public Book findByBookISBN(String no) {
-		Book book = null;
-		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getISBookNum().contains(no)) {
-				book = bookList.get(i);
+	public List<Book> findByBookISBN(String no) {
+//		Book book = null;
+//		for (int i = 0; i < bookList.size(); i++) {
+//			if (bookList.get(i).getISBookNum().contains(no)) {
+//				book = bookList.get(i);
+//			}
+//		}
+//		return book;
+		List<Book> tmp = new ArrayList<>();
+		for (Book book : bookList) {
+			if (book.getBookId().contains(no)) {
+				tmp.add(book);
 			}
 		}
-		return book;
+		return tmp;
+		
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class BookService {
 		switch (key) {
 		case 1: {
 			if (a.getBookPrice() == 0) {
-				System.out.println("절판된 상품입니다. 구매 불가");
+				System.out.println("SYSTEM :: 절판된 상품입니다. 구매 불가");
 				break;
 			}
 			cs.add(a);
@@ -256,7 +256,7 @@ public class BookService {
 			cs.printCart();
 		}
 		case 2: {
-			System.out.println("초기 화면으로 돌아갑니다.");
+			System.out.println("SYSTEM :: 초기 화면으로 돌아갑니다.");
 			break;
 		}
 		}
@@ -299,17 +299,17 @@ public class BookService {
 		String bookDetail = MiniUtils.next("상세설명", String.class);
 		int bookPrice = MiniUtils.next("책 가격", Integer.class, n -> true, "올바른 숫자를 입력하세요");
 		int bookCount = MiniUtils.next("책 재고", Integer.class, n -> true, "올바른 숫자를 입력하세요");
-		boolean ifChecked = false;
-		boolean isSearch = false;
+		boolean b1 = false;
+		boolean b2 = false;
 
-		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount,
-				ifChecked, isSearch));
+		bookList.add(
+				new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount, b1, b2));
 	}
 
 	/**
 	 * 도서 정보 수정
 	 */
-	public void bookModify() {		
+	public void bookModify() {
 		Book b = findBy(MiniUtils.next("책 번호(서점용)", String.class, n -> true, null));
 		String bookId = MiniUtils.next("책 번호(서점용)", String.class, n -> n.length() == 4, "올바른 책 번호를 입력하세요 (4자리의 숫자)");
 		b.setBookId(bookId);
@@ -328,11 +328,10 @@ public class BookService {
 		b.setBookPrice(bookPrice);
 		int bookCount = MiniUtils.next("책 재고", Integer.class);
 		b.setBookCount(bookCount);
-		boolean ifChecked = false;
-		boolean isSearch = false;
-		
-		bookList.add(new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount,
-				ifChecked, isSearch));
+		boolean b1 = false;
+		boolean b2 = false;
+		bookList.add(
+				new Book(bookId, bookName, bookWriter, bookPublisher, ISBookNum, bookDetail, bookPrice, bookCount, b1, b2));
 	}
 
 	/**
@@ -347,7 +346,7 @@ public class BookService {
 
 	private Book findBy(String bookId) {
 		Book book = null;
-		for (int i = 0; i < bookList.size(); i++) {
+		for (int i = 0; i < bookList.size(); i++) { 
 			if (bookList.get(i).getBookId() == bookId) {
 				book = bookList.get(i);
 			}
@@ -355,15 +354,17 @@ public class BookService {
 		return book;
 	}
 
-	public void bookEvent(List<Book> listTarget){
-		Collections.shuffle(listTarget);
-		Book book = bookList.get(0);
-		System.out.println("[ 이달의 추천 도서 ::: < " + book.getBookName() + " > ::: ]");
-		List<Book> pBook = new ArrayList<>(listTarget);
-		pBook.sort((p1, p2) -> p1.getBookName().compareTo(p2.getBookName()));
+	public void bookEvent(List<Book> listTarget) {
+		int ran = (int)(Math.random() * listTarget.size());
+		Calendar calender = Calendar.getInstance();
+		CustomerService customer = CustomerService.getInstance();
+		int month = calender.get(Calendar.MONTH)+ 1;
+		String name = customer.getLoggedInUser().getName();
+		Book book = bookList.get(ran);
+		// 저자 초대 및 이벤트
+		System.out.println(" SYSTEM :: " + name + " 님, 어서오세요! 아래의 이벤트들을 확인해 보세요!");
+		System.err.println(month + " [월 의 추천 도서 ::: < " + book.getBookName() + " > ::: ]");
+		System.err.println(month + " [월 의 얼라딘터뷰 ::: < " + book.getBookWriter() + " 작가 > ::: ]");
 	}
 	
-	public void bookBestSell() {
-		
-	}
 }
