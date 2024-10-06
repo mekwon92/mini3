@@ -124,13 +124,13 @@ public class CustomerService {
 	}
 	
 	// 아이디 생성
-	int cnt = 1000;
+	private static int cnt = 1000;
 
 	public void customerAdd() {
 		System.out.println("회원가입 화면입니다.");
-		String id = MiniUtils.next("ID", String.class, s -> findBy(s) == null, "중복아이디 존재. 가입불가");
-		String pw = MiniUtils.next("PW", String.class);
-		String name = MiniUtils.next("이름", String.class);
+		String id = MiniUtils.next("ID를 입력하세요. 10자 이하의 영문 소문자, 숫자로 구성", String.class, s -> findBy(s) == null && s.matches("^[a-z0-9]{1,10}$"), "중복아이디 존재하거나 형식에 맞지 않습니다");
+		String pw = MiniUtils.next("PW를 입력하세요. 8자 이상의 영문 대문자, 영문 소문자, 숫자, 특수기호 조합", String.class, s -> s.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*()-+=]).{8,}$"), "비밀번호 조건에 맞지 않습니다");
+		String name = MiniUtils.next("이름을 입력하세요. 한글 2~4글자", String.class, s->s.matches("^[가-힣]{2,4}"), "한글로 2~4글자로 입력하세요");
 
 		Customer c = new Customer(id, pw, name);
 		c.setUserNum(cnt);
