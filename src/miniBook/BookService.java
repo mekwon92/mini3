@@ -4,13 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 import miniCart.CartService;
-import miniCustomer.Customer;
 import miniCustomer.CustomerService;
 import miniCustomer.MiniUtils;
 
@@ -24,6 +24,9 @@ public class BookService {
 // 싱글턴 적용
 //	필드 초기화
 	private static BookService BookService = new BookService();
+	private Calendar calender = Calendar.getInstance();
+	private int month = calender.get(Calendar.MONTH)+ 1;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	CartService cartService = CartService.getCartService();
 
 	private BookService() {
@@ -59,6 +62,10 @@ public class BookService {
 	public void bookSearcher() {
 		bookEvent(bookList);
 		boolean flag = true;
+		System.out.print(""
+				+ "======================================================================\n"
+				+ "SYSTEM :: 얼라들의 알라딘에서 무엇이든 검색하세요! 현재 날짜는" + sdf.format(calender.getTime()) + "입니다. :: \n"
+				+ "======================================================================\n" );
 		String[] categories = { "도서번호", "ISBN", "제목", "저자", "전체", "뒤로", "장바구니" };
 		while (flag) {
 			System.out.println("SYSTEM :: 도서를 검색합니다.");
@@ -66,13 +73,13 @@ public class BookService {
 				System.out.printf(" %d.%s", (i + 1), categories[i]);
 			}
 			System.out.println();
-			int input = MiniUtils.next(" ::: 카테고리 입력", Integer.class, i -> i >= 1 && i <= 7, "1~7 사이의 숫자 입력");
+			int input = MiniUtils.next(" SYSTEM :: 카테고리 입력", Integer.class, i -> i >= 1 && i <= 7, "1~7 사이의 숫자 입력");
 			switch (input) {
 			case 1:
 			case 2:
 			case 3:
 			case 4: {
-				searchBook(input, MiniUtils.next("SYSTEM :: 검색어를 입력하세요", String.class));
+				searchBook(input, MiniUtils.next("SYSTEM :: 검색어를 입력하세요. :: ", String.class));
 				break;
 			}
 			case 5: {
@@ -80,11 +87,11 @@ public class BookService {
 				break;
 			}
 			case 6: {
-				System.out.println("SYSTEM :: 이전 메뉴로 돌아갑니다.");
+				System.out.println("SYSTEM :: 이전 메뉴로 돌아갑니다. :: ");
 				return;
 			}
 			case 7: {
-				System.out.println("SYSTEM :: 장바구니를 불러옵니다.");
+				System.out.println("SYSTEM :: 장바구니를 불러옵니다. :: ");
 				cartService.cartlist();
 				flag = false;
 				return;
@@ -114,7 +121,7 @@ public class BookService {
 			return;
 		}
 		if (books != null && !books.isEmpty()) {
-			System.out.println("========================= 검색 결과 =========================");
+			System.out.println("=========================== 검색 결과 ===========================");
 			for (int i = 0; i < books.size(); i++) {
 				System.out.print(" :: " + (i + 1) + " :: ");
 				System.out.println(books.get(i));
@@ -334,14 +341,11 @@ public class BookService {
 	
 	public void bookEvent(List<Book> listTarget) {
 		int ran = (int)(Math.random() * listTarget.size());
-		Calendar calender = Calendar.getInstance();
 		CustomerService customer = CustomerService.getInstance();
-		int month = calender.get(Calendar.MONTH)+ 1;
 		String name = customer.getLoggedInUser().getName();
 		Book book = bookList.get(ran);
 		System.out.println(" SYSTEM :: " + name + " 님, 어서오세요! 아래의 이벤트들을 확인해 보세요!");
-		System.err.println(month + " [월 의 추천 도서 ::: < " + book.getBookName() + " > ::: ]");
-		System.err.println(month + " [월 의 얼라딘터뷰 ::: < " + book.getBookWriter() + " 작가 > ::: ]");
+		System.out.println(month + " 월의 [ 추천 도서 :: < " + book.getBookName() + " > :: ]  " + month + " 월의 [ 얼라딘터뷰 :: < " + book.getBookWriter() + " 작가 > :: ]");
 	}
 	
 }
