@@ -78,38 +78,40 @@ public class CartService {
 	}
 
 	public void cartlist() {
-		// 책 정보
-		printCart();
+        // 책 정보
+        printCart();
 
-		int input = MiniUtils.next("1.결제 2.수량 변경 3.돌아가기", Integer.class, i -> i <= 3 && i >= 1, "1이상 5이하의 값을 입력하세요");
-		switch (input) {
-		case 1:
-			printCart();
-			saleService.add(cart);
-			System.out.println("결제완료");
-			cart.getCarts().clear(); // 장바구니 비우기
-			saleService.getMySale();
+        int input = MiniUtils.next("1.결제 2.수량 변경 3.돌아가기", Integer.class, i -> i <= 3 && i >= 1, "1이상 5이하의 값을 입력하세요");
+        switch (input) {
+        case 1:
+            printCart();
+            saleService.add(cart);
+            System.out.println("결제완료");
+            cart.getCarts().clear(); // 장바구니 비우기
+            saleService.getMySale();
 
-			break;
-		case 2:
-			if (cart.getCarts().isEmpty()) {
-				System.out.println("장바구니가 비었습니다");
-				return;
-			}
-			System.out.println("수량 변경하기");
-			modifyAmount();
-			System.out.println("수량 변경이 완료되었습니다.");
-			break;
-		case 3:
-			System.out.println("책 검색 화면으로 돌아가기");
-			sw.bookSearcher();
-			return;
-		default:
-
-			break;
-
-		}
-	}
+            break;
+        case 2:
+            if (cart.getCarts().isEmpty()) {
+                System.out.println("장바구니가 비었습니다");
+                return;
+            }
+            System.out.println("수량 변경하기");
+            modifyAmount();
+            System.out.println("수량 변경이 완료되었습니다.");
+            break;
+        case 3:
+            int back = MiniUtils.next("1.로그인 화면 2.책 검색 화면", Integer.class, i -> true,"1~2의 값을 입력해주세요");
+            if(back==1) {
+                CustomerService.getInstance().login();
+            }else {
+                BookService.getInstance().bookSearcher();
+            }
+            break;
+        default:
+            return;
+        }
+    }
 
 	public void modifyAmount() {
 		printCart();
