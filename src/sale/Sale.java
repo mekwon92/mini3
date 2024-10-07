@@ -12,9 +12,10 @@ import miniCustomer.Customer;
 public class Sale implements Serializable {
     private int saleId; // PK
     private String id; // Customer id
-    private List<Book> books = new ArrayList<Book>(); // 클론예정
+    private List<Book> books = new ArrayList<Book>(); 
     private long regDate = System.currentTimeMillis(); // 구매했을때 시간
-
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
  // 총액 계산 메서드
     public int total() {
 //        int sum = 0;
@@ -54,14 +55,8 @@ public class Sale implements Serializable {
     public void setRegDate(long regDate) {
         this.regDate = regDate;
     }
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+   
     
-//   
-//    @Override
-//    public String toString() {
-//        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" +sdf.format(new Date(regDate)) + ", total()=" + total() + "]";
-//    }
-//    
     @Override
     public String toString() {
         return " 구매번호 " + saleId +  " ::: 주문금액 " + total() + "원 ::: 구매시간 " +sdf.format(new Date(regDate)) ;

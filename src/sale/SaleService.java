@@ -25,7 +25,7 @@ public class SaleService {
 		return saleService;
 	}
 	public void setcustomerService() {
-		customerService=customerService.getInstance();
+		customerService=CustomerService.getInstance();
 	}
 			
 	private List<Sale> sales = new ArrayList<Sale>();
