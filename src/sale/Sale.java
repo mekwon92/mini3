@@ -17,8 +17,8 @@ public class Sale implements Serializable {
 
 // 총액 계산 메서드
     public int total() {
-        int sum = 0;
-        return sum;
+//        int sum = 0;
+        return books.stream().mapToInt(b -> b.getBookCount() * b.getBookPrice()).sum();
     }
 
     // 책정보 조회 메서드
