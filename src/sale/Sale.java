@@ -15,7 +15,7 @@ public class Sale implements Serializable {
     private List<Book> books = new ArrayList<Book>(); // 클론예정
     private long regDate = System.currentTimeMillis(); // 구매했을때 시간
 
-// 총액 계산 메서드
+ // 총액 계산 메서드
     public int total() {
 //        int sum = 0;
         return books.stream().mapToInt(b -> b.getBookCount() * b.getBookPrice()).sum();
@@ -56,10 +56,15 @@ public class Sale implements Serializable {
     }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
+//   
+//    @Override
+//    public String toString() {
+//        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" +sdf.format(new Date(regDate)) + ", total()=" + total() + "]";
+//    }
+//    
     @Override
     public String toString() {
-        return "Sale [saleId=" + saleId + ", id=" + id + ", regDate=" +sdf.format(new Date(regDate)) + ", total()=" + total() + "]";
+        return " 구매번호 " + saleId +  " ::: 주문금액 " + total() + "원 ::: 구매시간 " +sdf.format(new Date(regDate)) ;
     
- 
     }
 }

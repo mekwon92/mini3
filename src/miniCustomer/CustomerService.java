@@ -16,17 +16,12 @@ import sale.Sale;
 import sale.SaleService;
 
 /* 지금 하고있는 작업
- * 1.로그인 후 마이페이지에서 본인의 구매이력 확인
- * 2.관리자 페이지 - 매출확인 메서드
+ * 1.환불에서 판매내역이 없을 때 판매내역이 없다고 나오도록
  * 
  *  
  *  추후 해야할 작업
  * 1. 정규식 이용해서 matchs
- * 2. 입출력으로 영속화
- * 3. 구매내역 확인
  * 
- * 생각해볼것
- * 구매내역확인 ..... findBy를 이용해서 갖고와야함....?
 */
 //리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 편하다..
 
@@ -129,13 +124,13 @@ public class CustomerService {
 	}
 	
 	// 아이디 생성
-	int cnt = 1000;
+	private static int cnt = 1000;
 
 	public void customerAdd() {
 		System.out.println("회원가입 화면입니다.");
-		String id = MiniUtils.next("ID", String.class, s -> findBy(s) == null, "중복아이디 존재. 가입불가");
-		String pw = MiniUtils.next("PW", String.class);
-		String name = MiniUtils.next("이름", String.class);
+		String id = MiniUtils.next("ID를 입력하세요. 10자 이하의 영문 소문자, 숫자로 구성", String.class, s -> findBy(s) == null && s.matches("^[a-z0-9]{1,10}$"), "중복아이디 존재하거나 형식에 맞지 않습니다");
+		String pw = MiniUtils.next("PW를 입력하세요. 8자 이상의 영문 대문자, 영문 소문자, 숫자, 특수기호 조합", String.class, s -> s.matches("^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*()-+=]).{8,}$"), "비밀번호 조건에 맞지 않습니다");
+		String name = MiniUtils.next("이름을 입력하세요. 한글 2~4글자", String.class, s->s.matches("^[가-힣]{2,4}"), "한글로 2~4글자로 입력하세요");
 
 		Customer c = new Customer(id, pw, name);
 		c.setUserNum(cnt);
@@ -211,8 +206,14 @@ public class CustomerService {
 	
 	//구매이력확인
 	public void purchaseList() {
-		System.out.println(loginUser.getId());//여기까진..null값이...... 아닌거같은디...?
-		System.out.println(ss.getMySale());
+		
+		for(Sale s : SaleService.getInstance().getMySale()) {
+			System.out.println(s);
+			System.out.println(s.getBooks());
+		}
+		
+		
+		
 	}
 	
 	
@@ -225,7 +226,7 @@ public class CustomerService {
 				int input = MiniUtils.next("1. 매출확인 2. 책정보 변경 3. 회원리스트 4. 환불 5. 뒤로가기 ", Integer.class, t -> t >= 1 && t <= 5, "1에서 5 사이의 수");
 				switch (input) {
 				case 1:
-					
+					profit();
 					break;
 				case 2:
 					bs.bookAlter();
@@ -255,12 +256,11 @@ public class CustomerService {
 	public void profit() {
 		for(Sale s : SaleService.getInstance().getSales()) {
 		sum += s.total();
-		System.out.println(sum);			
 		}
+		System.out.println("총 매출 내역 : " + sum + "원");			
 	}
 	
-
-	// 고객리스트 출력
+	// 회원리스트 출력
 	public void printCustomer() {
 		System.out.println("==========================================");
 		System.out.println("회원번호       ID     PASSWORD     이름");
@@ -275,11 +275,20 @@ public class CustomerService {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public void refund() { 
-		for(Sale s : ss.getSales())
-		System.out.println("구매번호 : " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
-		ss.remove();
-		System.out.println("환불완료");
+	public void refund() { 		
+		for(Sale s : ss.getSales()) 
+			System.out.println("구매번호 : " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
+			ss.remove();
+			System.out.println("환불완료");
+			
+			
+//		for(int i = 0 ; i < ss.getSales().size(); i++) {
+//			System.out.println(ss.getSales().get(i).getId() + ss.getSales().get(i).getSaleId()+ sdf.format(new Date(ss.getSales().get(i).getRegDate())));
+//			if(ss.getSales().get(i) != null)
+//				ss.remove();
+//			else
+//				System.out.println("없음");
+//		}
 	}
 	
 	

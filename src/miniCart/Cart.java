@@ -15,5 +15,16 @@ public class Cart {
     public void setCarts(List<Book> carts) {
         this.carts = carts;
     }
+<<<<<<< HEAD
     
 }
+=======
+
+    public List<Book> getBookCount() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+}
+>>>>>>> 418ad13cbbbf346757ece4c730c211a4b9ac3a15
