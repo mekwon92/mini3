@@ -15,16 +15,6 @@ import miniBook.BookService;
 import sale.Sale;
 import sale.SaleService;
 
-/* 지금 하고있는 작업
- * 1.환불에서 판매내역이 없을 때 판매내역이 없다고 나오도록
- * 
- *  
- *  추후 해야할 작업
- * 1. 정규식 이용해서 matchs
- * 
-*/
-//리스트들을 묶어서 하나의 클래스에 모아서 영속화하는게 ... 편하다..
-
 @SuppressWarnings("unchecked")
 public class CustomerService {
 	private static CustomerService costomerService = new CustomerService();
@@ -93,7 +83,8 @@ public class CustomerService {
 		}
 	}
 
-	// 로그인 후
+	// 로그인 후 
+	
 	
 	public void afterLogin() {
 		ss.setcustomerService();
@@ -246,21 +237,21 @@ public class CustomerService {
 	
 
 	//매출확인
-	int sum1 = 0;
 	public void profit() {
+		int sum = 0;
 		for(Sale s : SaleService.getInstance().getSales()) {
-		sum1 += s.total();
+		sum += s.total();
 		}
-		System.out.println("총 매출 내역 : " + sum1 + "원");			
+		System.out.println("총 매출 내역 : " + sum + "원");			
 	}
 	
 	// 회원리스트 출력
 	public void printCustomer() {
 		System.out.println("=====================================");
-		System.out.println("     ID      PASSWORD      이름");
+		System.out.println("         ID         PASSWORD      이름");
 		System.out.println("=====================================");
 		for (Customer c : customers) {
-			System.out.printf("%11s %11s %6s", c.getId(), c.getPw(), c.getName());
+			System.out.printf("%11s %15s %8s", c.getId(), c.getPw(), c.getName());
 			System.out.println();
 		}
 	}
@@ -268,24 +259,13 @@ public class CustomerService {
 	
 	public void refund() { 		
 		for(Sale s : ss.getSales()) {
-			System.out.println("구매번호 : " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
-			for(Sale s1 : SaleService.getInstance().getSales()) {
-				int sum2 = 0; 
-				sum2 += s1.total();
-				System.out.println("총 결제 금액 : " + sum2);
+			System.out.println("구매번호 : " + s.getSaleId() + " / 결제 금액 : "+ s.total() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
+			s.total();
+			System.out.println(s.getBooks());
 			}
-			System.out.println(s.getBooks());}
 			ss.remove();
 			System.out.println("환불완료");
 	
-			
-//		for(int i = 0 ; i < ss.getSales().size(); i++) {
-//			System.out.println(ss.getSales().get(i).getId() + ss.getSales().get(i).getSaleId()+ sdf.format(new Date(ss.getSales().get(i).getRegDate())));
-//			if(ss.getSales().get(i) != null)
-//				ss.remove();
-//			else
-//				System.out.println("없음");
-//		}
 	}
 	
 	
