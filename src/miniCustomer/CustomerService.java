@@ -31,8 +31,7 @@ public class CustomerService {
 	private List<Customer> customers = new ArrayList<Customer>();
 	private Customer loginUser;
 	
-	
-	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	BookService bs = BookService.getInstance();
 	SaleService ss = SaleService.getInstance();
 	
@@ -57,8 +56,6 @@ public class CustomerService {
 		}catch (FileNotFoundException  e) {
 			Customer customer = new Customer("id1", "pw1","권미은");
 			Customer customer2 = new Customer("id2", "pw2","김미미");
-			customer.setUserNum(998);
-			customer2.setUserNum(999);
 			
 			customers.add(customer);
 			customers.add(customer2);
@@ -124,7 +121,6 @@ public class CustomerService {
 	}
 	
 	// 아이디 생성
-	private static int cnt = 1000;
 
 	public void customerAdd() {
 		System.out.println("회원가입 화면입니다.");
@@ -133,10 +129,8 @@ public class CustomerService {
 		String name = MiniUtils.next("이름을 입력하세요. 한글 2~4글자", String.class, s->s.matches("^[가-힣]{2,4}"), "한글로 2~4글자로 입력하세요");
 
 		Customer c = new Customer(id, pw, name);
-		c.setUserNum(cnt);
 		customers.add(c);
-		System.out.println("ID(" + id + ") PASSWORD(" + pw + ") 생성 완료. 회원 번호 부여: " + c.getUserNum());
-		cnt++;
+		System.out.println("ID(" + id + ") PASSWORD(" + pw + ") 생성 완료");
 		
 		save();
 
@@ -252,35 +246,38 @@ public class CustomerService {
 	
 
 	//매출확인
-	int sum = 0;
+	int sum1 = 0;
 	public void profit() {
 		for(Sale s : SaleService.getInstance().getSales()) {
-		sum += s.total();
+		sum1 += s.total();
 		}
-		System.out.println("총 매출 내역 : " + sum + "원");			
+		System.out.println("총 매출 내역 : " + sum1 + "원");			
 	}
 	
 	// 회원리스트 출력
 	public void printCustomer() {
-		System.out.println("==========================================");
-		System.out.println("회원번호       ID     PASSWORD     이름");
-		System.out.println("==========================================");
+		System.out.println("=====================================");
+		System.out.println("     ID      PASSWORD      이름");
+		System.out.println("=====================================");
 		for (Customer c : customers) {
-			System.out.printf("%5d %11s %11s %6s", c.getUserNum(), c.getId(), c.getPw(), c.getName());
+			System.out.printf("%11s %11s %6s", c.getId(), c.getPw(), c.getName());
 			System.out.println();
 		}
 	}
 	
-	//환불
-	
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public void refund() { 		
-		for(Sale s : ss.getSales()) 
+		for(Sale s : ss.getSales()) {
 			System.out.println("구매번호 : " + s.getSaleId() + " / ID : " + s.getId() + " / 시간 : " + sdf.format(new Date(s.getRegDate())));
+			for(Sale s1 : SaleService.getInstance().getSales()) {
+				int sum2 = 0; 
+				sum2 += s1.total();
+				System.out.println("총 결제 금액 : " + sum2);
+			}
+			System.out.println(s.getBooks());}
 			ss.remove();
 			System.out.println("환불완료");
-			
+	
 			
 //		for(int i = 0 ; i < ss.getSales().size(); i++) {
 //			System.out.println(ss.getSales().get(i).getId() + ss.getSales().get(i).getSaleId()+ sdf.format(new Date(ss.getSales().get(i).getRegDate())));

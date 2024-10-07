@@ -1,7 +1,10 @@
 package sale;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,18 +30,34 @@ public class SaleService {
 			
 	private List<Sale> sales = new ArrayList<Sale>();
 
-	{
-        Sale sale = new Sale();
-        sale.setSaleId(1);
-        sale.setId("id1");
-        List<Book> list = new ArrayList<Book>();
-        list.add(new Book("0000", "홍길동전", "홍길동", "길동사", "0000000000001", "정의의 사도 홍길동의 모험", 10_000, 2, false,
-                false));
-        list.add(new Book("0003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", "길고도 복잡한 이야기를 원한다면.", 13_000,
-                1, false, false));
-        sale.setBooks(list);
-        sales.add(sale);
-    }
+//	{
+//        Sale sale = new Sale();
+//        sale.setSaleId(1);
+//        sale.setId("id1");
+//        List<Book> list = new ArrayList<Book>();
+//        list.add(new Book("0000", "홍길동전", "홍길동", "길동사", "0000000000001", "정의의 사도 홍길동의 모험", 10_000, 2, false,
+//                false));
+//        list.add(new Book("0003", "참을 수 없는 존재의 가벼움", "홍길동", "길동사", "0000000000004", "길고도 복잡한 이야기를 원한다면.", 13_000,
+//                1, false, false));
+//        sale.setBooks(list);
+//        sales.add(sale);
+//    }
+	
+{
+		
+		try {
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("./src/sale/money.ser"));
+			sales = (List<Sale>) ois.readObject();
+			ois.close();
+		}catch (FileNotFoundException  e) {
+	        Sale sale = new Sale();
+	        System.out.println("매출 내역이 없습니다");
+		} 
+		catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public List<Sale> getSales() {
 		return sales;
@@ -81,6 +100,7 @@ public class SaleService {
 			return;
 		}
 		sales.remove(s);
+		save();
 	}
 
 	public Sale findBy(int saleId) {

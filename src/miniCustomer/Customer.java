@@ -7,7 +7,6 @@ public class Customer implements Serializable{
 	private String id;
 	private String pw;
 	private String name;
-	private int userNum;
 	
 
 	public Customer(String id, String pw, String name) {
@@ -39,12 +38,7 @@ public class Customer implements Serializable{
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-	public int getUserNum() {
-		return userNum;
-	}
-	public void setUserNum(int userNum) {
-		this.userNum = userNum;
-	}
+	
 
 
 	@Override
