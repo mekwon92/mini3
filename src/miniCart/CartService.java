@@ -1,23 +1,9 @@
 package miniCart;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import miniBook.*;
-import miniCustomer.Customer;
-import miniCustomer.CustomerService;
-import miniCustomer.MiniUtils;
-import sale.Sale;
-import sale.SaleService;
-
-//cs.getLoggedInId() 로그인한 객체 가져오는법
+import sale.*;
+import miniCustomer.*;
 
 //카트 서비스 싱글턴
 public class CartService {
@@ -71,11 +57,6 @@ public class CartService {
 		cart.getCarts().remove(cs);
 	}
 
-	public void remove(List<Book> targetlist) { // 오버로딩
-		for (int i = 0; i < targetlist.size(); i++)
-			targetlist.remove(i);
-	}
-
 	public Book findBy(String bookid) {
 		Book newcart = null;
 		for (Book ss : booklist) {
@@ -99,33 +80,6 @@ public class CartService {
 	public void cartlist() {
         // 책 정보
         printCart();
-
-
-		int input = MiniUtils.next("1.결제 2.수량 변경 3.돌아가기", Integer.class, i -> i <= 3 && i >= 1, "1이상 5이하의 값을 입력하세요");
-		switch (input) {
-		case 1:
-			printCart();
-//            System.out.println("위 내역에 대한것에 결제를 진행하시겠습니까?");
-			saleService.add(cart);
-			System.out.println("결제완료");
-			cart.getCarts().clear(); // 장바구니 비우기
-			saleService.getInstance().getMySale();
-
-			break;
-		case 2:
-			if (cart.getCarts().isEmpty()) {
-				System.out.println("장바구니가 비었습니다");
-				return;
-			}
-			System.out.println("수량 변경하기");
-			modifyAmount();
-		default:
-			System.out.println("책 검색 화면으로 돌아가기");
-			sw.bookSearcher();
-			break;
-
-		}
-	}
 
         int input = MiniUtils.next("1.결제 2.수량 변경 3.돌아가기", Integer.class, i -> i <= 3 && i >= 1, "1이상 5이하의 값을 입력하세요");
         switch (input) {
@@ -159,15 +113,15 @@ public class CartService {
         }
     }
 
-
 	public void modifyAmount() {
 		printCart();
 		Book book = cart.getCarts().get(
 				MiniUtils.next("수정할 항목입력", Integer.class, i -> i >= 1 && i <= cart.getCarts().size(), "올바른 범위의 값 입력")
 						- 1);
-
-		int amount = MiniUtils.next("변경할 수량을 입력", Integer.class, i -> i < book.getBookCount() && i >= 0,
+		System.out.println(""+book.getBookName()+"입니다.");
+		int amount = MiniUtils.next("변경할 수량을 입력", Integer.class, i -> true,
 				"올바른 범위의 값 입력");
+		System.out.println("수량을 "+amount+" 만큼 변경했습니다." );
 		if (amount == 0) {
 			cart.getCarts().remove(book);
 		} else {
