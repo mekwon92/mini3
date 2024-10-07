@@ -160,21 +160,6 @@ public class BookService {
 	 * @author KHM
 	 */
 	public List<Book> findByBookId(String no) {
-//		List<Book> tmp = new ArrayList<>();
-//		Book book = null;
-//		boolean flag = false;
-//		for (int i = 0; i < bookList.size(); i++) {
-//			if (bookList.get(i).getBookId().contains(no)) {
-//				book = bookList.get(i);
-//				flag = true;
-//			}
-//		}
-//		if (flag == true) {
-//			System.out.println("SYSTEM :: 일치하는 검색결과를 출력합니다.");
-//		} else {
-//			System.out.println("SYSTEM :: 일치하는 검색결과가 없습니다.");
-//		}
-//		return book;
 		List<Book> tmp = new ArrayList<>();
 		for (Book book : bookList) {
 			if (book.getBookId().contains(no)) {
@@ -185,13 +170,6 @@ public class BookService {
 	}
 
 	public List<Book> findByBookISBN(String no) {
-//		Book book = null;
-//		for (int i = 0; i < bookList.size(); i++) {
-//			if (bookList.get(i).getISBookNum().contains(no)) {
-//				book = bookList.get(i);
-//			}
-//		}
-//		return book;
 		List<Book> tmp = new ArrayList<>();
 		for (Book book : bookList) {
 			if (book.getBookId().contains(no)) {
@@ -203,7 +181,6 @@ public class BookService {
 	}
 
 	/**
-	 * + 후에 트림 사용해서 띄어쓰기 이슈 해결 필요, 해외작가의경우 성과 이름이 떨어져 있을 확률이 높으므로 이에 대한 고려도 필요
 	 * 
 	 * @param String writer
 	 * @author KHM
@@ -354,6 +331,7 @@ public class BookService {
 		return book;
 	}
 
+	
 	public void bookEvent(List<Book> listTarget) {
 		int ran = (int)(Math.random() * listTarget.size());
 		Calendar calender = Calendar.getInstance();
@@ -361,7 +339,6 @@ public class BookService {
 		int month = calender.get(Calendar.MONTH)+ 1;
 		String name = customer.getLoggedInUser().getName();
 		Book book = bookList.get(ran);
-		// 저자 초대 및 이벤트
 		System.out.println(" SYSTEM :: " + name + " 님, 어서오세요! 아래의 이벤트들을 확인해 보세요!");
 		System.err.println(month + " [월 의 추천 도서 ::: < " + book.getBookName() + " > ::: ]");
 		System.err.println(month + " [월 의 얼라딘터뷰 ::: < " + book.getBookWriter() + " 작가 > ::: ]");
